@@ -21,19 +21,21 @@ object SimpleCanvas  {
 
   /* Predefined opaque colors. */
   object Color {
-    val Black = Color(0,0,0)
-    val White = Color(255, 255,255)
-    val Red   = Color(255, 0, 0)
-    val Green = Color(0, 255, 0)
-    val Blue  = Color(0, 0, 255)
+    val Black = new Color(0,0,0)
+    val White = new Color(255, 255,255)
+    val Red   = new Color(255, 0, 0)
+    val Green = new Color(0, 255, 0)
+    val Blue  = new Color(0, 0, 255)
   }
 
   /* RGB color where alpha = 0 is fully transparent and 255 is opaque. */
-  case class Color(red: Int, green: Int, blue: Int, alpha: Int = 255){
+  class Color(val red: Int, val green: Int, val blue: Int, val alpha: Int = 255){
     require(0 to 255 contains red,   s"red=$red must be within 0 to 255")
     require(0 to 255 contains green, s"green=$green must be within 0 to 255")
     require(0 to 255 contains blue,  s"blue=$blue must be within 0 to 255")
     require(0 to 255 contains alpha, s"alpha=$alpha must be within 0 to 255")
+
+    override def toString = s"Color(red=$red, green=$green, blue=$blue, alpha=$alpha)"
   }
 }
 
