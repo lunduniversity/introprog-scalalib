@@ -1,3 +1,6 @@
 This is the documentation of cslib.
 
 == Package structure ==
+
+- [[cslib.gui `cslib.gui`]] includes utilities for creating simple graphical user interfaces:
+    - [[cslib.gui.SimpleCanvas `cslib.gui.SimpleCanvas`]] is a beginner-friendly class for creating drawing windows implemented using javafx via the  [[cslib.gui.Fx `cslib.gui.Fx`]] wrapper module.
