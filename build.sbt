@@ -14,4 +14,3 @@ scalacOptions ++= Seq(
   "-Ywarn-unused"
 )
 fork := true
-scalacOptions in (Compile, doc) ++= Seq("-d","doc")
