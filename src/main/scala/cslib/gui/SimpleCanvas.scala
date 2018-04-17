@@ -39,7 +39,7 @@ object SimpleCanvas  {
 
 class SimpleCanvas(
   val initTitle: String      = "Another Canvas Window",
-  val initSize: (Int, Int)   = (1000,1000),
+  val initSize: (Double, Double)   = (1000.0, 1000.0),
   val initBackground: SimpleCanvas.Color  = SimpleCanvas.Color.Black,
   val initBasicMenu: Boolean = false,
 ) {
@@ -85,7 +85,7 @@ class SimpleCanvas(
       if we.getEventType == javafx.stage.WindowEvent.WINDOW_HIDING =>
         _lastEventType = Event.WindowClosed
 
-    case e => _lastEventType = Event.Undefined
+    case _ => _lastEventType = Event.Undefined
   }
 
   def awaitEvent(timeoutInMillis: Long): Unit = {
@@ -122,8 +122,7 @@ class SimpleCanvas(
   def size: (Double, Double) = (stage.getWidth, stage.getHeight)
   def clear(): Unit = withGC(_.clearRect(0, 0, size._1, size._2))
 
-//  def hideAndStop():  Unit = Fx(stage.hide)  TODO should this be expose???
-  def show():  Unit = Fx{stage.show; stage.requestFocus}
+  def show():  Unit = Fx { stage.show; stage.requestFocus }
 
   protected lazy val basicMenuBar =
     Fx.menuBar(
