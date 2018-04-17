@@ -1,0 +1,11 @@
+sudo: required
+dist: trusty
+
+language: scala
+scala: 2.12.5
+
+before_install:
+ - sudo apt-get update -q
+
+script:
+ - sbt compile
