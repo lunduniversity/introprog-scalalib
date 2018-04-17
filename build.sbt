@@ -1,7 +1,12 @@
-name := "cslib"
+lazy val Version = "18.0.1"
+lazy val Name    = "cslib"
+
+name := Name
 organization := "se.lth.cs"
-version := "0.0.1"
+version := Version
 scalaVersion := "2.12.5"
+fork := true
+
 scalacOptions ++= Seq(
   "-encoding", "UTF-8",
   "-unchecked",
@@ -13,4 +18,14 @@ scalacOptions ++= Seq(
 //  "-Ywarn-value-discard",
   "-Ywarn-unused"
 )
-fork := true
+
+scalacOptions in (Compile, doc) ++= Seq(
+  "-implicits",
+  "-groups",
+  "-doc-title", Name,
+  "-doc-footer", "Lund University, Faculty of Engineering LTH",
+  "-sourcepath", (baseDirectory in ThisBuild).value.toString,
+  "-doc-version", Version,
+  "-doc-root-content", (sourceDirectory in Compile).value.toString + "/scala/rootdoc.txt",
+  "-doc-source-url", s"https://github.com/lunduniversity/cslib-scala/tree/master€{FILE_PATH}.scala"
+)
