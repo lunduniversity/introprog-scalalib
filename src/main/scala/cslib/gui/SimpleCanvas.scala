@@ -43,7 +43,7 @@ class SimpleCanvas(
   val initTitle: String      = "Another Canvas Window",
   val initSize: (Double, Double)   = (1000.0, 1000.0),
   val initBackground: SimpleCanvas.Color  = SimpleCanvas.Color.Black,
-  val initBasicMenu: Boolean = false,
+  val initBasicMenu: Boolean = true,
 ) {
   import SimpleCanvas._
   protected val eventQueueCapacity = 1000
