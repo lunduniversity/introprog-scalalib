@@ -1,6 +1,6 @@
-This is the documentation of cslib.
+This is the documentation of `luscala` - a simple-to-use library with Scala utilities used in beginner computer science teaching at Lund University.
 
 == Package structure ==
 
-- [[cslib.gui `cslib.gui`]] includes utilities for creating simple graphical user interfaces:
-    - [[cslib.gui.SimpleCanvas `cslib.gui.SimpleCanvas`]] is a beginner-friendly class for creating drawing windows implemented using javafx via the  [[cslib.gui.Fx `cslib.gui.Fx`]] wrapper module.
+- [[luscala.gui `luscala.gui`]] includes utilities for creating simple graphical user interfaces:
+    - [[luscala.gui.SimpleCanvas `luscala.gui.SimpleCanvas`]] is a beginner-friendly class for creating drawing windows implemented using javafx via the  [[luscala.gui.Fx `luscala.gui.Fx`]] wrapper module.

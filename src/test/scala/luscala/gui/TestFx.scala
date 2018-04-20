@@ -1,6 +1,6 @@
-package cslib.gui
+package luscala.gui
 
-/** run in `sbt:cslib>` with command `Test/runMain cslib.gui.TestFx` */
+/** run in `sbt:luscala>` with command `Test/runMain luscala.gui.TestFx` */
 object TestFx {
   def main(args: Array[String]): Unit = {
     println("You should see a black window with a green line for 1 second.")

@@ -10,3 +10,4 @@ before_install:
 script:
  - sbt compile
  - sbt 'Test/compile'
+ - sbt doc

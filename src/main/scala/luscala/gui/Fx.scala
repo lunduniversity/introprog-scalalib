@@ -1,4 +1,4 @@
-package cslib.gui
+package luscala.gui
 
 /** A wrapper with utils for simpler access to javafx */
 object Fx {

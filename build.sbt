@@ -1,5 +1,5 @@
 lazy val Version = "18.0.1"
-lazy val Name    = "cslib"
+lazy val Name    = "luscala"
 
 name := Name
 organization := "se.lth.cs"
@@ -23,9 +23,9 @@ scalacOptions in (Compile, doc) ++= Seq(
   "-implicits",
   "-groups",
   "-doc-title", Name,
-  "-doc-footer", "Lund University, Faculty of Engineering LTH",
+  "-doc-footer", "Dep. of Computer Science, Lund University, Faculty of Engineering LTH",
   "-sourcepath", (baseDirectory in ThisBuild).value.toString,
   "-doc-version", Version,
   "-doc-root-content", (sourceDirectory in Compile).value.toString + "/scala/rootdoc.txt",
-  "-doc-source-url", s"https://github.com/lunduniversity/cslib-scala/tree/master€{FILE_PATH}.scala"
+  "-doc-source-url", s"https://github.com/lunduniversity/luscala/tree/master€{FILE_PATH}.scala"
 )

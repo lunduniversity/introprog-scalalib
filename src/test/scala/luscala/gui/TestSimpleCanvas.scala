@@ -1,6 +1,6 @@
-package cslib.gui
+package luscala.gui
 
-/** run in `sbt:cslib>` with command `Test/runMain cslib.gui.TestSimpleCanvas` */
+/** run in `sbt:luscala>` with command `Test/runMain luscala.gui.TestSimpleCanvas` */
 object TestSimpleCanvas {
   def main(args: Array[String]): Unit = {
     println("You should see two black windows with a white in line each.")
