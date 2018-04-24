@@ -59,7 +59,6 @@ class PixelWindow(
         _lastKeyText = java.awt.event.KeyEvent.getKeyText(ke.getKeyCode)
       else _lastKeyText = ke.getKeyChar.toString
 
-      println(s"key event: $ke _lastKeyText = ${_lastKeyText}")
       ke.getID match {
         case java.awt.event.KeyEvent.KEY_PRESSED =>
           _lastEventType = Event.KeyPressed
@@ -68,6 +67,12 @@ class PixelWindow(
         case _ => println(s"Unknown key event: $e")
       }
 
+    case we: java.awt.event.WindowEvent =>
+      we.getID match {
+        case java.awt.event.WindowEvent.WINDOW_CLOSING =>
+          _lastEventType = Event.WindowClosed
+        case _ => println(s"Unknown window event: $e")
+      }
     case _ => println(s"Unknown event: $e")
   }
 
@@ -106,9 +111,9 @@ class PixelWindow(
 
   frame.addWindowListener(new java.awt.event.WindowAdapter {
     override def windowClosing(e: java.awt.event.WindowEvent): Unit = {
-      //eventQueue.offer(e);
       frame.setVisible(false)
       frame.dispose()
+      eventQueue.offer(e)
     }
   })
 
