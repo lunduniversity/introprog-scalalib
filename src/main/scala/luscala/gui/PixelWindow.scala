@@ -38,7 +38,7 @@ class PixelWindow(
   def lastEventType: String = _lastEventType
 
   protected var _lastKeyText = ""
-  def lastKeyText: String = _lastKeyText
+  def lastKey: String = _lastKeyText
 
   protected var _lastMousePos = (0, 0)
   def lastMousePos: (Int, Int) = _lastMousePos
@@ -55,7 +55,7 @@ class PixelWindow(
       }
 
     case ke: java.awt.event.KeyEvent =>
-      if (ke.getKeyChar == java.awt.event.KeyEvent.CHAR_UNDEFINED)
+      if (ke.getKeyChar == java.awt.event.KeyEvent.CHAR_UNDEFINED || ke.getKeyChar < ' ')
         _lastKeyText = java.awt.event.KeyEvent.getKeyText(ke.getKeyCode)
       else _lastKeyText = ke.getKeyChar.toString
 
@@ -73,8 +73,7 @@ class PixelWindow(
 
   def awaitEvent(timeoutInMillis: Long): Unit = {
     val e = eventQueue.poll(timeoutInMillis, java.util.concurrent.TimeUnit.MILLISECONDS)
-    if (e != null) handleEvent(e)
-    else _lastEventType = Event.Undefined
+    if (e != null) handleEvent(e) else _lastEventType = Event.Undefined
   }
 
   def moveTo(pos: (Int, Int)): Unit = { x = pos._1; y = pos._2 }
