@@ -17,24 +17,28 @@ object PixelWindow {
 }
 
 class PixelWindow(
-  val width: Int = 1000,
-  val height: Int = 1000,
+  val width: Int = 800,
+  val height: Int = 640,
   val title: String = "PixelWindow",
   val background: java.awt.Color = java.awt.Color.BLACK
 ) {
-
   import PixelWindow.Event
-
   var x = 0
   var y = 0
+  var lineWidth: Int = 1
+  var textSize: Int = 20
+  var color: java.awt.Color = Swing.invertColor(background)
+
   /*private*/ val frame = new javax.swing.JFrame(title)
-  /*private*/ val canvas = new Swing.CanvasPanel(width, height, background)
+  /*private*/ val canvas = new Swing.ImagePanel(width, height, background)
 
   private val queueCapacity = 1000
   private val eventQueue =
     new java.util.concurrent.LinkedBlockingQueue[java.awt.AWTEvent](queueCapacity)
 
   private var _lastEventType = Event.Undefined
+  init()
+
   def lastEventType: String = _lastEventType
 
   protected var _lastKeyText = ""
@@ -81,61 +85,83 @@ class PixelWindow(
     if (e != null) handleEvent(e) else _lastEventType = Event.Undefined
   }
 
-  def moveTo(pos: (Int, Int)): Unit = { x = pos._1; y = pos._2 }
+  def moveTo(newX: Int, newY: Int): Unit = { x = newX; y = newY }
 
-  def lineTo(pos: (Int, Int)): Unit = {
-    canvas.line(x, y, pos._1, pos._2)
-    x = pos._1; y = pos._2
+  def lineTo(newX: Int, newY: Int): Unit = canvas.withGraphics { g =>
+    import java.awt.BasicStroke
+    val s = new BasicStroke(lineWidth.toFloat, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER)
+    g.setStroke(s)
+    g.setColor(color)
+    g.drawLine(x, y, newX, newY)
+    x = newX; y = newY
   }
+
+  def setPixel(): Unit = canvas.withImage { img =>
+    img.setRGB(x, y, color.getRGB)
+  }
+
+  def clearPixel(): Unit = canvas.withImage { img =>
+    img.setRGB(x, y, background.getRGB)
+  }
+
+  def getPixel: java.awt.Color =
+    new java.awt.Color(canvas.img.getRGB(x,y))
 
   def open(): Unit = frame.setVisible(true)
 
   def close(): Unit = { frame.setVisible(false); frame.dispose() }
 
-  def clear(): Unit = canvas.clear()
+  def clear(): Unit = canvas.withGraphics { g =>
+    g.setColor(background)
+    g.fillRect(0, 0, width, height)
+  }
 
-  def drawString(s: String) = canvas.drawString(s, x, y)
+  def drawText(text: String) = canvas.withGraphics { g =>
+    import java.awt.RenderingHints._
+    g.setRenderingHint(KEY_TEXT_ANTIALIASING, VALUE_TEXT_ANTIALIAS_ON)
+    val f = g.getFont
+    g.setFont(new java.awt.Font(f.getName, f.getStyle, textSize))
+    g.setColor(color)
+    g.drawString(text, x, y)
+  }
 
-  def setTextSize(pts: Int) = canvas.textSize = pts
+  def isFullScreen: Boolean = Swing.screen.isFullScreen
 
-  def setLineColor(c: java.awt.Color): Unit = canvas.lineColor = c
-
-  def setLineWidth(w: Int): Unit = canvas.lineWidth = w
-
-  def setFullScreen(isActivate: Boolean): Unit =
-    if (isActivate) Swing.screen.enterFullScreen(frame)
+  def setFullScreen(activate: Boolean): Unit =
+    if (activate) Swing.screen.enterFullScreen(frame)
     else Swing.screen.exitFullScreen(frame)
 
-  Swing.init() // to setPlatformSpecificLookAndFeel
-  javax.swing.JFrame.setDefaultLookAndFeelDecorated(true)
+  private def init(): Unit = {
+    Swing.init() // to setPlatformSpecificLookAndFeel
+    javax.swing.JFrame.setDefaultLookAndFeelDecorated(true)
 
-  frame.addWindowListener(new java.awt.event.WindowAdapter {
-    override def windowClosing(e: java.awt.event.WindowEvent): Unit = {
-      frame.setVisible(false)
-      frame.dispose()
-      eventQueue.offer(e)
-    }
-  })
+    frame.addWindowListener(new java.awt.event.WindowAdapter {
+      override def windowClosing(e: java.awt.event.WindowEvent): Unit = {
+        frame.setVisible(false)
+        frame.dispose()
+        eventQueue.offer(e)
+      }
+    })
 
-  frame.addKeyListener(new java.awt.event.KeyAdapter {
-    override def keyPressed(e: java.awt.event.KeyEvent): Unit = eventQueue.offer(e)
-    override def keyReleased(e: java.awt.event.KeyEvent): Unit = eventQueue.offer(e)
-  })
+    frame.addKeyListener(new java.awt.event.KeyAdapter {
+      override def keyPressed(e: java.awt.event.KeyEvent): Unit = eventQueue.offer(e)
+      override def keyReleased(e: java.awt.event.KeyEvent): Unit = eventQueue.offer(e)
+    })
 
-  canvas.addMouseListener(new java.awt.event.MouseAdapter {
-    override def mousePressed(e: java.awt.event.MouseEvent): Unit = eventQueue.offer(e)
-    override def mouseReleased(e: java.awt.event.MouseEvent): Unit = eventQueue.offer(e)
-  })
+    canvas.addMouseListener(new java.awt.event.MouseAdapter {
+      override def mousePressed(e: java.awt.event.MouseEvent): Unit = eventQueue.offer(e)
+      override def mouseReleased(e: java.awt.event.MouseEvent): Unit = eventQueue.offer(e)
+    })
 
+    val box = new javax.swing.Box(javax.swing.BoxLayout.Y_AXIS)
+    box.setBackground(java.awt.Color.RED)
+    box.add(javax.swing.Box.createVerticalGlue())
+    box.add(canvas)
+    box.add(javax.swing.Box.createVerticalGlue())
+    frame.add(box)
 
-  val box = new javax.swing.Box(javax.swing.BoxLayout.Y_AXIS)
-  box.setBackground(java.awt.Color.RED)
-  box.add(javax.swing.Box.createVerticalGlue())
-  box.add(canvas)
-  box.add(javax.swing.Box.createVerticalGlue())
-  frame.add(box)
-
-  frame.getContentPane().setBackground(java.awt.Color.BLACK.brighter.brighter)
-  frame.pack()
-  frame.setVisible(true)
+    frame.getContentPane().setBackground(java.awt.Color.BLACK.brighter.brighter)
+    frame.pack()
+    frame.setVisible(true)
+  }
 }

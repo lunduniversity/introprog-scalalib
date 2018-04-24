@@ -44,13 +44,10 @@ object Swing {
   def invertColor(c: java.awt.Color): java.awt.Color =
     new java.awt.Color(255 - c.getRed, 255 - c.getGreen, 255 - c.getBlue)
 
-  class CanvasPanel(
+  class ImagePanel(
     val initWidth: Int,
     val initHeight: Int,
-    var backgroundColor: java.awt.Color = java.awt.Color.BLACK,
-    var lineColor: java.awt.Color =  java.awt.Color.WHITE,
-    var lineWidth: Int = 1,
-    var textSize: Int = 20
+    val initBackground: java.awt.Color
   ) extends javax.swing.JPanel {
     val img: java.awt.image.BufferedImage = java.awt.GraphicsEnvironment
       .getLocalGraphicsEnvironment
@@ -58,12 +55,11 @@ object Swing {
       .getDefaultConfiguration
       .createCompatibleImage(initWidth, initHeight, java.awt.Transparency.OPAQUE)
 
-    setBackground(backgroundColor)
+    setBackground(initBackground)
 		setDoubleBuffered(true)
 		setPreferredSize(new java.awt.Dimension(initWidth, initHeight))
 		setMinimumSize(new java.awt.Dimension(initWidth, initHeight))
 		setMaximumSize(new java.awt.Dimension(initWidth, initHeight))
-		clear()
 
     override def paintComponent(g: java.awt.Graphics): Unit = g.drawImage(img, 0, 0, this)
 
@@ -72,34 +68,14 @@ object Swing {
       true
   	}
 
-  	def clear(): Unit = {
-  		val g = img.createGraphics()
-  		g.setColor(backgroundColor)
-  		g.fillRect(0, 0, initWidth, initHeight)
-  		repaint()
-  	}
+    def withGraphics(action: java.awt.Graphics2D => Unit) = { action(img.createGraphics())
+      repaint()
+    }
 
-  	def line(x1: Int, y1: Int, x2: Int, y2: Int): Unit = {
-      import java.awt.BasicStroke
-  		val g = img.createGraphics()
-  		g.setColor(lineColor)
-      val s = new BasicStroke(lineWidth.toFloat, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER)
-  		g.setStroke(s)
-  		g.drawLine(x1, y1, x2, y2)
-  		repaint()
-  	}
-
-  	def drawString(txt: String, x: Int, y: Int): Unit = {
-  		val g = img.createGraphics()
-  		g.setColor(lineColor)
-      g.setRenderingHint(
-        java.awt.RenderingHints.KEY_TEXT_ANTIALIASING,
-        java.awt.RenderingHints.VALUE_TEXT_ANTIALIAS_ON)
-      val f = g.getFont
-      g.setFont(new java.awt.Font(f.getName,f.getStyle,textSize))
-  		g.drawString(txt, x, y)
-  		repaint()
-  	}
+    def withImage(action: java.awt.image.BufferedImage => Unit) = {
+      action(img)
+      repaint()
+    }
   }
 
   object screen {
