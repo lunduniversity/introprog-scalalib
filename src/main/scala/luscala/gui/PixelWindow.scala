@@ -37,8 +37,6 @@ class PixelWindow(
     new java.util.concurrent.LinkedBlockingQueue[java.awt.AWTEvent](queueCapacity)
 
   private var _lastEventType = Event.Undefined
-  init()
-
   def lastEventType: String = _lastEventType
 
   protected var _lastKeyText = ""
@@ -46,6 +44,8 @@ class PixelWindow(
 
   protected var _lastMousePos = (0, 0)
   def lastMousePos: (Int, Int) = _lastMousePos
+
+  initFrame()
 
   private def handleEvent(e: java.awt.AWTEvent): Unit = e match {
     case me: java.awt.event.MouseEvent =>
@@ -131,7 +131,7 @@ class PixelWindow(
     if (activate) Swing.screen.enterFullScreen(frame)
     else Swing.screen.exitFullScreen(frame)
 
-  private def init(): Unit = {
+  private def initFrame(): Unit = {
     Swing.init() // to setPlatformSpecificLookAndFeel
     javax.swing.JFrame.setDefaultLookAndFeelDecorated(true)
 
