@@ -1,7 +1,7 @@
 package luscala.gui
 
 /** A module ready to use in the Scala REPL or in a main Scala program */
-object SimpleCanvas  {
+object FxCanvas  {
   def systemExit(): Unit = System.exit(0)
 
   def stopAllWindows(): Unit= Fx.exit()
@@ -39,13 +39,13 @@ object SimpleCanvas  {
   }
 }
 
-class SimpleCanvas(
+class FxCanvas(
   val initTitle: String      = "Another Canvas Window",
   val initSize: (Double, Double)   = (1000.0, 1000.0),
-  val initBackground: SimpleCanvas.Color  = SimpleCanvas.Color.Black,
+  val initBackground: FxCanvas.Color  = FxCanvas.Color.Black,
   val initBasicMenu: Boolean = true,
 ) {
-  import SimpleCanvas._
+  import FxCanvas._
   protected val eventQueueCapacity = 1000
   protected var eventQueue =
     new java.util.concurrent.LinkedBlockingQueue[javafx.event.Event](eventQueueCapacity)
