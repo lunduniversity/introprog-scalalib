@@ -118,6 +118,7 @@ class PixelWindow(
 
   def drawText(text: String) = canvas.withGraphics { g =>
     import java.awt.RenderingHints._
+    // https://docs.oracle.com/javase/tutorial/2d/text/renderinghints.html
     g.setRenderingHint(KEY_TEXT_ANTIALIASING, VALUE_TEXT_ANTIALIAS_ON)
     val f = g.getFont
     g.setFont(new java.awt.Font(f.getName, f.getStyle, textSize))
@@ -132,7 +133,7 @@ class PixelWindow(
     else Swing.screen.exitFullScreen(frame)
 
   private def initFrame(): Unit = {
-    Swing.init() // to setPlatformSpecificLookAndFeel
+    Swing.init() // first time calls setPlatformSpecificLookAndFeel
     javax.swing.JFrame.setDefaultLookAndFeelDecorated(true)
 
     frame.addWindowListener(new java.awt.event.WindowAdapter {
