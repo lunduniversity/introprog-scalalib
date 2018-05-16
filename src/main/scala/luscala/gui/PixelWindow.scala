@@ -2,7 +2,7 @@ package lu.gui
 
 /** PixelWindow events and application management. */
 object PixelWindow {
-  /** Immediately exit running application, kills all threads. */
+  /** Immediately exit running application, close all windows, kills all threads. */
   def systemExit(): Unit = System.exit(0)
 
   /** Idle waiting for @param millis milliseconds. */
