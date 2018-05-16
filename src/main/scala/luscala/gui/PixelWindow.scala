@@ -31,8 +31,8 @@ object PixelWindow {
 }
 
 /** A window for pixel-based drawing.
-  * @param width of window in number of pixels
-  * @param height of window in number of pixels.
+  * @param width The number of horizontal pixels.
+  * @param height The number of vertical pixels.
   */
 class PixelWindow(
   val width: Int = 800,
