@@ -1,4 +1,4 @@
-package luscala.gui
+package lu.gui
 
 /** run in `sbt:luscala>` with command `Test/runMain luscala.gui.TestSimpleCanvas` */
 object TestFxCanvas {

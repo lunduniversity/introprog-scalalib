@@ -1,4 +1,4 @@
-package luscala.gui
+package lu.gui
 
 object Swing {
 

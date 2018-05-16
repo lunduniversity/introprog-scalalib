@@ -2,5 +2,5 @@ This is the documentation of `luscala` - a simple-to-use library with Scala util
 
 == Package structure ==
 
-- [[luscala.gui `luscala.gui`]] includes utilities for creating simple graphical user interfaces:
-    - [[luscala.gui.SimpleCanvas `luscala.gui.SimpleCanvas`]] is a beginner-friendly class for creating drawing windows implemented using javafx via the  [[luscala.gui.Fx `luscala.gui.Fx`]] wrapper module.
+- [[lu.gui `lu.gui`]] includes utilities for creating graphical user interfaces:
+    - [[lu.gui.PixelWindow `lu.gui.PixelWindow`]] is class a for pixel-based draw.

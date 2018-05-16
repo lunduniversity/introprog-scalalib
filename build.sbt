@@ -1,4 +1,4 @@
-lazy val Version = "18.0.1"
+lazy val Version = "0.1"
 lazy val Name    = "luscala"
 
 name := Name

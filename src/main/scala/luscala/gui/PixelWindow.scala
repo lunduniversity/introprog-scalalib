@@ -1,14 +1,28 @@
-package luscala.gui
+package lu.gui
 
+/** PixelWindow events and application management. */
 object PixelWindow {
+  /** Immediately exit running application, kills all threads. */
   def systemExit(): Unit = System.exit(0)
+
+  /** Idle waiting for @param millis milliseconds. */
   def delay(millis: Long): Unit = Thread.sleep(millis)
 
+  /** An object with strings describing events that can happen in a PixelWindow, see [[lu.gui.PixelWindow.Event]] */
   object Event {
+    /** The name of a key down event. */
     val KeyPressed    = "KeyPressed"
+
+   /** The name of a key up event. */
     val KeyReleased   = "KeyReleased"
+
+    /** The name of a left mouse button down event. */
     val MousePressed  = "MousePressed"
+
+    /** The name of a left mouse button up event. */
     val MouseReleased = "MouseReleased"
+
+    /** The name of a window close event. */
     val WindowClosed  = "WindowClosed"
 
     /** Used to indicate that no event is available */
@@ -16,6 +30,10 @@ object PixelWindow {
   }
 }
 
+/** A window for pixel-based drawing.
+  * @param width of window in number of pixels
+  * @param height of window in number of pixels.
+  */
 class PixelWindow(
   val width: Int = 800,
   val height: Int = 640,
@@ -23,8 +41,11 @@ class PixelWindow(
   val background: java.awt.Color = java.awt.Color.BLACK
 ) {
   import PixelWindow.Event
+
   var x = 0
   var y = 0
+  def pos: (Int, Int) = (x, y)
+
   var lineWidth: Int = 1
   var textSize: Int = 20
   var color: java.awt.Color = Swing.invertColor(background)
@@ -85,7 +106,10 @@ class PixelWindow(
     if (e != null) handleEvent(e) else _lastEventType = Event.Undefined
   }
 
-  def moveTo(newX: Int, newY: Int): Unit = { x = newX; y = newY }
+  def moveTo(newX: Int, newY: Int): Unit = {
+    x = newX
+    y = newY
+  }
 
   def lineTo(newX: Int, newY: Int): Unit = canvas.withGraphics { g =>
     import java.awt.BasicStroke
@@ -93,19 +117,20 @@ class PixelWindow(
     g.setStroke(s)
     g.setColor(color)
     g.drawLine(x, y, newX, newY)
-    x = newX; y = newY
+    x = newX
+    y = newY
   }
 
-  def setPixel(): Unit = canvas.withImage { img =>
+  def setPixel(x: Int, y: Int): Unit = canvas.withImage { img =>
     img.setRGB(x, y, color.getRGB)
   }
 
-  def clearPixel(): Unit = canvas.withImage { img =>
+  def clearPixel(x: Int, y: Int): Unit = canvas.withImage { img =>
     img.setRGB(x, y, background.getRGB)
   }
 
-  def getPixel: java.awt.Color =
-    new java.awt.Color(canvas.img.getRGB(x,y))
+  def getPixel(x: Int, y: Int): java.awt.Color =
+    new java.awt.Color(canvas.img.getRGB(x, y))
 
   def open(): Unit = frame.setVisible(true)
 

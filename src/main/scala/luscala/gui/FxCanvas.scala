@@ -1,4 +1,4 @@
-package luscala.gui
+package lu.gui
 
 /** A module ready to use in the Scala REPL or in a main Scala program */
 object FxCanvas  {

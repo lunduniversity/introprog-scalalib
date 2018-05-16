@@ -1,6 +1,9 @@
-package luscala.gui
+package lu.gui
 
-/** A wrapper with utils for simpler access to javafx */
+/** A wrapper with utils for simpler access to javafx. The main feature is the
+  * ability to create stages without having to treat the first stage as special:
+  * Simply do: `val myStage = Fx.newStage { s => ... }` and initialize a stage `s`
+  * The underlying javafx app ceremony is hidden. */
 object Fx {
   /** Switch on/off log output on application start and stop. Initially false. */
   @volatile var isLogging = false
