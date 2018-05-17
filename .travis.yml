@@ -2,7 +2,10 @@ sudo: required
 dist: trusty
 
 language: scala
-scala: 2.12.5
+scala: 2.12.6
+
+git:
+  depth: 3
 
 before_install:
  - sudo apt-get update -q
