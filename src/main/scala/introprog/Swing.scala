@@ -1,4 +1,4 @@
-package lu.gui
+package introprog
 
 object Swing {
 

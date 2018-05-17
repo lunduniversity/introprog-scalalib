@@ -1,10 +1,10 @@
-package lu.gui
+package introprog
 
-/** run in `sbt:luscala>` with command `Test/runMain luscala.gui.TestSimpleCanvas` */
+/** run in `sbt:introprog>` with command `Test/runMain introprog.TestFxCanvas` */
 object TestFxCanvas {
   def main(args: Array[String]): Unit = {
     println("You should see two black windows with a white in line each.")
-    println("The focus be in the second window after startup.")
+    println("The focus should be in the second window after startup.")
     println("The focus should alternate to the first window after 1 sec.")
     println("The windows should close and the app should exit after 2 sec.")
 

@@ -1,6 +1,6 @@
-This is the documentation of `luscala` - a simple-to-use library with Scala utilities used in beginner computer science teaching at Lund University.
+This is the documentation of `introprog` - a simple-to-use library with Scala utilities used in beginner computer science teaching at Lund University.
 
-== Package structure ==
+== Package contents ==
 
-- [[lu.gui `lu.gui`]] includes utilities for creating graphical user interfaces:
-    - [[lu.gui.PixelWindow `lu.gui.PixelWindow`]] is class a for pixel-based draw.
+- [[introprog.PixelWindow `introprog.PixelWindow`]] for simple, pixel-based drawing.
+- [[introprog.PixelWindow.Event `introprog.PixelWindow.Event`]] for event management in a PixelWindow.

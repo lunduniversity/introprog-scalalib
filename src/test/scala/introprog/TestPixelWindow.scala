@@ -1,7 +1,7 @@
-package hello
+package introprog
 
-object Main {
-  val w = new lu.gui.PixelWindow(400,300,"HEJ pixelfönster!!")
+object TestPixelWindow {
+  val w = new PixelWindow(400,300,"HEJ pixelfönster!!")
 
   def square(topLeft: (Int, Int))(side: Int): Unit = {
     w.moveTo( topLeft._1,        topLeft._2        )

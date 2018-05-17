@@ -1,4 +1,4 @@
-package lu.gui
+package introprog
 
 /** A wrapper with utils for simpler access to javafx. The main feature is the
   * ability to create stages without having to treat the first stage as special:

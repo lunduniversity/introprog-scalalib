@@ -1,4 +1,4 @@
-package lu.gui
+package introprog
 
 /** PixelWindow events and application management. */
 object PixelWindow {

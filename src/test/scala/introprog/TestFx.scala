@@ -1,6 +1,6 @@
-package lu.gui
+package introprog
 
-/** run in `sbt:luscala>` with command `Test/runMain luscala.gui.TestFx` */
+/** run in `sbt:introprog>` with command `Test/runMain introprog.TestFx` */
 object TestFx {
   def main(args: Array[String]): Unit = {
     println("You should see a black window with a green line for 1 second.")
