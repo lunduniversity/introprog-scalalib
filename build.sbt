@@ -12,11 +12,11 @@ scalacOptions ++= Seq(
   "-unchecked",
   "-deprecation",
   "-Xfuture",
-  "-Yno-adapted-args",
+//  "-Yno-adapted-args",
   "-Ywarn-dead-code",
   "-Ywarn-numeric-widen",
 //  "-Ywarn-value-discard",
-  "-Ywarn-unused"
+//  "-Ywarn-unused"
 )
 
 scalacOptions in (Compile, doc) ++= Seq(
@@ -27,5 +27,5 @@ scalacOptions in (Compile, doc) ++= Seq(
   "-sourcepath", (baseDirectory in ThisBuild).value.toString,
   "-doc-version", Version,
   "-doc-root-content", (sourceDirectory in Compile).value.toString + "/scala/rootdoc.txt",
-  "-doc-source-url", s"https://github.com/lunduniversity/luscala/tree/master€{FILE_PATH}.scala"
+  "-doc-source-url", s"https://github.com/lunduniversity/introprog-scalalib/tree/master€{FILE_PATH}.scala"
 )
