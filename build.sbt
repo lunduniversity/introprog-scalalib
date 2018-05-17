@@ -4,7 +4,7 @@ lazy val Name    = "luscala"
 name := Name
 organization := "se.lth.cs"
 version := Version
-scalaVersion := "2.12.5"
+scalaVersion := "2.12.6"
 fork := true
 
 scalacOptions ++= Seq(
