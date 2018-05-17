@@ -1,5 +1,5 @@
-# luscala
+# introprog-scalalib
 
-[![Build Status](https://travis-ci.org/lunduniversity/luscala.svg?branch=master)](https://travis-ci.org/lunduniversity/luscala)
+[![Build Status](https://travis-ci.org/lunduniversity/luscala.svg?branch=master)](https://travis-ci.org/lunduniversity/introprog)
 
-Library with Scala utilities for Computer Science teaching. The library is maintained by Lund University, Sweden. Contributions are welcome!
+Library with Scala utilities for Computer Science teaching. The library is maintained by Björn Regnell at Lund University, Sweden. Contributions are welcome! For further information see: https://github.com/lunduniversity/introprog
