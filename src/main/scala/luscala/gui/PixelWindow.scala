@@ -5,7 +5,7 @@ object PixelWindow {
   /** Immediately exit running application, close all windows, kills all threads. */
   def systemExit(): Unit = System.exit(0)
 
-  /** Idle waiting for @param millis milliseconds. */
+  /** Idle waiting for `millis` milliseconds. */
   def delay(millis: Long): Unit = Thread.sleep(millis)
 
   /** An object with strings describing events that can happen in a PixelWindow, see [[lu.gui.PixelWindow.Event]] */
