@@ -1,5 +1,5 @@
 lazy val Version = "0.1"
-lazy val Name    = "luscala"
+lazy val Name    = "introprog"
 
 name := Name
 organization := "se.lth.cs"
