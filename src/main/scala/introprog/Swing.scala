@@ -78,8 +78,9 @@ object Swing {
     }
   }
 
-  object screen {
-    def device = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment.getDefaultScreenDevice
+
+  object Screen {
+    private def device = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment.getDefaultScreenDevice
 
     def isSupported = device.isFullScreenSupported
 

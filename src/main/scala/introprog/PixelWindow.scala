@@ -199,11 +199,11 @@ class PixelWindow(
     g.drawString(text, x, y)
   }
 
-  def isFullScreen: Boolean = Swing.screen.isFullScreen
+  def isFullScreen: Boolean = Swing.Screen.isFullScreen
 
   def setFullScreen(activate: Boolean): Unit =
-    if (activate) Swing.screen.enterFullScreen(frame)
-    else Swing.screen.exitFullScreen(frame)
+    if (activate) Swing.Screen.enterFullScreen(frame)
+    else Swing.Screen.exitFullScreen(frame)
 
   private def initFrame(): Unit = {
     Swing.init() // first time calls setPlatformSpecificLookAndFeel
