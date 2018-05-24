@@ -8,31 +8,75 @@ object PixelWindow {
   /** Idle waiting for `millis` milliseconds. */
   def delay(millis: Long): Unit = Thread.sleep(millis)
 
-  /** An object with strings describing events that can happen in a PixelWindow, see [[lu.gui.PixelWindow.Event]] */
+  /** An object with strings describing events that can happen in a PixelWindow, see [[introprog.PixelWindow.Event]] */
   object Event {
-    /** The name of a key down event. */
+    /** A key down event. */
     val KeyPressed    = "KeyPressed"
 
-   /** The name of a key up event. */
+   /** A key up event. */
     val KeyReleased   = "KeyReleased"
 
-    /** The name of a left mouse button down event. */
+    /** A left mouse button down event. */
     val MousePressed  = "MousePressed"
 
-    /** The name of a left mouse button up event. */
+    /** A left mouse button up event. */
     val MouseReleased = "MouseReleased"
 
-    /** The name of a window close event. */
+    /** A window close event. */
     val WindowClosed  = "WindowClosed"
 
-    /** Used to indicate that no event is available */
+    /** No event is available.
+      *
+      * This value is used when timeout is reached in [[introprog.PixelWindow.awaitEvent]]
+      * or when [[introprog.PixelWindow.lastEventType]] is called before awaiting any event.
+      * The value of the string is `"Undefined"`.
+      */
     val Undefined     = "Undefined"
   }
 }
 
-/** A window for pixel-based drawing.
-  * @param width The number of horizontal pixels.
-  * @param height The number of vertical pixels.
+/** A window with a canvas for pixel-based drawing. Example usage:
+  {{{
+  object TestPixelWindow {
+    import introprog._
+
+    val w = new PixelWindow(400, 300, "Hello PixelWindow!")
+
+    def square(topLeft: (Int, Int))(side: Int): Unit = {
+      w.moveTo( topLeft._1,        topLeft._2        )
+      w.lineTo( topLeft._1 + side, topLeft._2        )
+      w.lineTo( topLeft._1 + side, topLeft._2 + side )
+      w.lineTo( topLeft._1,        topLeft._2 + side )
+      w.lineTo( topLeft._1,        topLeft._2        )
+    }
+
+    def main(args: Array[String]): Unit = {
+      println("Drawing a red square in a PixelWindow. Close window to exit.")
+      w.lineWidth = 2
+      w.color = java.awt.Color.red
+      square(200, 100)(50)
+      while (w.lastEventType != PixelWindow.Event.WindowClosed) {
+        w.awaitEvent(10)  // wait for next event for max 10 milliseconds
+        println(s"lastEventType == " + w.lastEventType)
+        w.lastEventType match {
+          case PixelWindow.Event.KeyPressed    => println("lastKey == " + w.lastKey)
+          case PixelWindow.Event.KeyReleased   => println("lastKey == " + w.lastKey)
+          case PixelWindow.Event.MousePressed  => println("lastMousePos == " + w.lastMousePos)
+          case PixelWindow.Event.MouseReleased => println("lastMousePos == " + w.lastMousePos)
+          case PixelWindow.Event.WindowClosed  => println("Goodbye!")
+          case _ =>
+        }
+        PixelWindow.delay(1000) // wait for 1 second
+      }
+    }
+  }
+  }}}
+  *
+  * @constructor Create a new window for pixel-based drawing.
+  * @param width the number of horizontal pixels of the drawing canvas inside the window
+  * @param height number of vertical pixels of the drawing canvas inside the window
+  * @param title the title of the window
+  * @param background the backgrouund color of the window; default is black
   */
 class PixelWindow(
   val width: Int = 800,
@@ -42,9 +86,11 @@ class PixelWindow(
 ) {
   import PixelWindow.Event
 
+  /** The horizontal starting position used by `lineTo`. Higher values are more to the right. */
   var x = 0
+
+  /** The vertical starting position used by `lineTo`. Higher values are further downwards.*/
   var y = 0
-  def pos: (Int, Int) = (x, y)
 
   var lineWidth: Int = 1
   var textSize: Int = 20
@@ -101,6 +147,7 @@ class PixelWindow(
     case _ => println(s"Unknown event: $e")
   }
 
+  /** Wait for next event until `timeoutInMillis` and if time is out `lastEventType` is `Undefined`*/
   def awaitEvent(timeoutInMillis: Long): Unit = {
     val e = eventQueue.poll(timeoutInMillis, java.util.concurrent.TimeUnit.MILLISECONDS)
     if (e != null) handleEvent(e) else _lastEventType = Event.Undefined
@@ -111,6 +158,7 @@ class PixelWindow(
     y = newY
   }
 
+  /** Draw a line from (`x`, `y`) to (`newX`, `newY`). */
   def lineTo(newX: Int, newY: Int): Unit = canvas.withGraphics { g =>
     import java.awt.BasicStroke
     val s = new BasicStroke(lineWidth.toFloat, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER)

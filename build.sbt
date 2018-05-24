@@ -1,5 +1,5 @@
 lazy val Version = "0.1"
-lazy val Name    = "luscala"
+lazy val Name    = "introprog"
 
 name := Name
 organization := "se.lth.cs"
@@ -26,6 +26,6 @@ scalacOptions in (Compile, doc) ++= Seq(
   "-doc-footer", "Dep. of Computer Science, Lund University, Faculty of Engineering LTH",
   "-sourcepath", (baseDirectory in ThisBuild).value.toString,
   "-doc-version", Version,
-  "-doc-root-content", (sourceDirectory in Compile).value.toString + "/scala/rootdoc.txt",
+  "-doc-root-content", (baseDirectory in ThisBuild).value.toString + "/src/rootdoc.txt",
   "-doc-source-url", s"https://github.com/lunduniversity/introprog-scalalib/tree/master€{FILE_PATH}.scala"
 )

@@ -1,0 +1,7 @@
+This is the documentation of the `introprog` Scala library with utilities used in beginner computer science teaching at Lund University.
+
+== Package contents ==
+
+* [[introprog.PixelWindow `introprog.PixelWindow`]] for simple, pixel-based drawing.
+
+* [[introprog.PixelWindow.Event `introprog.PixelWindow.Event`]] for event management in a PixelWindow.
