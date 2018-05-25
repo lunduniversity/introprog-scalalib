@@ -61,11 +61,12 @@ private[introprog] object Swing {
       true
   	}
 
-    def withGraphics(action: java.awt.Graphics2D => Unit) = { action(img.createGraphics())
+    def withGraphics(action: java.awt.Graphics2D => Unit) = runInSwingThread {
+      action(img.createGraphics())
       repaint()
     }
 
-    def withImage(action: java.awt.image.BufferedImage => Unit) = {
+    def withImage(action: java.awt.image.BufferedImage => Unit) = runInSwingThread {
       action(img)
       repaint()
     }
