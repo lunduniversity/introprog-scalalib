@@ -5,7 +5,7 @@ name := Name
 organization := "se.lth.cs"
 version := Version
 scalaVersion := "2.12.6"
-fork := true
+fork in (Compile, console) := true
 
 scalacOptions ++= Seq(
   "-encoding", "UTF-8",
