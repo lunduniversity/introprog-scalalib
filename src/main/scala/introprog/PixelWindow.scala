@@ -3,7 +3,7 @@ package introprog
 /** PixelWindow events and application management. */
 object PixelWindow {
   /** Immediately exit running application, close all windows, kills all threads. */
-  def systemExit(): Unit = System.exit(0)
+  def exit(): Unit = System.exit(0)
 
   /** Idle waiting for `millis` milliseconds. */
   def delay(millis: Long): Unit = Thread.sleep(millis)
@@ -82,7 +82,6 @@ class PixelWindow(
   val width: Int = 800,
   val height: Int = 640,
   val title: String = "PixelWindow",
-  val background: java.awt.Color = java.awt.Color.BLACK
 ) {
   import PixelWindow.Event
 
@@ -94,10 +93,11 @@ class PixelWindow(
 
   var lineWidth: Int = 1
   var textSize: Int = 20
-  var color: java.awt.Color = Swing.invertColor(background)
+  var background: java.awt.Color = java.awt.Color.BLACK
+  var color: java.awt.Color = java.awt.Color.WHITE
 
-  /*private*/ val frame = new javax.swing.JFrame(title)
-  /*private*/ val canvas = new Swing.ImagePanel(width, height, background)
+  private val frame = new javax.swing.JFrame(title)
+  private val canvas = new Swing.ImagePanel(width, height, background)
 
   private val queueCapacity = 1000
   private val eventQueue =
@@ -199,12 +199,6 @@ class PixelWindow(
     g.drawString(text, x, y)
   }
 
-  def isFullScreen: Boolean = Swing.Screen.isFullScreen
-
-  def setFullScreen(activate: Boolean): Unit =
-    if (activate) Swing.Screen.enterFullScreen(frame)
-    else Swing.Screen.exitFullScreen(frame)
-
   private def initFrame(): Unit = {
     Swing.init() // first time calls setPlatformSpecificLookAndFeel
     javax.swing.JFrame.setDefaultLookAndFeelDecorated(true)
@@ -238,4 +232,6 @@ class PixelWindow(
     frame.pack()
     frame.setVisible(true)
   }
+
+
 }

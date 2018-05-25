@@ -1,6 +1,7 @@
 package introprog
 
-object Swing {
+/** A module with Swing utilities. */
+private[introprog] object Swing {
 
   private def runInSwingThread(callback: => Unit): Unit =
     javax.swing.SwingUtilities.invokeLater(() => callback)
@@ -35,18 +36,6 @@ object Swing {
     )
   }
 
-  def fileDialog(buttonText: String = "Open", startDir: String = "~"): String = {
-    val fs = new javax.swing.JFileChooser(new java.io.File(startDir))
-    fs.showDialog(null, buttonText) match {
-      case 0 => Option(fs.getSelectedFile.toString).getOrElse("")
-      case _ => ""
-    }
-  }
-
-  /** Invert each RGB component of `c: java.awt.Color` by subraction from 255. */
-  def invertColor(c: java.awt.Color): java.awt.Color =
-    new java.awt.Color(255 - c.getRed, 255 - c.getGreen, 255 - c.getBlue)
-
   /** A Swing `JPanel` to create drawing windows for 2D graphics. */
   class ImagePanel(
     val initWidth: Int,
@@ -79,59 +68,6 @@ object Swing {
     def withImage(action: java.awt.image.BufferedImage => Unit) = {
       action(img)
       repaint()
-    }
-  }
-
-  /** A module for changing window full screen mode in the main display. */
-  object Screen {
-    private def device = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment.getDefaultScreenDevice
-
-    /** Test if full screen is supported bu the current main display. */
-    def isSupported = device.isFullScreenSupported
-
-    /** Test if full screen is supported. */
-    def isFullScreen = device.getFullScreenWindow != null
-
-    /** Test if window `w` is undecorated. */
-    def isUndecorated(w: java.awt.Window): Boolean = w match {
-      case f: javax.swing.JFrame => f.isUndecorated
-      case _ => false
-    }
-
-    /** Set decoration `state` of window `w`. */
-    def setUndecorated(w: java.awt.Window, state: Boolean): Unit =  {
-      w match {
-        case f: javax.swing.JFrame =>
-          f.dispose()
-          f.setUndecorated(state)
-          f.pack()
-          f.setVisible(true)
-        case _ =>
-      }
-    }
-
-    /** Toggle decorations (such as window top and borders) of window `w` on or off. */
-    def toggleDecorations(w: java.awt.Window): Unit = setUndecorated(w, !isUndecorated(w))
-
-    /** If window `w` is in full screen mode then exit full screen. */
-    def exitFullScreen(w: java.awt.Window): Unit =  {
-      if (isSupported) {
-        device.setFullScreenWindow(null)
-        setUndecorated(w, false)
-      }
-    }
-
-     /** If window `w` is not in full screen mode then enter full screen. */
-     def enterFullScreen(w: java.awt.Window): Unit =  {
-       if (isSupported) {
-         setUndecorated(w, true)
-         device.setFullScreenWindow(w)
-       }
-     }
-
-    /** Toggle the full screen state of window `w` on or off. */
-    def toggleFullScreen(w: java.awt.Window): Unit = runInSwingThread {
-      if (isFullScreen) exitFullScreen(w) else enterFullScreen(w)
     }
   }
 }
