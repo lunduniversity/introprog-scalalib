@@ -1,7 +1,7 @@
 package introprog
 
 object Dialog {
-  Swing.init()
+  Swing.init()  // set platform-specific look-and-feel
 
   def chooseFile(buttonText: String = "Open", startDir: String = "~"): String = {
     val fs = new javax.swing.JFileChooser(new java.io.File(startDir))
