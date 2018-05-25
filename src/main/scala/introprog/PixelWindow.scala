@@ -10,73 +10,67 @@ object PixelWindow {
 
   /** An object with strings describing events that can happen in a PixelWindow, see [[introprog.PixelWindow.Event]] */
   object Event {
-    /** A key down event. */
+    /** A string representing a key down event.
+    *
+    * This value is returned by [[introprog.PixelWindow.lastEventType]] when
+    * the last event was that a user pressed a key on the keyboard.
+    * You can get a text describing the key by calling [[introprog.PixelWindow.lastKey]]
+    * The value of the string is `"KeyPressed"`.
+    */
     val KeyPressed    = "KeyPressed"
 
-   /** A key up event. */
+   /** A string representing a key up event.
+   *
+   * This value is returned by [[introprog.PixelWindow.lastEventType]] when
+   * the last event was that a user released a key on the keyboard.
+   * You can get a text describing the key by calling [[introprog.PixelWindow.lastKey]]
+   * The value of the string is `"KeyReleased"`.
+   */
     val KeyReleased   = "KeyReleased"
 
-    /** A left mouse button down event. */
+    /** A string representing a mouse button down event.
+    *
+    * This value is returned by [[introprog.PixelWindow.lastEventType]] when
+    * the last event was that a user pressed a mouse button.
+    * You can get the mouse position by calling [[introprog.PixelWindow.lastMousePos]]
+    * The value of the string is `"MousePressed"`.
+    */
     val MousePressed  = "MousePressed"
 
-    /** A left mouse button up event. */
+    /** A string representing a mouse button up event.
+    *
+    * This value is returned by [[introprog.PixelWindow.lastEventType]] when
+    * the last thing that happened was that a user released a mouse button.
+    * You can get the mouse position by calling [[introprog.PixelWindow.lastMousePos]]
+    * The value of the string is `"MouseReleased"`.
+    */
     val MouseReleased = "MouseReleased"
 
-    /** A window close event. */
+    /** A string representing that a window close event has happened.
+    *
+    * This value is returned by [[introprog.PixelWindow.lastEventType]] when
+    * the last event was that a user has closed a window.
+    * The value of the string is `"WindowClosed"`.
+    */
     val WindowClosed  = "WindowClosed"
 
-    /** No event is available.
+    /** A string representing that no event is available.
       *
-      * This value is used when timeout is reached in [[introprog.PixelWindow.awaitEvent]]
-      * or when [[introprog.PixelWindow.lastEventType]] is called before awaiting any event.
+      * This value is returned by [[introprog.PixelWindow.lastEventType]] when
+      * [[introprog.PixelWindow.awaitEvent]] has waited until its timeout
+      * or if [[introprog.PixelWindow.lastEventType]] was called before awaiting any event.
       * The value of the string is `"Undefined"`.
       */
     val Undefined     = "Undefined"
   }
 }
 
-/** A window with a canvas for pixel-based drawing. Example usage:
-  {{{
-  object TestPixelWindow {
-    import introprog._
-
-    val w = new PixelWindow(400, 300, "Hello PixelWindow!")
-
-    def square(topLeft: (Int, Int))(side: Int): Unit = {
-      w.moveTo( topLeft._1,        topLeft._2        )
-      w.lineTo( topLeft._1 + side, topLeft._2        )
-      w.lineTo( topLeft._1 + side, topLeft._2 + side )
-      w.lineTo( topLeft._1,        topLeft._2 + side )
-      w.lineTo( topLeft._1,        topLeft._2        )
-    }
-
-    def main(args: Array[String]): Unit = {
-      println("Drawing a red square in a PixelWindow. Close window to exit.")
-      w.lineWidth = 2
-      w.color = java.awt.Color.red
-      square(200, 100)(50)
-      while (w.lastEventType != PixelWindow.Event.WindowClosed) {
-        w.awaitEvent(10)  // wait for next event for max 10 milliseconds
-        println(s"lastEventType == " + w.lastEventType)
-        w.lastEventType match {
-          case PixelWindow.Event.KeyPressed    => println("lastKey == " + w.lastKey)
-          case PixelWindow.Event.KeyReleased   => println("lastKey == " + w.lastKey)
-          case PixelWindow.Event.MousePressed  => println("lastMousePos == " + w.lastMousePos)
-          case PixelWindow.Event.MouseReleased => println("lastMousePos == " + w.lastMousePos)
-          case PixelWindow.Event.WindowClosed  => println("Goodbye!")
-          case _ =>
-        }
-        PixelWindow.delay(1000) // wait for 1 second
-      }
-    }
-  }
-  }}}
+/** A window with a canvas for pixel-based drawing.
   *
   * @constructor Create a new window for pixel-based drawing.
   * @param width the number of horizontal pixels of the drawing canvas inside the window
   * @param height number of vertical pixels of the drawing canvas inside the window
   * @param title the title of the window
-  * @param background the backgrouund color of the window; default is black
   */
 class PixelWindow(
   val width: Int = 800,
@@ -96,7 +90,7 @@ class PixelWindow(
   var background: java.awt.Color = java.awt.Color.BLACK
   var color: java.awt.Color = java.awt.Color.WHITE
 
-  private val frame = new javax.swing.JFrame(title)
+  /*private*/ val frame = new javax.swing.JFrame(title)
   private val canvas = new Swing.ImagePanel(width, height, background)
 
   private val queueCapacity = 1000
@@ -178,11 +172,11 @@ class PixelWindow(
   }
 
   def getPixel(x: Int, y: Int): java.awt.Color =
-    new java.awt.Color(canvas.img.getRGB(x, y))
+    new java.awt.Color(canvas.img.getRGB(x, y))  // TODO: is not thread safe???
 
-  def open(): Unit = frame.setVisible(true)
+  def open(): Unit = Swing { frame.setVisible(true) }
 
-  def close(): Unit = { frame.setVisible(false); frame.dispose() }
+  def close(): Unit = Swing { frame.setVisible(false); frame.dispose() }
 
   def clear(): Unit = canvas.withGraphics { g =>
     g.setColor(background)
@@ -199,7 +193,7 @@ class PixelWindow(
     g.drawString(text, x, y)
   }
 
-  private def initFrame(): Unit = {
+  private def initFrame(): Unit = Swing {
     Swing.init() // first time calls setPlatformSpecificLookAndFeel
     javax.swing.JFrame.setDefaultLookAndFeelDecorated(true)
 
@@ -222,16 +216,15 @@ class PixelWindow(
     })
 
     val box = new javax.swing.Box(javax.swing.BoxLayout.Y_AXIS)
-    box.setBackground(java.awt.Color.RED)
     box.add(javax.swing.Box.createVerticalGlue())
     box.add(canvas)
     box.add(javax.swing.Box.createVerticalGlue())
     frame.add(box)
 
-    frame.getContentPane().setBackground(java.awt.Color.BLACK.brighter.brighter)
+    val outsideOfCanvasColorShownIfResized = java.awt.Color.BLACK.brighter.brighter
+    frame.getContentPane().setBackground(outsideOfCanvasColorShownIfResized)
     frame.pack()
     frame.setVisible(true)
   }
-
 
 }
