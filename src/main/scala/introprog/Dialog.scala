@@ -21,10 +21,10 @@ object Dialog {
     JOptionPane.showInputDialog(message, init)
 
   /** Show a confirmation dialog with `question` and OK and Cancel buttons. */
-  def isOK(question: String = "Are you sure?", title: String = "Confirm"): Boolean =
+  def isOK(question: String = "Ok?", title: String = "Confirm"): Boolean =
     JOptionPane.showConfirmDialog(
-      null, question, title, JOptionPane.OK_CANCEL_OPTION) ==
-        JOptionPane.OK_OPTION
+      null, question, title, JOptionPane.OK_CANCEL_OPTION)
+        == JOptionPane.OK_OPTION
 
   /** Show a selection dialog with `buttons`. Return a string with the chosen button text. */
   def select(message: String, buttons: Seq[String], title: String = "Select"): String =
