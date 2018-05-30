@@ -8,23 +8,31 @@ object TestPixelWindow {
   import introprog._
 
   /** A reference to an instance of class `PixelWindow`. */
-  val w = new PixelWindow(400, 300, "Hello PixelWindow!")
+  // val w = new PixelWindow(400, 400, "Hello PixelWindow!")
+  val w = new FxPixelWindow(400, 400, "Hello FxPixelWindow!")
 
-  /** Draw a square starting in `topLeft` with size `side`. */
-  def square(topLeft: (Int, Int))(side: Int): Unit = {
-    w.moveTo( topLeft._1,        topLeft._2        )
-    w.lineTo( topLeft._1 + side, topLeft._2        )
-    w.lineTo( topLeft._1 + side, topLeft._2 + side )
-    w.lineTo( topLeft._1,        topLeft._2 + side )
-    w.lineTo( topLeft._1,        topLeft._2        )
+  /** The color used by `square`. */
+  var color = java.awt.Color.red
+
+  /** Draw a square with (`x`, `y`) as top left corner and size `side`. */
+  def square(x: Int, y: Int, side: Int): Unit = {
+    w.line(x, y,               x + side, y,        color)
+    w.line(x + side, y,        x + side, y + side, color)
+    w.line(x + side, y + side, x, y + side,        color)
+    w.line(x, y + side,        x, y,               color)
   }
 
-  /** Draw a red square and start an event loop that prints events in terminal. */
+  /** Draw squares and start an event loop that prints events in terminal. */
   def main(args: Array[String]): Unit = {
-    println("Drawing a red square in a PixelWindow. Close window to exit.")
-    w.lineWidth = 3
-    w.color = java.awt.Color.red
-    square(200, 100)(50)
+    println("Drawing squares in a PixelWindow. Close window to exit.")
+    w.drawText("HELLO WORLD! 012345ÅÄÖ", 0, 0)
+    square(200, 100, 50)
+    w.fill(x = 50, y = 100, width = 50, height = 50, color = java.awt.Color.blue)
+    color = java.awt.Color.orange
+    square(50,100, 50)
+    color = java.awt.Color.green
+    square(150,200, 50)
+    w.line(0,0,w.width,w.height)
 
     while (w.lastEventType != PixelWindow.Event.WindowClosed) {
       w.awaitEvent(10)  // wait for next event for max 10 milliseconds
@@ -37,7 +45,9 @@ object TestPixelWindow {
         case PixelWindow.Event.KeyReleased   => println("lastKey == " + w.lastKey)
         case PixelWindow.Event.MousePressed  => println("lastMousePos == " + w.lastMousePos)
         case PixelWindow.Event.MouseReleased => println("lastMousePos == " + w.lastMousePos)
-        case PixelWindow.Event.WindowClosed  => println("Goodbye!")
+        case PixelWindow.Event.WindowClosed  =>
+           println("Goodbye!"); //Fx.exit()
+           System.exit(0)
         case _ =>
       }
 

@@ -71,39 +71,32 @@ object PixelWindow {
   * @param width the number of horizontal pixels of the drawing canvas inside the window
   * @param height number of vertical pixels of the drawing canvas inside the window
   * @param title the title of the window
+  * @param background the background color filling the canvas and used when clearing pixels
+  * @param foreground the foreground color used as default argument for color parameters
   */
 class PixelWindow(
   val width: Int = 800,
   val height: Int = 640,
   val title: String = "PixelWindow",
+  val background: java.awt.Color = java.awt.Color.black,
+  val foreground: java.awt.Color = java.awt.Color.green
 ) {
   import PixelWindow.Event
 
-  /** The horizontal starting position used by `lineTo`. Higher values are more to the right. */
-  var x = 0
-
-  /** The vertical starting position used by `lineTo`. Higher values are further downwards.*/
-  var y = 0
-
-  var lineWidth: Int = 1
-  var textSize: Int = 20
-  var background: java.awt.Color = java.awt.Color.BLACK
-  var color: java.awt.Color = java.awt.Color.WHITE
-
-  /*private*/ val frame = new javax.swing.JFrame(title)
+  private val frame = new javax.swing.JFrame(title)
   private val canvas = new Swing.ImagePanel(width, height, background)
 
   private val queueCapacity = 1000
   private val eventQueue =
     new java.util.concurrent.LinkedBlockingQueue[java.awt.AWTEvent](queueCapacity)
 
-  private var _lastEventType = Event.Undefined
+  @volatile private var _lastEventType = Event.Undefined
   def lastEventType: String = _lastEventType
 
-  protected var _lastKeyText = ""
+  @volatile private var _lastKeyText = ""
   def lastKey: String = _lastKeyText
 
-  protected var _lastMousePos = (0, 0)
+  @volatile private var _lastMousePos = (0, 0)
   def lastMousePos: (Int, Int) = _lastMousePos
 
   initFrame()
@@ -147,32 +140,35 @@ class PixelWindow(
     if (e != null) handleEvent(e) else _lastEventType = Event.Undefined
   }
 
-  def moveTo(newX: Int, newY: Int): Unit = {
-    x = newX
-    y = newY
-  }
+  /** Draw a line from (`x1`, `y1`) to (`x2`, `y2`) using `color` and `lineWidth`. */
+  def line(x1: Int, y1: Int, x2: Int, y2: Int, color: java.awt.Color = foreground, lineWidth: Int = 1): Unit =
+    canvas.withGraphics { g =>
+      import java.awt.BasicStroke
+      val s = new BasicStroke(lineWidth.toFloat, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER)
+      g.setStroke(s)
+      g.setColor(color)
+      g.drawLine(x1, y1, x2, y2)
+    }
 
-  /** Draw a line from (`x`, `y`) to (`newX`, `newY`). */
-  def lineTo(newX: Int, newY: Int): Unit = canvas.withGraphics { g =>
-    import java.awt.BasicStroke
-    val s = new BasicStroke(lineWidth.toFloat, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER)
-    g.setStroke(s)
-    g.setColor(color)
-    g.drawLine(x, y, newX, newY)
-    x = newX
-    y = newY
-  }
+  def fill(x: Int, y: Int, width: Int, height: Int, color: java.awt.Color = foreground): Unit =
+    canvas.withGraphics { g =>
+      g.setColor(color)
+      g.fillRect(x, y, width, height)
+    }
 
-  def setPixel(x: Int, y: Int): Unit = canvas.withImage { img =>
-    img.setRGB(x, y, color.getRGB)
-  }
+  def setPixel(x: Int, y: Int, color: java.awt.Color = foreground): Unit =
+    canvas.withImage { img =>
+      img.setRGB(x, y, color.getRGB)
+    }
 
-  def clearPixel(x: Int, y: Int): Unit = canvas.withImage { img =>
-    img.setRGB(x, y, background.getRGB)
-  }
+  def clearPixel(x: Int, y: Int): Unit =
+    canvas.withImage { img =>
+      img.setRGB(x, y, background.getRGB)
+    }
 
-  def getPixel(x: Int, y: Int): java.awt.Color =
-    new java.awt.Color(canvas.img.getRGB(x, y))  // TODO: is not thread safe???
+  def getPixel(x: Int, y: Int): java.awt.Color = Swing.await {
+    new java.awt.Color(canvas.img.getRGB(x, y))
+  }
 
   def open(): Unit = Swing { frame.setVisible(true) }
 
@@ -183,14 +179,24 @@ class PixelWindow(
     g.fillRect(0, 0, width, height)
   }
 
-  def drawText(text: String) = canvas.withGraphics { g =>
-    import java.awt.RenderingHints._
-    // https://docs.oracle.com/javase/tutorial/2d/text/renderinghints.html
-    g.setRenderingHint(KEY_TEXT_ANTIALIASING, VALUE_TEXT_ANTIALIAS_ON)
-    val f = g.getFont
-    g.setFont(new java.awt.Font(f.getName, f.getStyle, textSize))
-    g.setColor(color)
-    g.drawString(text, x, y)
+  def drawText(
+    text: String,
+    x: Int,
+    y: Int,
+    color: java.awt.Color = foreground,
+    size: Int = 16,
+    style: Int = java.awt.Font.BOLD,
+    fontName: String = java.awt.Font.MONOSPACED
+  ) = {
+    canvas.withGraphics { g =>
+      import java.awt.RenderingHints._
+      // https://docs.oracle.com/javase/tutorial/2d/text/renderinghints.html
+      g.setRenderingHint(KEY_TEXT_ANTIALIASING, VALUE_TEXT_ANTIALIAS_ON)
+      //val f = g.getFont
+      g.setFont(new java.awt.Font(fontName /*f.getName*/, style, size))
+      g.setColor(color)
+      g.drawString(text, x, y + size)
+    }
   }
 
   private def initFrame(): Unit = Swing {

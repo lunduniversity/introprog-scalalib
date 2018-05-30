@@ -9,6 +9,17 @@ private[introprog] object Swing {
   /** Run `callback` in Swing thread using `javax.swing.SwingUtilities.invokeLater`. */
   def apply(callback: => Unit): Unit = runInSwingThread(callback)
 
+  def await[T: scala.reflect.ClassTag](callback: => T): T = {
+    val ready = new java.util.concurrent.CountDownLatch(1)
+    val result = new Array[T](1)
+    runInSwingThread {
+      result(0) = callback
+      ready.countDown
+    }
+    ready.await
+    result(0)
+  }
+
   private def installedLookAndFeels: Vector[String] =
     javax.swing.UIManager.getInstalledLookAndFeels.toVector.map(_.getClassName)
 
