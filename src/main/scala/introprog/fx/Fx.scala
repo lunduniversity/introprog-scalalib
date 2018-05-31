@@ -1,10 +1,10 @@
-package introprog
+package introprog.fx
 
 /** A wrapper with utils for simpler access to javafx. The main feature is the
   * ability to create stages without having to treat the first stage as special:
   * Simply do: `val myStage = Fx.newStage { s => ... }` and initialize a stage `s`
   * The underlying javafx app ceremony is hidden. */
-object Fx {
+private[fx] object Fx {
 
   def toFxColor(c: java.awt.Color): javafx.scene.paint.Color =
     javafx.scene.paint.Color.rgb(c.getRed, c.getGreen, c.getBlue, c.getAlpha / 255.0)

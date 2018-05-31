@@ -5,11 +5,10 @@ package introprog.examples
   * PixelWindow for easy 2D game programming.
   */
 object TestPixelWindow {
-  import introprog._
+  import introprog.PixelWindow
 
   /** A reference to an instance of class `PixelWindow`. */
-  // val w = new PixelWindow(400, 400, "Hello PixelWindow!")
-  val w = new FxPixelWindow(400, 400, "Hello FxPixelWindow!")
+  val w = new PixelWindow(400, 400, "Hello FxPixelWindow!")
 
   /** The color used by `square`. */
   var color = java.awt.Color.red

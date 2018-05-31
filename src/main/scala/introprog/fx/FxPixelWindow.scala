@@ -1,6 +1,6 @@
-package introprog
+package introprog.fx
 
-/** A module ready to use in the Scala REPL or in a main Scala program */
+/** A window for pixel-based drawing in an underlying javafx window. */
 object FxPixelWindow  {
   def exit(): Unit = System.exit(0)
 
@@ -103,8 +103,9 @@ class FxPixelWindow(
   /** Draw a line from (`x1`, `y1`) to (`x2`, `y2`) using `color` and `lineWidth`. */
   def line(x1: Int, y1: Int, x2: Int, y2: Int, color: java.awt.Color = foreground, lineWidth: Int = 1): Unit = withGC { gc =>
     gc.setStroke(Fx.toFxColor(color))
-    gc.setLineWidth(lineWidth)
-    gc.strokeLine(x1,y1,x2,y2)
+    gc.setLineWidth(lineWidth.toDouble)
+    gc.strokeLine(x1.toDouble,y1.toDouble,x2.toDouble,y2.toDouble)
+    gc.strokeLine(x1.toDouble,y1.toDouble,x2.toDouble,y2.toDouble)
   }
 
   // def setLineWidth(width: Double): Unit = withGC(_.setLineWidth(width))
@@ -118,7 +119,7 @@ class FxPixelWindow(
   def fill(x: Int, y: Int, width: Int, height: Int, color: java.awt.Color = foreground): Unit = withGC { gc =>
     //gc.setStroke(Fx.toFxColor(color))
     gc.setFill(Fx.toFxColor(color))
-    gc.fillRect(x,y,width,height)
+    gc.fillRect(x.toDouble,y.toDouble,width.toDouble,height.toDouble)
   }
 
   def setPixel(x: Int, y: Int, color: java.awt.Color = foreground): Unit =
@@ -144,9 +145,9 @@ class FxPixelWindow(
     fontName: String = "Monospaced Bold"
   ) = withGC { gc =>
     gc.setFill(Fx.toFxColor(color))
-    gc.setFont(new javafx.scene.text.Font(fontName, size))
+    gc.setFont(new javafx.scene.text.Font(fontName, size.toDouble))
     gc.setFontSmoothingType(javafx.scene.text.FontSmoothingType.LCD)
-    gc.fillText(text, x, y + size)
+    gc.fillText(text, x.toDouble, y.toDouble + size.toDouble)
   }
 
 
@@ -169,12 +170,12 @@ class FxPixelWindow(
       s.setTitle(title)
       root.setBackground(javafx.scene.layout.Background.EMPTY)
       canvas.getGraphicsContext2D.setFill(Fx.toFxColor(background))
-      canvas.getGraphicsContext2D.fillRect(0,0,width,height)
+      canvas.getGraphicsContext2D.fillRect(0.0,0.0,width.toDouble,height.toDouble)
       canvas.getGraphicsContext2D.setStroke(Fx.toFxColor(foreground))
       s.setScene(scene)
       root.setCenter(canvas)
-      s.setMinWidth(width)
-      s.setMinHeight(height)
+      s.setMinWidth(width.toDouble)
+      s.setMinHeight(height.toDouble)
       s.show
 
       //if (initBasicMenu) root.getChildren.add(0, basicMenuBar)
