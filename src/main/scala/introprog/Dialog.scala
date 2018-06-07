@@ -34,4 +34,11 @@ object Dialog {
           JOptionPane.QUESTION_MESSAGE, null, buttons.reverse.toArray, null)
       buttons(buttons.length - 1 - chosenIndex)
     }.getOrElse("")
+
+  /** Show a color selection dialog and return the color that the user selected. */
+  def selectColor(
+    message: String = "Select a color",
+    initialColor: java.awt.Color = java.awt.Color.red
+  ): Option[java.awt.Color] =
+    Option(javax.swing.JColorChooser.showDialog(null, message, initialColor))
 }
