@@ -1,8 +1,7 @@
 package introprog
 
 object Dialog {
-  import javax.swing.{JFileChooser, JOptionPane}
-  Swing.init()  // set platform-specific look-and-feel
+  import javax.swing.{JFileChooser, JOptionPane, JColorChooser}
 
   /** Show a file choice dialog starting in `startDir` with confirm `button` text. */
   def file(button: String = "Open", startDir: String = "~"): String = {
@@ -40,5 +39,5 @@ object Dialog {
     message: String = "Select a color",
     initialColor: java.awt.Color = java.awt.Color.red
   ): Option[java.awt.Color] =
-    Option(javax.swing.JColorChooser.showDialog(null, message, initialColor))
+    Option(JColorChooser.showDialog(null, message, initialColor))
 }
