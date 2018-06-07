@@ -1,4 +1,5 @@
 publish-doc.sh
+publish-jar.sh
 
 tmp
 **/old
