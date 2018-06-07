@@ -1,7 +1,7 @@
 package introprog
 
 /** A module with Swing utilities. */
-private[introprog] object Swing {
+object Swing {
 
   private def runInSwingThread(callback: => Unit): Unit =
     javax.swing.SwingUtilities.invokeLater(() => callback)
@@ -20,16 +20,16 @@ private[introprog] object Swing {
     result(0)
   }
 
-  private def installedLookAndFeels: Vector[String] =
+  def installedLookAndFeels: Vector[String] =
     javax.swing.UIManager.getInstalledLookAndFeels.toVector.map(_.getClassName)
 
-  private def findLookAndFeel(partOfName: String): Option[String] =
+  def findLookAndFeel(partOfName: String): Option[String] =
     installedLookAndFeels.find(_.toLowerCase contains partOfName)
 
-  private def isOS(partOfName: String): Boolean =
+  def isOS(partOfName: String): Boolean =
     scala.sys.props("os.name").toLowerCase.contains(partOfName.toLowerCase)
 
-  private var isInit = false
+  var isInit = false
 
   /** Init the Swing GUI toolkit and set platform-specific look and feel.*/
   def init(): Unit = if (!isInit) {
