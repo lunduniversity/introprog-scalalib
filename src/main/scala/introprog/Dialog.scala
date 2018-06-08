@@ -15,7 +15,7 @@ object Dialog {
   /** Show a dialog with a `message` text. */
   def show(message: String): Unit = JOptionPane.showMessageDialog(null, message)
 
-  /** Show a `message` askin for input with `init` value. Return user input.*/
+  /** Show a `message` asking for input with `init` value. Return user input.*/
   def input(message: String, init: String = ""): String =
     JOptionPane.showInputDialog(message, init)
 
