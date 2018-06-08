@@ -10,58 +10,64 @@ object PixelWindow {
 
   /** An object with strings describing events that can happen in a PixelWindow, see [[introprog.PixelWindow.Event]] */
   object Event {
-    /** A string representing a key down event.
+    /** An integer representing a key down event.
     *
     * This value is returned by [[introprog.PixelWindow.lastEventType]] when
     * the last event was that a user pressed a key on the keyboard.
     * You can get a text describing the key by calling [[introprog.PixelWindow.lastKey]]
-    * The value of the string is `"KeyPressed"`.
     */
-    val KeyPressed    = "KeyPressed"
+    val KeyPressed    = 1
 
-   /** A string representing a key up event.
+   /** An integer representing a key up event.
    *
    * This value is returned by [[introprog.PixelWindow.lastEventType]] when
    * the last event was that a user released a key on the keyboard.
    * You can get a text describing the key by calling [[introprog.PixelWindow.lastKey]]
-   * The value of the string is `"KeyReleased"`.
    */
-    val KeyReleased   = "KeyReleased"
+    val KeyReleased   = 2
 
-    /** A string representing a mouse button down event.
+    /** An integer representing a mouse button down event.
     *
     * This value is returned by [[introprog.PixelWindow.lastEventType]] when
     * the last event was that a user pressed a mouse button.
     * You can get the mouse position by calling [[introprog.PixelWindow.lastMousePos]]
-    * The value of the string is `"MousePressed"`.
     */
-    val MousePressed  = "MousePressed"
+    val MousePressed  = 3
 
-    /** A string representing a mouse button up event.
+    /** An integer representing a mouse button up event.
     *
     * This value is returned by [[introprog.PixelWindow.lastEventType]] when
     * the last thing that happened was that a user released a mouse button.
     * You can get the mouse position by calling [[introprog.PixelWindow.lastMousePos]]
-    * The value of the string is `"MouseReleased"`.
     */
-    val MouseReleased = "MouseReleased"
+    val MouseReleased = 4
 
-    /** A string representing that a window close event has happened.
+    /** An integer representing that a window close event has happened.
     *
     * This value is returned by [[introprog.PixelWindow.lastEventType]] when
     * the last event was that a user has closed a window.
-    * The value of the string is `"WindowClosed"`.
     */
-    val WindowClosed  = "WindowClosed"
+    val WindowClosed  = 5
 
-    /** A string representing that no event is available.
+    /** An integer representing that no event is available.
       *
       * This value is returned by [[introprog.PixelWindow.lastEventType]] when
       * [[introprog.PixelWindow.awaitEvent]] has waited until its timeout
       * or if [[introprog.PixelWindow.lastEventType]] was called before awaiting any event.
-      * The value of the string is `"Undefined"`.
       */
-    val Undefined     = "Undefined"
+    val Undefined     = 0
+
+    /** Returns a descriptive string with name of the `event` number */
+    def show(event: Int): String = event match {
+      case KeyPressed    => "KeyPressed"
+      case KeyReleased   => "KeyReleased"
+      case MousePressed  => "MousePressed"
+      case MouseReleased => "MouseReleased"
+      case WindowClosed  => "WindowClosed"
+      case Undefined     => "Undefined"
+      case _             =>
+        throw new IllegalArgumentException(s"Unknown event number: $event")
+    }
   }
 }
 
@@ -91,7 +97,7 @@ class PixelWindow(
     new java.util.concurrent.LinkedBlockingQueue[java.awt.AWTEvent](queueCapacity)
 
   @volatile private var _lastEventType = Event.Undefined
-  def lastEventType: String = _lastEventType
+  def lastEventType: Int = _lastEventType
 
   @volatile private var _lastKeyText = ""
   def lastKey: String = _lastKeyText
@@ -109,7 +115,8 @@ class PixelWindow(
           _lastEventType = Event.MousePressed
         case java.awt.event.MouseEvent.MOUSE_RELEASED =>
             _lastEventType = Event.MouseReleased
-        case _ => println(s"Unknown mouse event: $e")
+        case _ =>
+          throw new IllegalArgumentException(s"Unknown MouseEvent: $e")
       }
 
     case ke: java.awt.event.KeyEvent =>
@@ -122,16 +129,19 @@ class PixelWindow(
           _lastEventType = Event.KeyPressed
         case java.awt.event.KeyEvent.KEY_RELEASED =>
           _lastEventType = Event.KeyReleased
-        case _ => println(s"Unknown key event: $e")
+          case _ =>
+            throw new IllegalArgumentException(s"Unknown KeyEvent: $e")
       }
 
     case we: java.awt.event.WindowEvent =>
       we.getID match {
         case java.awt.event.WindowEvent.WINDOW_CLOSING =>
           _lastEventType = Event.WindowClosed
-        case _ => println(s"Unknown window event: $e")
+        case _ =>
+          throw new IllegalArgumentException(s"Unknown WindowEvent: $e")
       }
-    case _ => println(s"Unknown event: $e")
+      case _ =>
+        throw new IllegalArgumentException(s"Unknown AWTEvent: $e")
   }
 
   /** Wait for next event until `timeoutInMillis` and if time is out `lastEventType` is `Undefined`*/
