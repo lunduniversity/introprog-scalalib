@@ -1,4 +1,4 @@
-lazy val Version = "0.1.1"
+lazy val Version = "0.1.2"
 lazy val Name    = "introprog"
 
 name := Name
