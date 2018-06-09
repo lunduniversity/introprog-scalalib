@@ -3,6 +3,8 @@ package introprog
 object Dialog {
   import javax.swing.{JFileChooser, JOptionPane, JColorChooser}
 
+  Swing.init() // get platform-specific look and feel
+
   /** Show a file choice dialog starting in `startDir` with confirm `button` text. */
   def file(button: String = "Open", startDir: String = "~"): String = {
     val fs = new JFileChooser(new java.io.File(startDir))
@@ -15,9 +17,11 @@ object Dialog {
   /** Show a dialog with a `message` text. */
   def show(message: String): Unit = JOptionPane.showMessageDialog(null, message)
 
-  /** Show a `message` asking for input with `init` value. Return user input.*/
+  /** Show a `message` asking for input with `init` value. Return user input.
+    *
+    * Returns empty string on Cancel. */
   def input(message: String, init: String = ""): String =
-    JOptionPane.showInputDialog(message, init)
+    Option(JOptionPane.showInputDialog(message, init)).getOrElse("")
 
   /** Show a confirmation dialog with `question` and OK and Cancel buttons. */
   def isOK(question: String = "Ok?", title: String = "Confirm"): Boolean =
