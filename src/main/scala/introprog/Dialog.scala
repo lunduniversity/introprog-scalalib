@@ -37,7 +37,7 @@ object Dialog {
   /** Show a color selection dialog and return the color that the user selected. */
   def selectColor(
     message: String = "Select a color",
-    initialColor: java.awt.Color = java.awt.Color.red
-  ): Option[java.awt.Color] =
-    Option(JColorChooser.showDialog(null, message, initialColor))
+    default: java.awt.Color = java.awt.Color.red
+  ): java.awt.Color =
+    Option(JColorChooser.showDialog(null, message, default)).getOrElse(default)
 }
