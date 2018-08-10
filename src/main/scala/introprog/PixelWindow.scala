@@ -242,5 +242,4 @@ class PixelWindow(
     frame.pack()
     frame.setVisible(true)
   }
-
 }
