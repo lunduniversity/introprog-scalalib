@@ -8,7 +8,6 @@ The api documentation is available here: http://cs.lth.se/pgk/api/
 
 Se also: http://cs.lth.se/pgk and https://github.com/lunduniversity/introprog
 
-
 # Manual download
 
 Download the latest jar-file from here: https://github.com/lunduniversity/introprog-scalalib/releases
@@ -24,7 +23,7 @@ Put the jar-file on your classpath when you run your Scala app, for example:
 ```
 > scala -cp "introprog_2.12-0.1.5.jar:." Main
 ```
-If on Windows cmd/powershell use `;` instead of ´:´.
+If on Windows cmd/powershell use `;` instead of `:` before the period.
 
 # Using sbt
 
