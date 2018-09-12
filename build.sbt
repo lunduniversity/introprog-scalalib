@@ -1,4 +1,4 @@
-lazy val Version = "0.1.4"
+lazy val Version = "0.1.5"
 lazy val Name    = "introprog"
 
 name := Name
@@ -6,9 +6,9 @@ version := Version
 scalaVersion := "2.12.6"
 fork in (Compile, console) := true
 
-artifactName := { (sv: ScalaVersion, module: ModuleID, artifact: Artifact) =>
-  artifact.name + "-" + module.revision + "." + artifact.extension
-}
+// artifactName := { (sv: ScalaVersion, module: ModuleID, artifact: Artifact) =>
+//   artifact.name + "-" + module.revision + "." + artifact.extension
+// }
 
 scalacOptions ++= Seq(
   "-encoding", "UTF-8",
