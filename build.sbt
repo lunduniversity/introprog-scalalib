@@ -6,10 +6,6 @@ version := Version
 scalaVersion := "2.12.6"
 fork in (Compile, console) := true
 
-// artifactName := { (sv: ScalaVersion, module: ModuleID, artifact: Artifact) =>
-//   artifact.name + "-" + module.revision + "." + artifact.extension
-// }
-
 scalacOptions ++= Seq(
   "-encoding", "UTF-8",
   "-unchecked",
@@ -67,3 +63,7 @@ ThisBuild / publishTo := {
   else Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
 ThisBuild / publishMavenStyle := true
+
+//https://oss.sonatype.org/#stagingRepositories
+//https://oss.sonatype.org/#nexus-search;quick~se.lth.cs
+//https://repo1.maven.org/maven2/se/lth/cs/introprog_2.12/
