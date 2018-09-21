@@ -44,3 +44,11 @@ Put the jar-file on your classpath when you run your Scala app, for example:
 > scala -cp "introprog_2.12-0.1.5.jar:." Main
 ```
 If on Windows cmd/powershell use `;` instead of `:` before the period.
+
+## How to build this library
+With [`sbt`](https://www.scala-sbt.org/download.html) and [`git`](https://git-scm.com/downloads) on your path type in terminal:
+```
+> git clone git@github.com:lunduniversity/introprog-scalalib.git
+> cd introprog-scalalib
+> sbt package
+```
