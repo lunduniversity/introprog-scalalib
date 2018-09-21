@@ -19,7 +19,7 @@ scalaVersion := "2.12.6"
 libraryDependencies += "se.lth.cs" %% "introprog" % "0.1.5"
 ```
 
-When you run `sbt` in terminal the introprog lib is automatically downloaded and made available on your classpath.
+When you run `sbt` in terminal the `introprog` package is automatically downloaded and made available on your classpath.
 You can do things like:
 ```
 > sbt
