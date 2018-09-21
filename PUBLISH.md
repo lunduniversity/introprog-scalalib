@@ -32,6 +32,6 @@ These instructions have already been followed for this repo by Bjorn Regnell who
 
 10. After a while (typically a couple of minutes) the *Release* icon with a chain above the repository list is enabled. Click it when enabled. You can keep the "Automatically Drop" checkbox checked, which means that when the repo is published on Central the staging repo is removed from the list.
 
-11. By searching here you can see the repo in progress of being published but it takes a while before it is publically visible on Central (typically 10-15 minutes). https://oss.sonatype.org/#nexus-search;quick~se.lth.cs
+11. By searching here you can see the repo in progress of being published but it takes a while before it is publicly visible on Central (typically 10-15 minutes). https://oss.sonatype.org/#nexus-search;quick~se.lth.cs
 
 12. When visible on Central at https://repo1.maven.org/maven2/se/lth/cs/introprog_2.12/ verify with a simple sbt project that it works as shown in [README usage instructions for sbt](https://github.com/lunduniversity/introprog-scalalib/blob/master/README.md#using-sbt).
