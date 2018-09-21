@@ -1,6 +1,6 @@
 package introprog
 
-/** PixelWindow events and application management. */
+/** A window for pixel-based drawing in an underlying Swing window. */
 object PixelWindow {
   /** Immediately exit running application, close all windows, kills all threads. */
   def exit(): Unit = System.exit(0)
@@ -71,13 +71,13 @@ object PixelWindow {
   }
 }
 
-/** A window with a canvas for pixel-based drawing.
+/** A window with a canvas for pixel-based drawing implemented using Swing.
   *
   * @constructor Create a new window for pixel-based drawing.
   * @param width the number of horizontal pixels of the drawing canvas inside the window
   * @param height number of vertical pixels of the drawing canvas inside the window
   * @param title the title of the window
-  * @param background the background color filling the canvas and used when clearing pixels
+  * @param background the background color filling the canvas when clearing pixels
   * @param foreground the foreground color used as default argument for color parameters
   */
 class PixelWindow(
@@ -97,16 +97,33 @@ class PixelWindow(
     new java.util.concurrent.LinkedBlockingQueue[java.awt.AWTEvent](queueCapacity)
 
   @volatile private var _lastEventType = Event.Undefined
+
+  /** The event type of the latest event in the event queue.
+    *
+    * Returns Event.Undefined if no event has occurred. See also [[introprog.PixelWindow.awaitEvent]]
+    */
   def lastEventType: Int = _lastEventType
 
   @volatile private var _lastKeyText = ""
+
+  /** A string representing the last key pressed.
+    *
+    * Returns an empty string if no key event has occurred.
+    */
   def lastKey: String = _lastKeyText
 
-  @volatile private var _lastMousePos = (0, 0)
+  @volatile private var _lastMousePos = (-1, -1)
+
+  /** A pair of integers with the coordinates of the last mouse event.
+    *
+    * Returns `(-1, -1)` if no mouse event has occurred.
+    */
+
   def lastMousePos: (Int, Int) = _lastMousePos
 
-  initFrame()
+  initFrame()  // initialize listeners, show frame, etc.
 
+  /** Event dispatching, translating internal AWT events to exposed events. */
   private def handleEvent(e: java.awt.AWTEvent): Unit = e match {
     case me: java.awt.event.MouseEvent =>
       _lastMousePos = (me.getX, me.getY)
@@ -141,10 +158,13 @@ class PixelWindow(
           throw new IllegalArgumentException(s"Unknown WindowEvent: $e")
       }
       case _ =>
-        throw new IllegalArgumentException(s"Unknown AWTEvent: $e")
+        throw new IllegalArgumentException(s"Unknown Event: $e")
   }
 
-  /** Wait for next event until `timeoutInMillis` and if time is out `lastEventType` is `Undefined`*/
+  /** Wait for next event until `timeoutInMillis` milliseconds.
+    *
+    * If time is out the `lastEventType` is `Undefined`.
+    */
   def awaitEvent(timeoutInMillis: Long): Unit = {
     val e = eventQueue.poll(timeoutInMillis, java.util.concurrent.TimeUnit.MILLISECONDS)
     if (e != null) handleEvent(e) else _lastEventType = Event.Undefined
@@ -160,35 +180,43 @@ class PixelWindow(
       g.drawLine(x1, y1, x2, y2)
     }
 
+  /** Fill a rectangle with upper left corner at `(x, y)` using `color` */
   def fill(x: Int, y: Int, width: Int, height: Int, color: java.awt.Color = foreground): Unit =
     canvas.withGraphics { g =>
       g.setColor(color)
       g.fillRect(x, y, width, height)
     }
 
+  /** Set the color of the pixel at `(x, y)`. */
   def setPixel(x: Int, y: Int, color: java.awt.Color = foreground): Unit =
     canvas.withImage { img =>
       img.setRGB(x, y, color.getRGB)
     }
 
+  /** Clear the pixel at `(x, y)` using the `background` class parameter. */
   def clearPixel(x: Int, y: Int): Unit =
     canvas.withImage { img =>
       img.setRGB(x, y, background.getRGB)
     }
 
+  /** Return the color of the pixel at `(x, y)`. */
   def getPixel(x: Int, y: Int): java.awt.Color = Swing.await {
     new java.awt.Color(canvas.img.getRGB(x, y))
   }
 
+  /** Show the window. Has no effect if the window is already visible. */
   def open(): Unit = Swing { frame.setVisible(true) }
 
+  /** Hide the window. Has no effect if the window is already hidden. */
   def close(): Unit = Swing { frame.setVisible(false); frame.dispose() }
 
+  /** Clear all pixels using the `background` class parameter. */
   def clear(): Unit = canvas.withGraphics { g =>
     g.setColor(background)
     g.fillRect(0, 0, width, height)
   }
 
+  /** Draw `text` at `(x, y)` using `color`, `size`, `style and `fontName`. */
   def drawText(
     text: String,
     x: Int,
@@ -209,6 +237,7 @@ class PixelWindow(
     }
   }
 
+  /** Create the underlying window and add listeners for event management. */
   private def initFrame(): Unit = Swing {
     Swing.init() // first time calls setPlatformSpecificLookAndFeel
     javax.swing.JFrame.setDefaultLookAndFeelDecorated(true)
