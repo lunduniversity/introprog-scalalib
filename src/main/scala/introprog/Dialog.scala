@@ -1,5 +1,6 @@
 package introprog
 
+/** A module with utilities for creating standard GUI dialogs. */
 object Dialog {
   import javax.swing.{JFileChooser, JOptionPane, JColorChooser}
 

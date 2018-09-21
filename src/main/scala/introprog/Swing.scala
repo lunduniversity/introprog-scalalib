@@ -1,14 +1,15 @@
 package introprog
 
-/** A module with Swing utilities. */
+/** A module with Swing utilities used by [[introprog.PixelWindow]]. */
 object Swing {
 
   private def runInSwingThread(callback: => Unit): Unit =
     javax.swing.SwingUtilities.invokeLater(() => callback)
 
-  /** Run `callback` in Swing thread using `javax.swing.SwingUtilities.invokeLater`. */
+  /** Run `callback` asynchronously in the Swing thread. */
   def apply(callback: => Unit): Unit = runInSwingThread(callback)
 
+  /** Run `callback` in the Swing thread and block until completion. */
   def await[T: scala.reflect.ClassTag](callback: => T): T = {
     val ready = new java.util.concurrent.CountDownLatch(1)
     val result = new Array[T](1)
@@ -20,16 +21,19 @@ object Swing {
     result(0)
   }
 
+  /** Return a sequence of available look and feel options. */
   def installedLookAndFeels: Vector[String] =
     javax.swing.UIManager.getInstalledLookAndFeels.toVector.map(_.getClassName)
 
+  /** Find a look and feel with a name including `partOfName`. */
   def findLookAndFeel(partOfName: String): Option[String] =
     installedLookAndFeels.find(_.toLowerCase contains partOfName)
 
+  /** Test if the current operating system name includes `partOfName`. */
   def isOS(partOfName: String): Boolean =
     scala.sys.props("os.name").toLowerCase.contains(partOfName.toLowerCase)
 
-  var isInit = false
+  private var isInit = false
 
   /** Init the Swing GUI toolkit and set platform-specific look and feel.*/
   def init(): Unit = if (!isInit) {
@@ -37,7 +41,7 @@ object Swing {
     isInit = true
   }
 
-  def setPlatformSpecificLookAndFeel(): Unit = {
+  private def setPlatformSpecificLookAndFeel(): Unit = {
     import javax.swing.UIManager.setLookAndFeel
     if (isOS("linux")) findLookAndFeel("gtk").foreach(setLookAndFeel)
     else if (isOS("win")) findLookAndFeel("win").foreach(setLookAndFeel)
@@ -72,11 +76,13 @@ object Swing {
       true
   	}
 
+    /** Execute `action` in the Swing thread with graphics context as param. */
     def withGraphics(action: java.awt.Graphics2D => Unit) = runInSwingThread {
       action(img.createGraphics())
       repaint()
     }
 
+    /** Execute `action` in the Swing thread with raw image as param. */
     def withImage(action: java.awt.image.BufferedImage => Unit) = runInSwingThread {
       action(img)
       repaint()

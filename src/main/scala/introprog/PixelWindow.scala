@@ -1,6 +1,6 @@
 package introprog
 
-/** A window for pixel-based drawing in an underlying Swing window. */
+/** A module with utilities for event handling in `PixelWindow` instances. */
 object PixelWindow {
   /** Immediately exit running application, close all windows, kills all threads. */
   def exit(): Unit = System.exit(0)
@@ -8,7 +8,7 @@ object PixelWindow {
   /** Idle waiting for `millis` milliseconds. */
   def delay(millis: Long): Unit = Thread.sleep(millis)
 
-  /** An object with strings describing events that can happen in a PixelWindow, see [[introprog.PixelWindow.Event]] */
+  /** An object with integers representing events that can happen in a PixelWindow. */
   object Event {
     /** An integer representing a key down event.
     *
@@ -57,7 +57,7 @@ object PixelWindow {
       */
     val Undefined     = 0
 
-    /** Returns a descriptive string with name of the `event` number */
+    /** Returns a descriptive text for each `event`. */
     def show(event: Int): String = event match {
       case KeyPressed    => "KeyPressed"
       case KeyReleased   => "KeyReleased"
@@ -71,14 +71,14 @@ object PixelWindow {
   }
 }
 
-/** A window with a canvas for pixel-based drawing implemented using Swing.
+/** A window with a canvas for pixel-based drawing.
   *
   * @constructor Create a new window for pixel-based drawing.
-  * @param width the number of horizontal pixels of the drawing canvas inside the window
-  * @param height number of vertical pixels of the drawing canvas inside the window
+  * @param width the number of horizontal pixels
+  * @param height number of vertical pixels
   * @param title the title of the window
-  * @param background the background color filling the canvas when clearing pixels
-  * @param foreground the foreground color used as default argument for color parameters
+  * @param background the color used when clearing pixels
+  * @param foreground the foreground color, default color in drawing operations
   */
 class PixelWindow(
   val width: Int = 800,
@@ -165,7 +165,7 @@ class PixelWindow(
     *
     * If time is out, `lastEventType` is `Undefined`.
     */
-  def awaitEvent(timeoutInMillis: Long): Unit = {
+  def awaitEvent(timeoutInMillis: Long = 1): Unit = {
     val e = eventQueue.poll(timeoutInMillis, java.util.concurrent.TimeUnit.MILLISECONDS)
     if (e != null) handleEvent(e) else _lastEventType = Event.Undefined
   }
@@ -180,7 +180,7 @@ class PixelWindow(
       g.drawLine(x1, y1, x2, y2)
     }
 
-  /** Fill a rectangle with upper left corner at `(x, y)` using `color` */
+  /** Fill a rectangle with upper left corner at `(x, y)` using `color`. */
   def fill(x: Int, y: Int, width: Int, height: Int, color: java.awt.Color = foreground): Unit =
     canvas.withGraphics { g =>
       g.setColor(color)
@@ -205,10 +205,10 @@ class PixelWindow(
   }
 
   /** Show the window. Has no effect if the window is already visible. */
-  def open(): Unit = Swing { frame.setVisible(true) }
+  def show(): Unit = Swing { frame.setVisible(true) }
 
   /** Hide the window. Has no effect if the window is already hidden. */
-  def close(): Unit = Swing { frame.setVisible(false); frame.dispose() }
+  def hide(): Unit = Swing { frame.setVisible(false); frame.dispose() }
 
   /** Clear all pixels using the `background` class parameter. */
   def clear(): Unit = canvas.withGraphics { g =>
