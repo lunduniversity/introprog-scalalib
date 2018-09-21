@@ -66,7 +66,7 @@ This repo includes utilities to empower learners to advance from basic to interm
 * Hide/avoid threading and complicated concurrency.
 * Inspiration:
   - Talk by Martin Odersky: [Scala the Simple Parts](https://www.youtube.com/watch?v=ecekSCX3B4Q) with slides [here](https://www.slideshare.net/Odersky/scala-the-simple-parts)
-  - [Principle of least power](http://www.lihaoyi.com/post/StrategicScalaStylePrincipleofLeastPower.html)
+  - [Principle of least power](http://www.lihaoyi.com/post/StrategicScalaStylePrincipleofLeastPower.html) blog post by Li Haoyi
 
 Areas currently in scope of this library:
 
