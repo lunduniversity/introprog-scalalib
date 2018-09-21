@@ -31,6 +31,7 @@ scalacOptions in (Compile, doc) ++= Seq(
 
 // Below enables publishing to central.sonatype.org according to
 //  https://www.scala-sbt.org/release/docs/Using-Sonatype.html
+// sbt> publishedSigned
 
 ThisBuild / organization := "se.lth.cs"
 ThisBuild / organizationName := "LTH"
