@@ -1,0 +1,37 @@
+# Instruction for repo maintainers
+
+## Already done once and for all: Setup publication to Sonatype
+
+These instructions have already been followed for this repo by Bjorn Regnell who has claimed the name space se.lth.cs and the artefact id introprog:
+
+* https://www.scala-sbt.org/release/docs/Using-Sonatype.html#Sonatype+setup
+
+* Instruction videos: https://central.sonatype.org/pages/ossrh-guide.html
+
+* New project ticket (requires login to Jira): https://issues.sonatype.org/browse/OSSRH-42634?filter=-2
+
+## How to publish
+
+1. Build and test locally.
+
+2. Bump version in `build.sbt`, run `sbt package`, commit and push and create a github release with the packade jar uploaded. We also want a release on github aligned with the release on Sonatype Central.
+
+3. In `sbt` run `publishedSigned`
+
+4. Log into Sonatype Nexus here: https://oss.sonatype.org/#welcome
+
+5. Click on *Staging Repositories* in the Build Promotion list to the left. https://oss.sonatype.org/#stagingRepositories
+
+6. Scroll down and select selthcs-100X and select the *Contents* tab and expand until leaf level of the tree where you can see the `introprog_2.12-x.y.z.jar`
+
+7. Download the staged jar by clicking on it and selecting the *Artifact* tab to the right and click the *Download* button. Save it e.g. in `tmp`.
+
+8. Verify that the staged jar downloaded from sonatype works by running `scala -cp introprog-xxx.jar` and in REPL e.g. `val w = new introprog.PixelWindow`. The reason for this step is that there has been incidents where the uploading has failed and the jar was empty. A published jar can not be retracted even if corrupted according to Sonatype policies.
+
+9. Click the *Close* icon with a diskett above the repository list to "close" the staging repository.
+
+10. After a while (typically a couple of minutes) the *Release* icon with a chain above the repository list is enabled. Click it when enabled. You can keep the "Automatically Drop" checkbox checked, which means that when the repo is published on Central the staging repo is removed from the list.
+
+11. By searching here you can see the repo in progress of being published but it takes a while before it is publically visible on Central (typically 10-15 minutes). https://oss.sonatype.org/#nexus-search;quick~se.lth.cs
+
+12. When visible on Central at https://repo1.maven.org/maven2/se/lth/cs/introprog_2.12/ verify with a simple sbt project that it works as shown in [README usage instructions for sbt](https://github.com/lunduniversity/introprog-scalalib/blob/master/README.md#using-sbt).
