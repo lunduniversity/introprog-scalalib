@@ -6,7 +6,7 @@ This is a library with Scala utilities for Computer Science teaching. The librar
 
 The api documentation is available here: http://cs.lth.se/pgk/api/
 
-You can fins example code here: https://github.com/lunduniversity/introprog-scalalib/tree/master/src/main/scala/introprog/examples
+You can fins example code here: [src/main/scala/introprog/examples](https://github.com/lunduniversity/introprog-scalalib/tree/master/src/main/scala/introprog/examples)
 
 This repo in used in this course (in Swedish): http://cs.lth.se/pgk with course material published as free open source here: https://github.com/lunduniversity/introprog
 
