@@ -163,7 +163,7 @@ class PixelWindow(
 
   /** Wait for next event until `timeoutInMillis` milliseconds.
     *
-    * If time is out the `lastEventType` is `Undefined`.
+    * If time is out, `lastEventType` is `Undefined`.
     */
   def awaitEvent(timeoutInMillis: Long): Unit = {
     val e = eventQueue.poll(timeoutInMillis, java.util.concurrent.TimeUnit.MILLISECONDS)
