@@ -65,11 +65,11 @@ This repo includes utilities to empower learners to advance from basic to interm
 * Prefer immutability over mutable state, `Vector` for sequences and case classes for data.
 * Hide/avoid threading and complicated concurrency.
 * Inspiration:
-  - [Talk by Martin Odersky: Scala the Simple Parts](https://www.youtube.com/watch?v=ecekSCX3B4Q) [Slides here](https://www.slideshare.net/Odersky/scala-the-simple-parts)
+  - Talk by Martin Odersky: [Scala the Simple Parts](https://www.youtube.com/watch?v=ecekSCX3B4Q) with slides [here](https://www.slideshare.net/Odersky/scala-the-simple-parts)
   - [Principle of least power](http://www.lihaoyi.com/post/StrategicScalaStylePrincipleofLeastPower.html)
 
 Areas currently in scope of this library:
 
-* Simple 2D graphics.
+* Simple 2D graphics for single-threaded game programming with explicit game loop.
 * Simple IO.
 * Simple, modal GUI dialogs.
