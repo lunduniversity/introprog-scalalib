@@ -14,7 +14,11 @@ These instructions have already been followed for this repo by Bjorn Regnell who
 
 1. Build and test locally.
 
-2. Bump version in `build.sbt`, run `sbt package`, commit and push and create a github release with the packade jar uploaded. We also want a release on github aligned with the release on Sonatype Central.
+2. Bump version in `build.sbt`, run `sbt package`. We also want a release on github and the course home page aligned with the release on Sonatype Central. Therefore You should also:
+  - commit all changes and push and *then* create a github release with the packaged jar uploaded to https://github.com/lunduniversity/introprog-scalalib/releases
+  - Publish the jar to the course home page at http://cs.lth.se/lib using  `sh publish-jar.sh`
+  - Publish updated docs to the course home page at http://cs.lth.se/api using script `sh publish-doc.sh`
+  - Include the introprog code in the workspace subdir at https://github.com/lunduniversity/introprog to enable eclipse project generation with internal dependency of projects. Run `sbt eclipse` in that repo and the `package.sh` script to create `workspace.zip` etc. TODO: For the future it would be nice to have another repo introprog-workspace and factor out code to that repo and solve the problem of dependency between latex code and the workspace.
 
 3. In `sbt` run `publishedSigned`
 
