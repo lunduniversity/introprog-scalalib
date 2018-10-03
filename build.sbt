@@ -1,9 +1,9 @@
-lazy val Version = "1.0.0"
+lazy val Version = "1.1.0"
 lazy val Name    = "introprog"
 
 name := Name
 version := Version
-scalaVersion := "2.12.6"
+scalaVersion := "2.12.7"
 fork in (Compile, console) := true
 
 scalacOptions ++= Seq(
