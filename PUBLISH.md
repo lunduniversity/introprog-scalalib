@@ -15,6 +15,7 @@ These instructions have already been followed for this repo by Bjorn Regnell who
 1. Build and test locally.
 
 2. Bump version in `build.sbt`, run `sbt package`. We also want a release on github and the course home page aligned with the release on Sonatype Central. Therefore You should also:
+  - Don't forget to uppdate the `rootdoc.txt` file with current version information and package contents etc.: https://github.com/lunduniversity/introprog-scalalib/blob/master/src/rootdoc.txt
   - commit all changes and push and *then* create a github release with the packaged jar uploaded to https://github.com/lunduniversity/introprog-scalalib/releases
   - Publish the jar to the course home page at http://cs.lth.se/lib using  `sh publish-jar.sh`
   - Publish updated docs to the course home page at http://cs.lth.se/api using script `sh publish-doc.sh`
@@ -22,13 +23,13 @@ These instructions have already been followed for this repo by Bjorn Regnell who
 
 3. In `sbt` run `publishedSigned`
 
-4. Log into Sonatype Nexus here: https://oss.sonatype.org/#welcome
+4. Log into Sonatype Nexus here: (if the page does not load, clear the browser's cache by pressing Ctrl+F5) https://oss.sonatype.org/#welcome
 
-5. Click on *Staging Repositories* in the Build Promotion list to the left. https://oss.sonatype.org/#stagingRepositories
+5. Click on *Staging Repositories* in the Build Promotion list to the left. Click "Refresh" if list is empty. https://oss.sonatype.org/#stagingRepositories
 
 6. Scroll down and select selthcs-100X and select the *Contents* tab and expand until leaf level of the tree where you can see the `introprog_2.12-x.y.z.jar`
 
-7. Download the staged jar by clicking on it and selecting the *Artifact* tab to the right and click the *Download* button. Save it e.g. in `tmp`.
+7. Download the staged jar by clicking on it and selecting the *Artifact* tab to the right and click the Repository Path to download. Save it e.g. in `tmp`.
 
 8. Verify that the staged jar downloaded from sonatype works by running `scala -cp introprog-xxx.jar` and in REPL e.g. `val w = new introprog.PixelWindow`. The reason for this step is that there has been incidents where the uploading has failed and the jar was empty. A published jar can not be retracted even if corrupted according to Sonatype policies.
 
