@@ -1,6 +1,6 @@
 package introprog
 
-/** A model with input/output operations from/to the underlying file system. */
+/** A module with input/output operations from/to the underlying file system. */
 object IO {
   /** Load a string from a text file called `fileName` using encoding `enc`. */
   def loadString(fileName: String, enc: String = "UTF-8"): String = {
