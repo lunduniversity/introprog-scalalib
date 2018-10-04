@@ -16,8 +16,8 @@ This repo in used in this course *(in Swedish)*: http://cs.lth.se/pgk with cours
 
 If you have the [Scala Build Tool](https://www.scala-sbt.org/download.html) then you can put this text in a file called `build.sbt`
 ```
-scalaVersion := "2.12.6"
-libraryDependencies += "se.lth.cs" %% "introprog" % "1.0.0"
+scalaVersion := "2.12.7"
+libraryDependencies += "se.lth.cs" %% "introprog" % "1.1.0"
 ```
 
 When you run `sbt` in terminal the `introprog` package is automatically downloaded and made available on your classpath.
