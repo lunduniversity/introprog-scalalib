@@ -49,11 +49,11 @@ object IO {
   /** Create a directory with name `dir` if it does not exist. */
   def createDirIfNotExist(dir: String): Boolean = new java.io.File(dir).mkdirs()
 
-  /** Return the path name or the current user's home directory. */
-  def userDir: String = System.getProperty("user.home")
+  /** Return the path name of the current user's home directory. */
+  def userDir(): String = System.getProperty("user.home")
 
-  /** Return the path name or the current working directory. */
-  def currentDir: String =
+  /** Return the path name of the current working directory. */
+  def currentDir(): String =
     java.nio.file.Paths.get(".").toAbsolutePath.normalize.toString
 
   /** Return a sequence of file names in the directory `dir`. */
