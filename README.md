@@ -70,6 +70,6 @@ This repo includes utilities to empower learners to advance from basic to interm
 
 Areas currently in scope of this library:
 
-* Simple 2D graphics for single-threaded game programming with explicit game loop.
-* Simple IO.
-* Simple, modal GUI dialogs.
+* Simple pixel-based 2D graphics for single-threaded game programming with explicit game loop.
+* Simple blocking IO that hides the underlying complication of releasing resources etc.
+* Simple modal GUI dialogs that blocks while waiting for user response.
