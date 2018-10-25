@@ -4,7 +4,7 @@
 
 This is a library with Scala utilities for Computer Science teaching. The library is maintained by Björn Regnell at Lund University, Sweden. Contributions are welcome!
 
-* The **api** documentation is available here: http://cs.lth.se/pgk/api/
+* The api **documentation** is available here: http://cs.lth.se/pgk/api/
 
 * You can find code **examples** here: [src/main/scala/introprog/examples](https://github.com/lunduniversity/introprog-scalalib/tree/master/src/main/scala/introprog/examples)
 
