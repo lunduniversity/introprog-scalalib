@@ -1,9 +1,9 @@
-lazy val Version = "1.1.1"
+lazy val Version = "1.1.2"
 lazy val Name    = "introprog"
 
 name := Name
 version := Version
-scalaVersion := "2.12.7"
+scalaVersion := "2.12.8"
 fork in (Compile, console) := true
 
 scalacOptions ++= Seq(
@@ -17,6 +17,8 @@ scalacOptions ++= Seq(
 //  "-Ywarn-value-discard",
 //  "-Ywarn-unused"
 )
+
+javacOptions in (Compile, compile) ++= Seq("-target", "1.8")
 
 scalacOptions in (Compile, doc) ++= Seq(
   "-implicits",
