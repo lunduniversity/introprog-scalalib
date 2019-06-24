@@ -35,6 +35,8 @@ scalacOptions in (Compile, doc) ++= Seq(
 //  https://www.scala-sbt.org/release/docs/Using-Sonatype.html
 // sbt> publishedSigned
 
+useGpg := true
+
 ThisBuild / organization := "se.lth.cs"
 ThisBuild / organizationName := "LTH"
 ThisBuild / organizationHomepage := Some(url("http://cs.lth.se/"))
