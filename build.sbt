@@ -35,7 +35,7 @@ scalacOptions in (Compile, doc) ++= Seq(
 //  https://www.scala-sbt.org/release/docs/Using-Sonatype.html
 // sbt> publishedSigned
 
-useGpg := true
+// useGpg := true // error in travis build, as publish plugin in local ~/.sbt
 
 ThisBuild / organization := "se.lth.cs"
 ThisBuild / organizationName := "LTH"
