@@ -16,8 +16,8 @@ This repo in used in this course *(in Swedish)*: http://cs.lth.se/pgk with cours
 
 If you have the [Scala Build Tool](https://www.scala-sbt.org/download.html) then you can put this text in a file called `build.sbt`
 ```
-scalaVersion := "2.12.7"
-libraryDependencies += "se.lth.cs" %% "introprog" % "1.1.1"
+scalaVersion := "2.12.8"
+libraryDependencies += "se.lth.cs" %% "introprog" % "1.1.2"
 ```
 
 When you run `sbt` in terminal the `introprog` package is automatically downloaded and made available on your classpath.
@@ -35,14 +35,14 @@ Download the latest jar-file from here: https://github.com/lunduniversity/introp
 
 Put the jar-file on your classpath when you run the Scala REPL, for example:
 ```
-> scala -cp introprog_2.12-1.1.0.jar
+> scala -cp introprog_2.12-1.2.0.jar
 scala> val w = new introprog.PixelWindow()
 scala> w.fill(100,100,100,100,java.awt.Color.red)
 scala>
 ```
 Put the jar-file on your classpath when you run your Scala app, for example:
 ```
-> scala -cp "introprog_2.12-1.1.0.jar:." Main
+> scala -cp "introprog_2.12-1.2.0.jar:." Main
 ```
 If on Windows cmd/powershell use `;` instead of `:` before the period.
 
