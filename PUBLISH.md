@@ -19,7 +19,7 @@ These instructions have already been followed for this repo by Bjorn Regnell who
   - commit all changes and push and *then* create a github release with the packaged jar uploaded to https://github.com/lunduniversity/introprog-scalalib/releases
   - Publish the jar to the course home page at http://cs.lth.se/lib using  `sh publish-jar.sh`
   - Publish updated docs to the course home page at http://cs.lth.se/api using script `sh publish-doc.sh`
-  - Copy the introprog-scalalib/src the workspace subdir at https://github.com/lunduniversity/introprog to enable eclipse project generation with internal dependency of projects using `sh publish-workspace.sh`. Then run `sbt eclipse` in that repo and `sh package.sh` to create `workspace.zip` etc. TODO: For the future it would be nice to have another repo introprog-workspace and factor out code to that repo and solve the problem of dependency between latex code and the workspace.
+  - Copy the introprog-scalalib/src the workspace subdir at https://github.com/lunduniversity/introprog to enable eclipse project generation with internal dependency of projects using `sh publish-workspace.sh`. Then run `sbt eclipse` IN THAT repo and `sh package.sh` to create `workspace.zip` etc. TODO: For the future it would be **nice** to have another repo introprog-workspace and factor out code to that repo and solve the problem of dependency between latex code and the workspace.
 
 3. In `sbt` run `publishedSigned`
 
