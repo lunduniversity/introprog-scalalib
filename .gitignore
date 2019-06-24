@@ -7,6 +7,9 @@ tmp
 .ensime
 .ensime_cache/
 .classpath
+**/.metals
+**/.bloop
+
 
 **/*.cache-main  # Eclipse
 **/.metadata     # Eclipse
