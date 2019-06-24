@@ -11,6 +11,8 @@ tmp
 **/.bloop
 
 
+**/*.ser # serialized binary
+
 **/*.cache-main  # Eclipse
 **/.metadata     # Eclipse
 **/target        # sbt
