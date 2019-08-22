@@ -1,9 +1,9 @@
-lazy val Version = "1.1.2"
+lazy val Version = "1.1.3"
 lazy val Name    = "introprog"
 
 name := Name
 version := Version
-scalaVersion := "2.12.8"
+scalaVersion := "2.12.9"
 fork in (Compile, console) := true
 
 scalacOptions ++= Seq(
@@ -31,11 +31,11 @@ scalacOptions in (Compile, doc) ++= Seq(
   "-doc-source-url", s"https://github.com/lunduniversity/introprog-scalalib/tree/master€{FILE_PATH}.scala"
 )
 
-// Below enables publishing to central.sonatype.org according to
-//  https://www.scala-sbt.org/release/docs/Using-Sonatype.html
-// sbt> publishedSigned
-
-// useGpg := true // error in travis build, as publish plugin in local ~/.sbt
+// Below enables publishing to central.sonatype.org 
+// see PUBLISH.md for instructions
+// usage inside sbt:
+// sbt> publishSigned
+// DON'T PANIC: it takes looong time to run it
 
 ThisBuild / organization := "se.lth.cs"
 ThisBuild / organizationName := "LTH"
