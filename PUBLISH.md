@@ -20,6 +20,7 @@ These instructions have already been followed for this repo by Bjorn Regnell who
   - Publish the jar to the course home page at http://cs.lth.se/lib using  `sh publish-jar.sh`
   - Publish updated docs to the course home page at http://cs.lth.se/api using script `sh publish-doc.sh`
   - Copy the introprog-scalalib/src the workspace subdir at https://github.com/lunduniversity/introprog to enable eclipse project generation with internal dependency of projects using `sh publish-workspace.sh`. Then run `sbt eclipse` IN THAT repo and `sh package.sh` to create `workspace.zip` etc. TODO: For the future it would be **nice** to have another repo introprog-workspace and factor out code to that repo and solve the problem of dependency between latex code and the workspace.
+  - Update the link http://www.cs.lth.se/pgk/lib in typo3 so that it links to the right http://fileadmin.cs.lth.se/pgk/introprog_2.12-NEW.VER.SION.jar
 
 3. In `sbt` run `publishedSigned`
 
@@ -31,7 +32,7 @@ These instructions have already been followed for this repo by Bjorn Regnell who
 
 7. Download the staged jar by clicking on it and selecting the *Artifact* tab to the right and click the Repository Path to download. Save it e.g. in `tmp`.
 
-8. Verify that the staged jar downloaded from sonatype works by running `scala -cp introprog-xxx.jar` and in REPL e.g. `val w = new introprog.PixelWindow`. The reason for this step is that there has been incidents where the uploading has failed and the jar was empty. A published jar can not be retracted even if corrupted according to Sonatype policies.
+8. Verify that the staged jar downloaded from sonatype works by running `scala -cp introprog_2.12-x.y.z.jar` and in REPL e.g. `val w = new introprog.PixelWindow`. The reason for this step is that there has been incidents where the uploading has failed and the jar was empty. A published jar can not be retracted even if corrupted according to Sonatype policies.
 
 9. Click the *Close* icon with a diskett above the repository list to "close" the staging repository.
 
