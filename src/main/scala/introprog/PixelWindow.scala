@@ -200,8 +200,9 @@ class PixelWindow(
     }
 
   /** Return the color of the pixel at `(x, y)`. */
-  def getPixel(x: Int, y: Int): java.awt.Color = Swing.await {
-    new java.awt.Color(canvas.img.getRGB(x, y))
+  def getPixel(x: Int, y: Int): java.awt.Color = {
+    require(x >= 0 && x < width && y >= 0 && y < width, "Tried to read a pixel outside the window")
+    Swing.await { new java.awt.Color(canvas.img.getRGB(x, y)) }
   }
 
   /** Show the window. Has no effect if the window is already visible. */
