@@ -8,7 +8,7 @@ This is a library with Scala utilities for Computer Science teaching. The librar
 
 * You can find code **examples** here: [src/main/scala/introprog/examples](https://github.com/lunduniversity/introprog-scalalib/tree/master/src/main/scala/introprog/examples)
 
-This repo in used in this course *(in Swedish)*: http://cs.lth.se/pgk with course material published as free open source here: https://github.com/lunduniversity/introprog
+This repo is used in this course *(in Swedish)*: http://cs.lth.se/pgk with course material published as free open source here: https://github.com/lunduniversity/introprog
 
 
 ## How to use introprog-scalalib
