@@ -35,6 +35,7 @@ gpg --homedir . -a --export-secret-keys > secring.asc
 gpg --homedir . --list-key  
 # <copy> the pub hex string e.g E7232FE8B8357EEC786315FE821738D92B63C95F
 gpg --homedir . --keyserver hkp://pool.sks-keyservers.net --send-keys <paste>
+gpg --homedir . --keyserver hkp://pgp.mit.edu --send-keys E7232FE8B8357EEC786315FE821738D92B63C95F
 mkdir -p ~/.sbt/gpg
 cd ~/.sbt/gpg
 cp -R ~/ci-keys/* .
