@@ -33,7 +33,9 @@ scala> w.fill(100,100,100,100,java.awt.Color.red)
 
 Download the latest jar-file from here: https://github.com/lunduniversity/introprog-scalalib/releases
 
-Or from Maven central: https://search.maven.org/search?q=a:introprog_2.12
+Or from Maven central here: https://search.maven.org/search?q=a:introprog_2.12 
+
+Or get any version from here: https://repo1.maven.org/maven2/se/lth/cs/introprog_2.12/
 
 Put the jar-file on your classpath when you run the Scala REPL, for example:
 ```
