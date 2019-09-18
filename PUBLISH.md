@@ -69,7 +69,7 @@ Here is some more info on (unnecessary) config that was **NOT** used:
 1. Build and test locally.
 
 2. Bump version in `build.sbt`, run `sbt package`. We also want a release on github and the course home page aligned with the release on Sonatype Central. Therefore You should also:
-  - Don't forget to uppdate the `rootdoc.txt` file with current version information and package contents etc.: https://github.com/lunduniversity/introprog-scalalib/blob/master/src/rootdoc.txt
+  - Don't forget to update the `rootdoc.txt` file with current version information and package contents etc.: https://github.com/lunduniversity/introprog-scalalib/blob/master/src/rootdoc.txt
   - commit all changes and push and *then* create a github release with the packaged jar uploaded to https://github.com/lunduniversity/introprog-scalalib/releases
   - Publish the jar to the course home page at http://cs.lth.se/lib using  `sh publish-jar.sh`
   - Publish updated docs to the course home page at http://cs.lth.se/api using script `sh publish-doc.sh`
