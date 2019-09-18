@@ -45,7 +45,7 @@ After this you should have this these files `~/.sbt/gpg`:
 
 ```
 $ cat ~/.sbt/1.0/plugins/gpg.sbt 
-addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.1.1")
+addSbtPlugin("com.jsuereth" % "sbt-pgp" % "2.0.0")
 
 $ cat ~/.sbt/sonatype_credential 
 realm=Sonatype Nexus Repository Manager
@@ -62,8 +62,9 @@ openpgp-revocs.d  pubring.asc        trustdb.gpg
 
 ```
 
-Here is some more info on (unnecessary) config that was **NOT** used:
-* https://www.scala-sbt.org/sbt-pgp/usage.html
+* See more info here:
+  - https://github.com/sbt/sbt-pgp#configuration-signing-key
+  - https://www.scala-sbt.org/sbt-pgp/usage.html
 
 ## How to publish
 
