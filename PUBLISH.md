@@ -1,6 +1,6 @@
 # Instruction for repo maintainers
 
-First two sections are preparations only done once for all or once per machine. Last comes what is when actually publishing.
+First two sections are preparations only done once for all or once per machine. Last comes what is done when actually publishing.
 
 ## Already done once and for all: Setup publication to Sonatype
 
