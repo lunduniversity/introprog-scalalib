@@ -1,6 +1,6 @@
 # introprog-scalalib
 
-[![Build Status](https://travis-ci.org/lunduniversity/introprog-scalalib.svg?branch=master)](https://travis-ci.org/lunduniversity/introprog-scalalib)
+[![Build Status](https://travis-ci.org/lunduniversity/introprog-scalalib.svg?branch=master)](https://travis-ci.org/lunduniversity/introprog-scalalib)[<img src="https://img.shields.io/maven-central/v/se.lth.cs/introprog_2.12.svg?label=latest%20release%20for%202.12">](http://search.maven.org/#search%7Cga%7C1%7Cg%3Ase.lth.cs%20a%3Aintroprog_2.12) [<img src="https://img.shields.io/maven-central/v/se.lth.cs/introprog_2.13.svg?label=latest%20release%20for%202.13">](http://search.maven.org/#search%7Cga%7C1%7Cg%3Ase.lth.cs%20a%3Aintroprog_2.13)
 
 This is a library with Scala utilities for Computer Science teaching. The library is maintained by Björn Regnell at Lund University, Sweden. Contributions are welcome!
 
