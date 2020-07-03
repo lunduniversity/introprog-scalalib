@@ -1,11 +1,14 @@
 sudo: required
 dist: trusty
 
+git:
+  depth: 3
+
 language: scala
 scala: 2.13.3
 
-git:
-  depth: 1
+jdk:
+  - openjdk11
 
 before_install:
  - sudo apt-get update -q
