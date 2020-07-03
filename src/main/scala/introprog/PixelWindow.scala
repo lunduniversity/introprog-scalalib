@@ -225,7 +225,7 @@ class PixelWindow(
   }
 
   /** Set the PixelWindow frame title. */
-  def setTitle(title: String): Unit = frame.setTitle(title)
+  def setTitle(title: String): Unit = Swing { frame.setTitle(title) }
   
   /** Show the window. Has no effect if the window is already visible. */
   def show(): Unit = Swing { frame.setVisible(true) }
