@@ -1,12 +1,12 @@
 lazy val Version = "1.1.4"
 lazy val Name    = "introprog"
 lazy val scala212 = "2.12.10"
-lazy val scala213 = "2.13.1"
+lazy val scala213 = "2.13.3"
 lazy val supportedScalaVersions = List(scala212, scala213)
 
 name := Name
 version := Version
-scalaVersion := "2.13.1"
+scalaVersion := scala213
 fork in (Compile, console) := true
 
 ThisBuild / crossScalaVersions := supportedScalaVersions
