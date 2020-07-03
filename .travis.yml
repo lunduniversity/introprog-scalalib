@@ -5,12 +5,12 @@ language: scala
 scala: 2.13.3
 
 git:
-  depth: 3
+  depth: 1
 
 before_install:
  - sudo apt-get update -q
 
 script:
- - sbt compile
+ - sbt '+ compile'
  - sbt 'Test/compile'
  - sbt doc
