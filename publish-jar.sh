@@ -1,6 +1,9 @@
-sbt package
 VERSION="$(grep -m 1 -Po -e '\d+.\d+.\d+' build.sbt)"
-JARFILE="introprog_2.12-$VERSION.jar"
+SCALAVERSION=2.13
+
+JARFILE="introprog_$SCALAVERSION-$VERSION.jar"
 DEST="$LUCATID@web.cs.lth.se:/Websites/Fileadmin/pgk/"
+
+sbt package
 echo Copying $JARFILE to $DEST
-scp  "target/scala-2.12/$JARFILE" $DEST
+scp  "target/scala-$SCALAVERSION/$JARFILE" $DEST

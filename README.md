@@ -16,7 +16,7 @@ This repo is used in this course *(in Swedish)*: http://cs.lth.se/pgk with cours
 
 If you have the [Scala Build Tool](https://www.scala-sbt.org/download.html) then you can put this text in a file called `build.sbt`
 ```
-scalaVersion := "2.12.10"
+scalaVersion := "2.13.3"
 libraryDependencies += "se.lth.cs" %% "introprog" % "1.1.4"
 ```
 
@@ -33,20 +33,20 @@ scala> w.fill(100,100,100,100,java.awt.Color.red)
 
 Download the latest jar-file from here: https://github.com/lunduniversity/introprog-scalalib/releases
 
-Or from Maven central here: https://search.maven.org/search?q=a:introprog_2.12 
+Or from Maven central here: https://search.maven.org/search?q=a:introprog_2.13 
 
-Or get any version from here: https://repo1.maven.org/maven2/se/lth/cs/introprog_2.12/
+Or get any version from here: https://repo1.maven.org/maven2/se/lth/cs/introprog_2.13/
 
 Put the jar-file on your classpath when you run the Scala REPL, for example:
 ```
-> scala -cp introprog_2.12-1.1.4.jar
+> scala -cp introprog_2.13-1.1.4.jar
 scala> val w = new introprog.PixelWindow()
 scala> w.fill(100,100,100,100,java.awt.Color.red)
 scala>
 ```
 Put the jar-file on your classpath when you run your Scala app, for example:
 ```
-> scala -cp "introprog_2.12-1.1.4.jar:." Main
+> scala -cp "introprog_2.13-1.1.4.jar:." Main
 ```
 If on Windows cmd/powershell use `;` instead of `:` before the period.
 
