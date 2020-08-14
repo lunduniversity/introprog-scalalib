@@ -1,4 +1,12 @@
+echo "*** Generating docs and copy api to fileadmin then zip it for local download"
+set -x
+
 SCALAVERSION=2.13
 sbt doc
-echo "*** scp docs to web.cs.lth.se"
+
 scp -r target/scala-$SCALAVERSION/api $LUCATID@web.cs.lth.se:/Websites/Fileadmin/pgk/
+
+cd target/scala-$SCALAVERSION/
+zip -rv api.zip api
+scp api.zip $LUCATID@web.cs.lth.se:/Websites/Fileadmin/pgk/
+cd ../..
