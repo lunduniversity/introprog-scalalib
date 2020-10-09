@@ -13,6 +13,7 @@ object PixelWindow {
     import java.awt.event.KeyEvent._
     Map(
       VK_META       -> "Meta",
+      VK_WINDOWS    -> "Meta",
       VK_CONTROL    -> "Ctrl",
       VK_ALT        -> "Alt",
       VK_ALT_GRAPH  -> "Alt Gr",
@@ -166,7 +167,7 @@ class PixelWindow(
 
     case ke: java.awt.event.KeyEvent =>
       if (ke.getKeyChar == java.awt.event.KeyEvent.CHAR_UNDEFINED || ke.getKeyChar < ' ')
-            _lastKeyText = PixelWindow.keyTextLookup.getOrElse(ke.getKeyCode, java.awt.event.KeyEvent.getKeyText(ke.getKeyCode))
+        _lastKeyText = PixelWindow.keyTextLookup.getOrElse(ke.getKeyCode, java.awt.event.KeyEvent.getKeyText(ke.getKeyCode))
       else _lastKeyText = ke.getKeyChar.toString
 
       ke.getID match {
