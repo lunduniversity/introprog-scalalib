@@ -294,6 +294,8 @@ class PixelWindow(
     Swing.init() // first time calls setPlatformSpecificLookAndFeel
     javax.swing.JFrame.setDefaultLookAndFeelDecorated(true)
 
+    frame.setFocusTraversalKeysEnabled(false);
+
     frame.addWindowListener(new java.awt.event.WindowAdapter {
       override def windowClosing(e: java.awt.event.WindowEvent): Unit = {
         frame.setVisible(false)
