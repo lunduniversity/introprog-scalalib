@@ -1,38 +1,45 @@
-lazy val Version = "1.1.4"
+lazy val Version = "1.1.5"
 lazy val Name    = "introprog"
-lazy val scala212 = "2.12.12"
-lazy val scala213 = "2.13.3"
+lazy val scala212 = "2.12.13"
+lazy val scala213 = "2.13.5"
+lazy val scala30  = "3.0.0-RC3" 
 lazy val supportedScalaVersions = List(scala212, scala213)
+
+// to avoid strange warnings, these three lines are needed
+  Global / excludeLintKeys += ThisBuild / Compile / console / fork
+  Global / excludeLintKeys += ThisBuild / Compile / doc / scalacOptions
+  Global / excludeLintKeys += ThisBuild / name 
 
 ThisBuild / name := Name
 ThisBuild / version := Version
-ThisBuild / scalaVersion := scala213
-fork in (Compile, console) := true
+ThisBuild / scalaVersion := scala30
+
+ThisBuild / Compile / console / fork := true
 
 ThisBuild / crossScalaVersions := supportedScalaVersions
 
-scalacOptions ++= Seq(
+ThisBuild / scalacOptions ++= Seq(
   "-encoding", "UTF-8",
   "-unchecked",
   "-deprecation",
 //  "-Xfuture",
 //  "-Yno-adapted-args",
-  "-Ywarn-dead-code",
-  "-Ywarn-numeric-widen",
+//  "-Ywarn-dead-code",
+//  "-Ywarn-numeric-widen",
 //  "-Ywarn-value-discard",
 //  "-Ywarn-unused"
 )
 
-javacOptions in (Compile, compile) ++= Seq("-target", "1.8")
+ThisBuild / Compile / compile / javacOptions ++= Seq("-target", "1.8")
 
-scalacOptions in (Compile, doc) ++= Seq(
+ThisBuild / Compile / doc / scalacOptions ++= Seq(
   "-implicits",
   "-groups",
   "-doc-title", Name,
   "-doc-footer", "Dep. of Computer Science, Lund University, Faculty of Engineering LTH",
-  "-sourcepath", (baseDirectory in ThisBuild).value.toString,
+  "-sourcepath", (ThisBuild/baseDirectory).value.toString,
   "-doc-version", Version,
-  "-doc-root-content", (baseDirectory in ThisBuild).value.toString + "/src/rootdoc.txt",
+  "-doc-root-content", (ThisBuild/baseDirectory).value.toString + "/src/rootdoc.txt",
   "-doc-source-url", s"https://github.com/lunduniversity/introprog-scalalib/tree/master€{FILE_PATH}.scala"
 )
 
