@@ -9,8 +9,8 @@ tmp
 .classpath
 **/.metals
 **/.bloop
-project/metals.sbt
-
+**/metals.sbt
+.vscode
 
 **/*.cache-main  # Eclipse
 **/.metadata     # Eclipse
