@@ -3,7 +3,7 @@ lazy val Name    = "introprog"
 lazy val scala212 = "2.12.13"
 lazy val scala213 = "2.13.5"
 lazy val scala30  = "3.0.0-RC3" 
-lazy val supportedScalaVersions = List(scala212, scala213)
+lazy val supportedScalaVersions = List(scala212, scala213, scala30)
 
 // to avoid strange warnings, these three lines are needed
   Global / excludeLintKeys += ThisBuild / Compile / console / fork
