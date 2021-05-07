@@ -175,8 +175,8 @@ class PixelWindow(
           _lastEventType = Event.KeyPressed
         case java.awt.event.KeyEvent.KEY_RELEASED =>
           _lastEventType = Event.KeyReleased
-          case _ =>
-            throw new IllegalArgumentException(s"Unknown KeyEvent: $e")
+        case _ =>
+          throw new IllegalArgumentException(s"Unknown KeyEvent: $e")
       }
 
     case we: java.awt.event.WindowEvent =>
@@ -186,8 +186,9 @@ class PixelWindow(
         case _ =>
           throw new IllegalArgumentException(s"Unknown WindowEvent: $e")
       }
-      case _ =>
-        throw new IllegalArgumentException(s"Unknown Event: $e")
+
+    case _ =>
+      throw new IllegalArgumentException(s"Unknown Event: $e")
   }
 
   /** Return `true` if `(x, y)` is inside windows borders else `false`. */
