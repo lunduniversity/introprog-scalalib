@@ -9,6 +9,7 @@ tmp
 .classpath
 **/.metals
 **/.bloop
+**/.bsp
 **/metals.sbt
 .vscode
 
