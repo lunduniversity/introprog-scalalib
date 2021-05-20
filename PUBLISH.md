@@ -70,7 +70,7 @@ openpgp-revocs.d  pubring.asc        trustdb.gpg
 
 1. Build and test locally.
 
-2. Bump version in `build.sbt`, run `sbt package`. We also want a release on github and the course home page aligned with the release on Sonatype Central. Therefore You should also:
+2. Bump `lazy val Version` in `build.sbt`, run `+ package` in sbt. We also want a release on github and the course home page aligned with the release on Sonatype Central. Therefore You should also:
   - Don't forget to update the `rootdoc.txt` file with current version information and package contents etc.: https://github.com/lunduniversity/introprog-scalalib/blob/master/src/rootdoc.txt
   - commit all changes and push and *then* create a github release with the packaged jar uploaded to https://github.com/lunduniversity/introprog-scalalib/releases
   - Publish the jar to the course home page at http://cs.lth.se/lib using  `sh publish-jar.sh`
@@ -78,22 +78,34 @@ openpgp-revocs.d  pubring.asc        trustdb.gpg
   - Copy the introprog-scalalib/src the workspace subdir at https://github.com/lunduniversity/introprog to enable eclipse project generation with internal dependency of projects using `sh publish-workspace.sh`. Then run `sbt eclipse` IN THAT repo and `sh package.sh` to create `workspace.zip` etc. TODO: For the future it would be **nice** to have another repo introprog-workspace and factor out code to that repo and solve the problem of dependency between latex code and the workspace.
   - Update the link http://www.cs.lth.se/pgk/lib in typo3 so that it links to the right http://fileadmin.cs.lth.se/pgk/introprog_2.12-x.y.z.jar
 
-3. In `sbt` run `publishSigned`
+3. In build.sbt set the key `ThisBuild / versionPolicyIntention := ` to one of `Compatibility.None`, `Compatibility.BinaryAndSourceCompatible` or `Compatibility.BinaryCompatible` depending on what is intended. Then run these checks in the sbt shell: 
+   ```
+   sbt> versionCheck
+   sbt> versionPolicyCheck
+   ```
+   More information here:
+   * https://www.scala-lang.org/blog/2021/02/16/preventing-version-conflicts-with-versionscheme.html
+   * https://www.youtube.com/watch?v=0T3vBnYCXn4
+   * https://www.scala-sbt.org/1.x/docs/Publishing.html#Version+scheme
+   * https://eed3si9n.com/enforcing-semver-with-sbt-strict-update
 
-4. Log into Sonatype Nexus here: (if the page does not load, clear the browser's cache by pressing Ctrl+F5) https://oss.sonatype.org/#welcome
 
-5. Click on *Staging Repositories* in the Build Promotion list to the left. Click "Refresh" if list is empty. https://oss.sonatype.org/#stagingRepositories
+4. In `sbt>` run `+ publishSigned`  - the plus is needed to cross publish all versions. See https://www.scala-sbt.org/1.x/docs/Cross-Build.html
 
-6. Scroll down and select selthcs-100X and select the *Contents* tab and expand until leaf level of the tree where you can see the `introprog_3-x.y.z.jar`
+5. Log into Sonatype Nexus here: (if the page does not load, clear the browser's cache by pressing Ctrl+F5) https://oss.sonatype.org/#welcome
 
-7. Download the staged jar by clicking on it and selecting the *Artifact* tab to the right and click the Repository Path to download. Save it e.g. in `tmp`.
+6. Click on *Staging Repositories* in the Build Promotion list to the left. Click "Refresh" if list is empty. https://oss.sonatype.org/#stagingRepositories
 
-8. Verify that the staged jar downloaded from sonatype works by running `scala -cp introprog_3-x.y.z.jar` and in REPL e.g. `val w = new introprog.PixelWindow`. The reason for this step is that there has been incidents where the uploading has failed and the jar was empty. A published jar can not be retracted even if corrupted according to Sonatype policies.
+7. Scroll down and select something similar to `selthcs-100X` and select the *Contents* tab and expand until leaf level of the tree where you can see the `introprog_3-x.y.z.jar`
 
-9. Click the *Close* icon with a diskett above the repository list to "close" the staging repository. No need to write anything in the "Description" field in the popup. It has happened that the Close failed - then the repo is still "Open" so try to close it again and hope it works this time...
+8. Download the staged jar by clicking on it and selecting the *Artifact* tab to the right and click the Repository Path to download. Save it e.g. in `tmp`.
 
-10. After a while (typically a couple of minutes) the *Release* icon with a chain above the repository list is enabled. Click it when enabled. You can keep the "Automatically Drop" checkbox checked, which means that when the repo is published on Central the staging repo is removed from the list.
+9.  Verify that the staged jar downloaded from sonatype works by running `scala -cp introprog_3-x.y.z.jar` and in REPL e.g. `val w = new introprog.PixelWindow`. The reason for this step is that there has been incidents where the uploading has failed and the jar was empty. A published jar can not be retracted even if corrupted according to Sonatype policies.
 
-11. By searching here you can see the repo in progress of being published but it takes a while before it is publicly visible on Central (typically 10-15 minutes). https://oss.sonatype.org/#nexus-search;quick~se.lth.cs
+10. Click the *Close* icon with a diskett above the repository list to "close" the staging repository. No need to write anything in the "Description" field in the popup. It has happened that the Close failed - then the repo is still "Open" so try to close it again and hope it works this time...
 
-12. When visible on Central at https://repo1.maven.org/maven2/se/lth/cs/introprog_3/ verify with a simple sbt project that it works as shown in [README usage instructions for sbt](https://github.com/lunduniversity/introprog-scalalib/blob/master/README.md#using-sbt).
+11. After a while (typically a couple of minutes) the *Release* icon with a chain above the repository list is enabled. Click it when enabled. You can keep the "Automatically Drop" checkbox checked, which means that when the repo is published on Central the staging repo is removed from the list.
+
+12. By searching here you can see the repo in progress of being published but it takes a while before it is publicly visible on Central (typically 10-15 minutes). https://oss.sonatype.org/#nexus-search;quick~se.lth.cs
+
+13. When visible on Central at https://repo1.maven.org/maven2/se/lth/cs/introprog_3/ verify with a simple sbt project that it works as shown in [README usage instructions for sbt](https://github.com/lunduniversity/introprog-scalalib/blob/master/README.md#using-sbt).

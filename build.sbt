@@ -4,18 +4,32 @@ lazy val scala213 = "2.13.6"
 lazy val scala3  = "3.0.0" 
 lazy val supportedScalaVersions = List(scala213, scala3)
 
-// to avoid strange warnings, these three lines are needed
+// to avoid strange warnings, these lines with excludeLintKeys are needed:
   Global / excludeLintKeys += ThisBuild / Compile / console / fork
   Global / excludeLintKeys += ThisBuild / Compile / doc / scalacOptions
-  Global / excludeLintKeys += ThisBuild / name 
 
-ThisBuild / name := Name
-ThisBuild / version := Version
-ThisBuild / scalaVersion := scala3
+
+lazy val introprog = (project in file("."))
+  .settings(
+    name := Name,
+    version := Version,
+    scalaVersion := scala3,
+    crossScalaVersions := supportedScalaVersions,
+  )
 
 ThisBuild / Compile / console / fork := true
 
-ThisBuild / crossScalaVersions := supportedScalaVersions
+//https://github.com/scalacenter/sbt-version-policy
+ThisBuild / versionScheme := Some("early-semver")
+ThisBuild / versionPolicyIntention := Compatibility.None
+//ThisBuild / versionPolicyIntention := Compatibility.BinaryAndSourceCompatible
+//ThisBuild / versionPolicyIntention := Compatibility.BinaryCompatible
+
+//In the sbt shell check version using:
+//sbt> versionCheck
+//sbt> versionPolicyCheck
+//sbt> last versionPolicyFindDependencyIssues
+//sbt> last mimaPreviousClassfiles
 
 ThisBuild / scalacOptions ++= Seq(
   "-encoding", "UTF-8",
@@ -44,8 +58,8 @@ ThisBuild / Compile / doc / scalacOptions ++= Seq(
 
 // Below enables publishing to central.sonatype.org 
 // see PUBLISH.md for instructions
-// usage inside sbt:
-// sbt> publishSigned
+// usage inside sbt: BUT READ PUBLISH.md FIRST  - the plus is needed for cross building all versions
+// sbt> + publishSigned
 // DON'T PANIC: it takes looong time to run it
 
 ThisBuild / organization := "se.lth.cs"
@@ -82,13 +96,7 @@ ThisBuild / publishMavenStyle := true
 
 publishConfiguration := publishConfiguration.value.withOverwrite(true)
 publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true)
-//pushRemoteCacheConfiguration := pushRemoteCacheConfiguration.value.withOverwrite(true) 
-
-
-lazy val introprog = (project in file("."))
-  .settings(
-    name := Name,
-  )
+//pushRemoteCacheConfiguration := pushRemoteCacheConfiguration.value.withOverwrite(true)
 
 //https://oss.sonatype.org/#stagingRepositories
 //https://oss.sonatype.org/#nexus-search;quick~se.lth.cs
