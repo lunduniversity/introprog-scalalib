@@ -96,4 +96,4 @@ lazy val introprog = (project in file("."))
 
 //usePgpKeyHex("E7232FE8B8357EEC786315FE821738D92B63C95F")
 
-//https://github.com/sbt/sbt-pgp#configuration-signing-key
+//https://github.com/sbt/sbt-pgp
