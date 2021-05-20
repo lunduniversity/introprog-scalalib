@@ -1,6 +1,6 @@
 # introprog-scalalib
 
-[![Build Status](https://travis-ci.org/lunduniversity/introprog-scalalib.svg?branch=master)](https://travis-ci.org/lunduniversity/introprog-scalalib)[<img src="https://img.shields.io/maven-central/v/se.lth.cs/introprog_2.12.svg?label=latest%20release%20for%202.12">](http://search.maven.org/#search%7Cga%7C1%7Cg%3Ase.lth.cs%20a%3Aintroprog_2.12) [<img src="https://img.shields.io/maven-central/v/se.lth.cs/introprog_2.13.svg?label=latest%20release%20for%202.13">](http://search.maven.org/#search%7Cga%7C1%7Cg%3Ase.lth.cs%20a%3Aintroprog_2.13)
+[<img src="https://img.shields.io/maven-central/v/se.lth.cs/introprog_3.svg?label=latest%20release%20for%20Scala%203">](http://search.maven.org/#search%7Cga%7C1%7Cg%3Ase.lth.cs%20a%3Aintroprog_3)  [<img src="https://img.shields.io/maven-central/v/se.lth.cs/introprog_2.13.svg?label=latest%20release%20for%202.13">](http://search.maven.org/#search%7Cga%7C1%7Cg%3Ase.lth.cs%20a%3Aintroprog_2.13)  [<img src="https://img.shields.io/maven-central/v/se.lth.cs/introprog_2.12.svg?label=latest%20release%20for%202.12">](http://search.maven.org/#search%7Cga%7C1%7Cg%3Ase.lth.cs%20a%3Aintroprog_2.12)
 
 This is a library with Scala utilities for Computer Science teaching. The library is maintained by Björn Regnell at Lund University, Sweden. Contributions are welcome!
 
@@ -14,13 +14,11 @@ This repo is used in this course *(in Swedish)*: http://cs.lth.se/pgk with cours
 ## How to use introprog-scalalib
 ### Using sbt
 
-If you have the [Scala Build Tool](https://www.scala-sbt.org/download.html) version 1.5.2 or later then you can put this text in a file called `build.sbt`
+If you have the [Scala Build Tool](https://www.scala-sbt.org/download.html) version 1.5.2 or later then put this text in a file called `build.sbt`
 ```
 scalaVersion := "3.0.0"
 libraryDependencies += "se.lth.cs" %% "introprog" % "1.1.5"
 ```
-
-If you are on Scala 2.13.x or 2.12.x then you need to use the old version `"1.1.4"` of introprog.
 
 When you run `sbt` in terminal the `introprog` package is automatically downloaded and made available on your classpath.
 You can do things like:
@@ -30,6 +28,19 @@ sbt> console
 scala> val w = new introprog.PixelWindow()
 scala> w.fill(100,100,100,100,java.awt.Color.red)
 ```
+
+### Older Scala versions
+
+If you want to use Scala 2.13 then you need Scala 2.13.5 or later and these special settings in `build.sbt`: 
+```
+scalaVersion := "2.13.6"
+scalacOptions += "-Ytasty-reader"
+libraryDependencies += 
+  ("se.lth.cs" %% "introprog" % "1.1.5").cross(CrossVersion.for2_13Use3)
+```
+
+For Scala 2.12.x and 2.13.4 and older you need to use the old version `"1.1.4"`. 
+
 
 ### Manual download
 
