@@ -1,9 +1,9 @@
 lazy val Version = "1.1.5"
 lazy val Name    = "introprog"
 lazy val scala212 = "2.12.13"
-lazy val scala213 = "2.13.5"
-lazy val scala30  = "3.0.0-RC3" 
-lazy val supportedScalaVersions = List(scala212, scala213, scala30)
+lazy val scala213 = "2.13.6"
+lazy val scala3  = "3.0.0" 
+lazy val supportedScalaVersions = List(scala212, scala213, scala3)
 
 // to avoid strange warnings, these three lines are needed
   Global / excludeLintKeys += ThisBuild / Compile / console / fork
@@ -12,7 +12,7 @@ lazy val supportedScalaVersions = List(scala212, scala213, scala30)
 
 ThisBuild / name := Name
 ThisBuild / version := Version
-ThisBuild / scalaVersion := scala30
+ThisBuild / scalaVersion := scala3
 
 ThisBuild / Compile / console / fork := true
 
@@ -80,6 +80,16 @@ ThisBuild / publishTo := {
   else Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
 ThisBuild / publishMavenStyle := true
+
+publishConfiguration := publishConfiguration.value.withOverwrite(true)
+publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true)
+//pushRemoteCacheConfiguration := pushRemoteCacheConfiguration.value.withOverwrite(true) 
+
+
+lazy val introprog = (project in file("."))
+  .settings(
+    name := Name,
+  )
 
 //https://oss.sonatype.org/#stagingRepositories
 //https://oss.sonatype.org/#nexus-search;quick~se.lth.cs
