@@ -84,11 +84,11 @@ openpgp-revocs.d  pubring.asc        trustdb.gpg
 
 5. Click on *Staging Repositories* in the Build Promotion list to the left. Click "Refresh" if list is empty. https://oss.sonatype.org/#stagingRepositories
 
-6. Scroll down and select selthcs-100X and select the *Contents* tab and expand until leaf level of the tree where you can see the `introprog_2.12-x.y.z.jar`
+6. Scroll down and select selthcs-100X and select the *Contents* tab and expand until leaf level of the tree where you can see the `introprog_3-x.y.z.jar`
 
 7. Download the staged jar by clicking on it and selecting the *Artifact* tab to the right and click the Repository Path to download. Save it e.g. in `tmp`.
 
-8. Verify that the staged jar downloaded from sonatype works by running `scala -cp introprog_2.12-x.y.z.jar` and in REPL e.g. `val w = new introprog.PixelWindow`. The reason for this step is that there has been incidents where the uploading has failed and the jar was empty. A published jar can not be retracted even if corrupted according to Sonatype policies.
+8. Verify that the staged jar downloaded from sonatype works by running `scala -cp introprog_3-x.y.z.jar` and in REPL e.g. `val w = new introprog.PixelWindow`. The reason for this step is that there has been incidents where the uploading has failed and the jar was empty. A published jar can not be retracted even if corrupted according to Sonatype policies.
 
 9. Click the *Close* icon with a diskett above the repository list to "close" the staging repository. No need to write anything in the "Description" field in the popup. It has happened that the Close failed - then the repo is still "Open" so try to close it again and hope it works this time...
 
@@ -96,4 +96,4 @@ openpgp-revocs.d  pubring.asc        trustdb.gpg
 
 11. By searching here you can see the repo in progress of being published but it takes a while before it is publicly visible on Central (typically 10-15 minutes). https://oss.sonatype.org/#nexus-search;quick~se.lth.cs
 
-12. When visible on Central at https://repo1.maven.org/maven2/se/lth/cs/introprog_2.12/ verify with a simple sbt project that it works as shown in [README usage instructions for sbt](https://github.com/lunduniversity/introprog-scalalib/blob/master/README.md#using-sbt).
+12. When visible on Central at https://repo1.maven.org/maven2/se/lth/cs/introprog_3/ verify with a simple sbt project that it works as shown in [README usage instructions for sbt](https://github.com/lunduniversity/introprog-scalalib/blob/master/README.md#using-sbt).
