@@ -1,6 +1,6 @@
 # introprog-scalalib
 
-![Build Status](https://github.com/fritjof-b/introprog-scalalib/actions/workflows/main.yml/badge.svg)
+![Build Status](https://github.com/lunduniversity/introprog-scalalib/actions/workflows/main.yml/badge.svg)
 
 [<img src="https://img.shields.io/maven-central/v/se.lth.cs/introprog_3.svg?label=latest%20release%20for%20Scala%203">](http://search.maven.org/#search%7Cga%7C1%7Cg%3Ase.lth.cs%20a%3Aintroprog_3)  [<img src="https://img.shields.io/maven-central/v/se.lth.cs/introprog_2.13.svg?label=latest%20release%20for%202.13">](http://search.maven.org/#search%7Cga%7C1%7Cg%3Ase.lth.cs%20a%3Aintroprog_2.13)  [<img src="https://img.shields.io/maven-central/v/se.lth.cs/introprog_2.12.svg?label=latest%20release%20for%202.12">](http://search.maven.org/#search%7Cga%7C1%7Cg%3Ase.lth.cs%20a%3Aintroprog_2.12)
 
