@@ -1,8 +1,10 @@
-VERSION="$(grep -m 1 -Po -e '\d+.\d+.\d+' build.sbt)"
-SCALAVERSION=2.13
+#VERSION="$(grep -m 1 -Po -e '\d+.\d+.\d+' build.sbt)"
+VERSION=1.1.5
+SCALAVERSION=3.0.0
+SCALACOMPAT=3
 
-JARFILE="introprog_$SCALAVERSION-$VERSION.jar"
-DEST="$LUCATID@web.cs.lth.se:/Websites/Fileadmin/pgk/"
+JARFILE="introprog_$SCALACOMPAT-$VERSION.jar"
+DEST="$LUCATID@fileadmin.cs.lth.se:/Websites/Fileadmin/pgk/"
 
 sbt package
 echo Copying $JARFILE to $DEST
