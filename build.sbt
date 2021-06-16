@@ -1,4 +1,4 @@
-lazy val Version = "2.0.0"
+lazy val Version = "1.1.5"
 lazy val Name    = "introprog"
 lazy val scala213 = "2.13.6"
 lazy val scala3  = "3.0.0" 
