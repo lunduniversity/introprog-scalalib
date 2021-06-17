@@ -1,0 +1,11 @@
+name: Build
+on: [push]
+jobs:
+  Test:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: SBT Build
+        run: sbt compile
+        shell: bash
