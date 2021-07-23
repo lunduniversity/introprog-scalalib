@@ -1,7 +1,5 @@
 package introprog
 
-
-
 /** A module with input/output operations from/to the underlying file system. */
 object IO {
   /**

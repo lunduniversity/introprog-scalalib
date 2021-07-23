@@ -1,6 +1,5 @@
 package introprog
-import java.awt.image.BufferedImage
-import java.nio.Buffer
+
 /** A module with utilities for event handling in `PixelWindow` instances. */
 object PixelWindow {
   /** Immediately exit running application, close all windows, kills all threads. */
@@ -255,6 +254,7 @@ class PixelWindow(
     Swing.await { new java.awt.Color(canvas.img.getRGB(x, y)) }
   }
 
+  import java.awt.image.BufferedImage
   /**
     * Returns a screenshot of the window
     * SLOW! creates image one pixel at a time
