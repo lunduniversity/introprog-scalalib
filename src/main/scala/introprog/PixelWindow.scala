@@ -256,12 +256,12 @@ class PixelWindow(
 
   import java.awt.image.BufferedImage
   /**
-    * Returns a screenshot of the window
-    * SLOW! creates image one pixel at a time
+    * Returns a screenshot of the window,
+    * creates image one pixel at a time.
     */
   def getImage(): BufferedImage = {
     val img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-    (0 until width).map(w => (0 until height).map(h => 
+    (0 until width).foreach(w => (0 until height).foreach(h => 
       img.setRGB(w, h, getPixel(w, h).getRGB())
     ))
     img
@@ -318,9 +318,7 @@ class PixelWindow(
   }
   /** Draw `image` at `(x, y)` unscaled. */
   def drawImage(image: BufferedImage, x: Int, y: Int) = {
-    canvas.withGraphics{ g => 
-      g.drawImage(image, x, y, image.getWidth(), image.getHeight(), null)
-    }
+    canvas.withGraphics(_.drawImage(image, x, y, image.getWidth(), image.getHeight(), null))
   }
 
 
