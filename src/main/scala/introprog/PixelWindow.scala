@@ -254,18 +254,21 @@ class PixelWindow(
     Swing.await { new java.awt.Color(canvas.img.getRGB(x, y)) }
   }
 
-  import java.awt.image.BufferedImage
-  /**
-    * Returns a screenshot of the window,
-    * creates image one pixel at a time.
-    */
-  def getImage(): BufferedImage = {
-    val img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-    (0 until width).foreach(w => (0 until height).foreach(h => 
-      img.setRGB(w, h, getPixel(w, h).getRGB())
-    ))
-    img
-  }
+
+  /** Return image of PixelWindow. */
+  def getMatrix(): ColorMatrix = 
+    getMatrix(0, 0, width, height)
+
+  /** Return image of PixelWindow section defined by top left corner `(x, y)` and `(width, height)`. */
+  def getMatrix(x: Int, y: Int, width: Int, height: Int) : ColorMatrix =
+    import java.awt.image.BufferedImage
+    val img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
+    for
+      xx <- 0 until width 
+      yy <- 0 until height
+    do
+      img.setRGB(xx, yy, getPixel(xx + x, yy + y).getRGB())
+    img.toColorMatrix
 
   /** Set the PixelWindow frame title. */
   def setTitle(title: String): Unit = Swing { frame.setTitle(title) }
@@ -304,23 +307,36 @@ class PixelWindow(
   }
 
   
-  /** Draw `image` at `(x, y)` scaled to `(width, height)`. */
-  def drawImage(
-    image: BufferedImage,
+  /** Draw `cm` at `(x, y)` scaled to `(width, height)`. */
+  def drawMatrix(
+    cm: ColorMatrix,
     x: Int,
     y: Int,
     width: Int,
     height: Int
-  ) = {
-    canvas.withGraphics { g =>
-      g.drawImage(image, x, y, width, height, null)
-    }
-  }
-  /** Draw `image` at `(x, y)` unscaled. */
-  def drawImage(image: BufferedImage, x: Int, y: Int) = {
-    canvas.withGraphics(_.drawImage(image, x, y, image.getWidth(), image.getHeight(), null))
-  }
+  ): Unit = 
+    drawImage(cm.toImage, x, y, width, height)
+  
+  /** Draw `cm` at `(x, y)` unscaled. */
+  def drawMatrix(cm: ColorMatrix, x: Int, y: Int): Unit = 
+    drawImage(cm.toImage, x, y, cm.width, cm.height)
 
+
+  /** Draw `img` at `(x, y)` unscaled. */
+  def drawImage(img: java.awt.image.BufferedImage, x: Int, y: Int): Unit = 
+    drawImage(img, x, y, img.getWidth(), img.getHeight())
+
+  /** Draw `img` at `(x, y)` scaled to `(width, height)`. */
+  def drawImage(img: java.awt.image.BufferedImage, x: Int, y: Int, width: Int, height: Int): Unit = 
+    canvas.withGraphics(_.drawImage(img, x, y, width, height, null))
+
+  /** Draw `matrix` at `(x, y)` unscaled. */
+  def drawMatrix(matrix: Array[Array[java.awt.Color]], x: Int, y: Int): Unit = 
+    for
+      xx <- 0 until matrix.length 
+      yy <- 0 until matrix(xx).length
+    do
+      setPixel(xx+x, yy+y, matrix(xx)(yy))
 
 
 

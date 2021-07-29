@@ -25,20 +25,36 @@ object TestIO {
   }
 
   def testImageLoadAndDraw = {
-    import introprog.PixelWindow
+    import introprog.*
+    import java.awt.Color
+    import java.awt.Color.*
 
-    var w = new PixelWindow(100, 100);
+    val w = new PixelWindow(4*128, 3*128);
+    val w2 = new PixelWindow(4*128, 3*128)
     //draw text top right
-    w.drawText("test", 0, 0, java.awt.Color.red)
-    //draw entire window bottom left
-    w.drawImage(w.getImage(), 50, 50)
-    //save screenshot
-    IO.saveImage("screenshot.png", w.getImage())
-
-    //open new window with screenshot
-    new PixelWindow(100, 100).drawImage(IO.loadImage("screenshot.png"), 0, 0);
+    val testMatrix = Array[Array[Color]](Array[Color](blue, yellow, blue), 
+                                        Array[Color](yellow, yellow,  yellow),
+                                        Array[Color](blue, yellow,  blue),
+                                        Array[Color](blue, yellow,  blue))
+    var flagPos = (0, 0)
+    var flagSize = (4, 3)
     
-    println("if window content looks the same everything works :)")
+    //rita pytteliten flagga                
+    w.drawMatrix(testMatrix, 0, 0)
+
+    for i <- 1 to 7 do
+      //klipp ut och spara förra flaggan (via ColorMatrix)
+      val cm = w.getMatrix(flagPos._1, flagPos._2, flagSize._1, flagSize._2)
+      IO.saveImage("screenshot.png", cm.toImage)
+      //rita ut på det andra fönstret med `drawMatrix`
+      w2.drawMatrix(cm.toMatrix, flagPos._1, flagPos._2)
+      //uppdatera pos och size
+      flagPos = (flagPos._1 + flagSize._1,flagPos._2 + flagSize._2)
+      flagSize = (flagSize._1 * 2,flagSize._2 * 2)
+      //rita nya flagga från fil
+      if(i != 7) w.drawImage(IO.loadImage("screenshot.png"), flagPos._1, flagPos._2, flagSize._1, flagSize._2)
+    
+    println("if there are 7 flags in each window everything should be working fine")
     
     //delete screenshot file
     IO.delete("screenshot.png")
