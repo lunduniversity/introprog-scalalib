@@ -1,5 +1,7 @@
 package introprog
 
+import java.awt.Graphics2D
+
 /** A module with utilities for event handling in `PixelWindow` instances. */
 object PixelWindow {
   /** Immediately exit running application, close all windows, kills all threads. */
@@ -256,19 +258,15 @@ class PixelWindow(
 
 
   /** Return image of PixelWindow. */
-  def getMatrix(): ColorMatrix = 
-    getMatrix(0, 0, width, height)
+  def getImage(): Image =
+    import java.awt.image.BufferedImage
+    val img = BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
+    Swing.await{img.getGraphics.drawImage(canvas.img, 0, 0, null)}
+    Image(img)
 
   /** Return image of PixelWindow section defined by top left corner `(x, y)` and `(width, height)`. */
-  def getMatrix(x: Int, y: Int, width: Int, height: Int) : ColorMatrix =
-    import java.awt.image.BufferedImage
-    val img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
-    for
-      xx <- 0 until width 
-      yy <- 0 until height
-    do
-      img.setRGB(xx, yy, getPixel(xx + x, yy + y).getRGB())
-    img.toColorMatrix
+  def getImage(x: Int, y: Int, width: Int, height: Int) : Image =
+    getImage().subsection(x, y, width, height)
 
   /** Set the PixelWindow frame title. */
   def setTitle(title: String): Unit = Swing { frame.setTitle(title) }
@@ -278,6 +276,9 @@ class PixelWindow(
 
   /** Hide the window. Has no effect if the window is already hidden. */
   def hide(): Unit = Swing { frame.setVisible(false); frame.dispose() }
+
+  /** Set window position on screen*/
+  def setPosition(x: Int, y: Int): Unit = frame.setBounds(x, y, width, height)
 
   /** Clear all pixels using the `background` class parameter. */
   def clear(): Unit = canvas.withGraphics { g =>
@@ -307,28 +308,19 @@ class PixelWindow(
   }
 
   
-  /** Draw `cm` at `(x, y)` scaled to `(width, height)`. */
-  def drawMatrix(
-    cm: ColorMatrix,
+  /** Draw `img` at `(x, y)` scaled to `(width, height)`. */
+  def drawImage(
+    img: Image,
     x: Int,
     y: Int,
     width: Int,
     height: Int
   ): Unit = 
-    drawImage(cm.toImage, x, y, width, height)
+    canvas.withGraphics(_.drawImage(img.underlying, x, y, width, height, null))
   
-  /** Draw `cm` at `(x, y)` unscaled. */
-  def drawMatrix(cm: ColorMatrix, x: Int, y: Int): Unit = 
-    drawImage(cm.toImage, x, y, cm.width, cm.height)
-
-
   /** Draw `img` at `(x, y)` unscaled. */
-  def drawImage(img: java.awt.image.BufferedImage, x: Int, y: Int): Unit = 
-    drawImage(img, x, y, img.getWidth(), img.getHeight())
-
-  /** Draw `img` at `(x, y)` scaled to `(width, height)`. */
-  def drawImage(img: java.awt.image.BufferedImage, x: Int, y: Int, width: Int, height: Int): Unit = 
-    canvas.withGraphics(_.drawImage(img, x, y, width, height, null))
+  def drawImage(img: Image, x: Int, y: Int): Unit = 
+    drawImage(img, x, y, img.width, img.height)
 
   /** Draw `matrix` at `(x, y)` unscaled. */
   def drawMatrix(matrix: Array[Array[java.awt.Color]], x: Int, y: Int): Unit = 

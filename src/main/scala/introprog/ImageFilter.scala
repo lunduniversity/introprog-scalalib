@@ -5,8 +5,12 @@ package introprog
 
 /**
  * Superklassen till alla filterklasser.
+ * 
  * @version 1.3 (2021-07-25) översättning från java
  * (Theodor Lundqvist)
+ * 
+ * 1.2 (2016-07-17) nbrOfArgs attribut har lagts till 
+ * (Casper Schreiter, Björn Regnell)
  * 
  * Skapar ett filterobjekt med ett givet namn och antalet argument filtret behöver.
  * 
@@ -16,7 +20,6 @@ package introprog
  *            antal argument
  */
 abstract class ImageFilter(val name: String, val nbrOfArgs: Int):
-	import java.awt.Color;
 
     	/**
 	 * Filtrerar bilden i matrisen inPixels och returnerar resultatet i en ny
@@ -28,7 +31,7 @@ abstract class ImageFilter(val name: String, val nbrOfArgs: Int):
 	 *            argument
 	 * @return den filtrerade bilden
 	 */
-	def apply(inPixels: ColorMatrix, args: Array[Double]): ColorMatrix;
+	def apply(img: Image, args: Array[Double]): Image;
 	
 	/**
 	 * Beräknar intensiteten hos alla pixlarna i pixels, returnerar resultatet i
@@ -38,13 +41,13 @@ abstract class ImageFilter(val name: String, val nbrOfArgs: Int):
 	 *            matris med pixlar
 	 * @return intensiteten i varje pixel (matris med shorts)
 	 */
-	protected def computeIntensity(cm: ColorMatrix): Array[Array[Short]] = 
-		val intensity : Array[Array[Short]] = Array.ofDim(cm.height, cm.width)
+	protected def computeIntensity(img: Image): Array[Array[Short]] = 
+		val intensity : Array[Array[Short]] = Array.ofDim(img.height, img.width)
 		for 
-			h <- 0 until cm.height 
-			w <- 0 until cm.width
+			h <- 0 until img.height 
+			w <- 0 until img.width
 		do
-			val c = cm(h, w)
+			val c = img(h, w)
 			intensity(h)(w) = ((c.getRed()+c.getGreen+c.getBlue())/3).toShort
 		intensity
 

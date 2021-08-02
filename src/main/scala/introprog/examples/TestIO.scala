@@ -24,13 +24,18 @@ object TestIO {
     testImageLoadAndDraw
   }
 
-  def testImageLoadAndDraw = {
+  def testImageLoadAndDraw : Unit = {
     import introprog.*
     import java.awt.Color
     import java.awt.Color.*
 
-    val w = new PixelWindow(4*128, 3*128);
-    val w2 = new PixelWindow(4*128, 3*128)
+    val wSize = (4*128, 3*128)
+    val w =  new PixelWindow(wSize._1, wSize._2, "DrawImage");
+    val w2 = new PixelWindow(wSize._1, wSize._2, "DrawMatrix")
+    val w3 = new PixelWindow(wSize._1, wSize._2, "SaveLoadAsJpeg")
+    w.setPosition(0,0)
+    w2.setPosition(wSize._1, 0)
+    w3.setPosition(0, wSize._2+50)
     //draw text top right
     val testMatrix = Array[Array[Color]](Array[Color](blue, yellow, blue), 
                                         Array[Color](yellow, yellow,  yellow),
@@ -41,23 +46,32 @@ object TestIO {
     
     //rita pytteliten flagga                
     w.drawMatrix(testMatrix, 0, 0)
-
     for i <- 1 to 7 do
-      //klipp ut och spara förra flaggan (via ColorMatrix)
-      val cm = w.getMatrix(flagPos._1, flagPos._2, flagSize._1, flagSize._2)
-      IO.saveImage("screenshot.png", cm.toImage)
+      //klipp ut och spara förra flaggan (via Image)
+      var img = w.getImage(flagPos._1, flagPos._2, flagSize._1, flagSize._2)
+      IO.savePNG(img, "screenshot")
       //rita ut på det andra fönstret med `drawMatrix`
-      w2.drawMatrix(cm.toMatrix, flagPos._1, flagPos._2)
-      //uppdatera pos och size
-      flagPos = (flagPos._1 + flagSize._1,flagPos._2 + flagSize._2)
-      flagSize = (flagSize._1 * 2,flagSize._2 * 2)
-      //rita nya flagga från fil
-      if(i != 7) w.drawImage(IO.loadImage("screenshot.png"), flagPos._1, flagPos._2, flagSize._1, flagSize._2)
-    
-    println("if there are 7 flags in each window everything should be working fine")
-    
+      w2.drawMatrix(img.toMatrix, flagPos._1, flagPos._2)
+      if i != 7 then
+        //uppdatera pos och size
+        flagPos = (flagPos._1 + flagSize._1,flagPos._2 + flagSize._2)
+        flagSize = (flagSize._1 * 2,flagSize._2 * 2)
+        //rita ny flagga från fil
+        img = IO.loadImage("screenshot.png").get
+        w.drawImage(img.scaled(img.width*2, img.height*2), flagPos._1, flagPos._2)
+
+    var im = w2.getImage()
+    IO.saveJPEG(im, "screenshot.jpg", 0.2) 
+    im = IO.loadImage("screenshot.jpg").get
+    w3.drawImage(im, 0, 0)
+
+
+    println("Windows should be identical and display 7 flags each\nPress enter to quit")
+    scala.io.StdIn.readLine()
     //delete screenshot file
     IO.delete("screenshot.png")
+    IO.delete("screenshot.jpg")
+    PixelWindow.exit()
   }
 
 
