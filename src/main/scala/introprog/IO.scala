@@ -1,8 +1,5 @@
 package introprog
 
-import java.io.IOException
-
-
 /** A module with input/output operations from/to the underlying file system. */
 object IO {
   /**
@@ -160,7 +157,7 @@ object IO {
     *
     * @param image the image to save.
     * @param fileName the path to save the image to, `path/file.jpg` or just `path/file`
-    * @param compression the compression factor to use `(0.0-1.0).
+    * @param compression the compression factor to use `(0.0-1.0)`.
     * */
   def saveJPEG(img: Image, fileName: String, compression: Double) : Unit = 
     require(compression <= 1.0 && compression >= 0.0, "compression must be within 0.0 and 1.0")
@@ -191,25 +188,25 @@ object IO {
   * Save `img` to file as `JPEG` with a compression ratio of 0.75.
   * Restore color of transparent pixels.
   * @param img the image to save.
-  * @param fileName the path to save the image to, `path/file.jpg` or just `path/file`
+  * @param fileName the path to save the image to, `path/file.jpg` or just `path/file`.
   * */
   def saveJPEG(img: Image, fileName: String) : Unit = 
     import javax.imageio.ImageIO
     import java.io.File
     if !ImageIO.write(img.underlying, "jpg", File(if fileName.endsWith(".jpg") then fileName else s"$fileName.jpg")) then
-    throw IOException("no appropriate writer is found")
+    throw java.io.IOException("no appropriate writer is found")
 
   /**
   * Save `img` to file as `PNG`.
   *
   * @param img the image to save.
-  * @param fileName the path to save the image to, `path/file.png` or just `path/file`
+  * @param fileName the path to save the image to, `path/file.png` or just `path/file`.
   * */
   def savePNG(img: Image, fileName: String) : Unit = 
     import javax.imageio.ImageIO
     import java.io.File
     if !ImageIO.write(img.underlying, "png", File(if fileName.endsWith(".png") then fileName else s"$fileName.png")) then
-    throw IOException("no appropriate writer is found")
+    throw java.io.IOException("no appropriate writer is found")
 
 
   

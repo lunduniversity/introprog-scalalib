@@ -1,7 +1,5 @@
 package introprog
 
-import java.awt.Graphics2D
-
 /** A module with utilities for event handling in `PixelWindow` instances. */
 object PixelWindow {
   /** Immediately exit running application, close all windows, kills all threads. */
