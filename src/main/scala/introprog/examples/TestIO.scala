@@ -57,12 +57,12 @@ object TestIO {
         flagPos = (flagPos._1 + flagSize._1,flagPos._2 + flagSize._2)
         flagSize = (flagSize._1 * 2,flagSize._2 * 2)
         //rita ny flagga från fil
-        img = IO.loadImage("screenshot.png").get
+        img = IO.loadImage("screenshot.png")
         w.drawImage(img.scaled(img.width*2, img.height*2), flagPos._1, flagPos._2)
 
-    var im = w2.getImage()
+    var im = w2.getImage
     IO.saveJPEG(im, "screenshot.jpg", 0.2) 
-    im = IO.loadImage("screenshot.jpg").get
+    im = IO.loadImage("screenshot.jpg")
     w3.drawImage(im, 0, 0)
 
 

@@ -4,42 +4,39 @@ package introprog
 
 
 /**
- * Superklassen till alla filterklasser.
+ * The super class to all filters.
  * 
- * @version 1.3 (2021-07-25) översättning från java
+ * (2021-07-25) translate from java.
  * (Theodor Lundqvist)
  * 
- * 1.2 (2016-07-17) nbrOfArgs attribut har lagts till 
+ * (2016-07-17) nbrOfArgs attribut has been added.
  * (Casper Schreiter, Björn Regnell)
  * 
- * Skapar ett filterobjekt med ett givet namn och antalet argument filtret behöver.
- * 
+ * Create a filter object with a given name and the number of arguments the filter needs.
  * @param name
- *            filtrets namn
+ *            the name of the filter.
  * @param nbrOfArgs
- *            antal argument
+ *            number of arguments.
  */
 abstract class ImageFilter(val name: String, val nbrOfArgs: Int):
 
-    	/**
-	 * Filtrerar bilden i matrisen inPixels och returnerar resultatet i en ny
-	 * matris. Utnyttjar eventuellt värdena i args
+	/**
+	 * Apply the filter on `img` and return the result as a new Image using the arguments in `args`.
 	 * 
-	 * @param inPixels
-	 *            den ursprungliga bilden
+	 * @param img
+	 *            the original image.
 	 * @param args
-	 *            argument
-	 * @return den filtrerade bilden
+	 *            arguments
+	 * @return the resulting image.
 	 */
 	def apply(img: Image, args: Array[Double]): Image;
 	
 	/**
-	 * Beräknar intensiteten hos alla pixlarna i pixels, returnerar resultatet i
-	 * en ny matris.
+	 * Calculate the intensity in each pixel of `img`.
 	 * 
-	 * @param pixels
-	 *            matris med pixlar
-	 * @return intensiteten i varje pixel (matris med shorts)
+	 * @param img
+	 *           the image
+	 * @return intensitymatrix, values ranging from 0 to 255
 	 */
 	protected def computeIntensity(img: Image): Array[Array[Short]] = 
 		val intensity : Array[Array[Short]] = Array.ofDim(img.height, img.width)
@@ -51,29 +48,28 @@ abstract class ImageFilter(val name: String, val nbrOfArgs: Int):
 			intensity(h)(w) = ((c.getRed()+c.getGreen+c.getBlue())/3).toShort
 		intensity
 
-
 	/**
-	 * Faltar punkten p[i][j] med faltningskärnan kernel.
+	 * Convolute `p[i][j]` with the convolutionkernel `kernel`.
 	 * 
 	 * @param p
-	 *            matris med talvärden
+	 *            matrix with numbervalues
 	 * @param i
-	 *            radindex för den aktuella punkten
+	 *            current row index
 	 * @param j
-	 *            kolonnindex för den aktuella punkten
+	 *            current coloumn index
 	 * @param kernel
-	 *            faltningskärnan, en 3x3-matris
+	 *            convolutionkernel, a 3x3-matrix
 	 * @param weight
-	 *            summan av elementen i kernel
-	 * @return resultatet av faltningen
+	 *            the sum of the element in `kernel`
+	 * @return result of the convolution
 	 */
-	protected def convolve(p: Array[Array[Short]], i: Int, k: Int, kernel: Array[Array[Short]],
+	protected def convolve(p: Array[Array[Short]], i: Int, j: Int, kernel: Array[Array[Short]],
 			weight: Int): Short =
 		var sum : Double = 0;
 		
 		for ii <- -1 to 1 do
 			for jj <- -1 to 1 do
-				sum += p(i + ii)(k + jj) * kernel(ii + 1)(jj + 1);
+				sum += p(i + ii)(j + jj) * kernel(ii + 1)(jj + 1);
 		
 		Math.round(sum / weight).toShort;
 	

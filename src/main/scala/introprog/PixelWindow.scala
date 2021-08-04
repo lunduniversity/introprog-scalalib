@@ -256,7 +256,7 @@ class PixelWindow(
 
 
   /** Return image of PixelWindow. */
-  def getImage(): Image =
+  def getImage: Image =
     import java.awt.image.BufferedImage
     val img = BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
     Swing.await{img.getGraphics.drawImage(canvas.img, 0, 0, null)}
@@ -264,7 +264,7 @@ class PixelWindow(
 
   /** Return image of PixelWindow section defined by top left corner `(x, y)` and `(width, height)`. */
   def getImage(x: Int, y: Int, width: Int, height: Int) : Image =
-    getImage().subsection(x, y, width, height)
+    getImage.subsection(x, y, width, height)
 
   /** Set the PixelWindow frame title. */
   def setTitle(title: String): Unit = Swing { frame.setTitle(title) }

@@ -143,14 +143,10 @@ object IO {
     *
     * @param fileName the path the image that will be loaded.
     * */
-  def loadImage(fileName: String): Option[Image] = 
-    import scala.util.{Try, Success, Failure}
+  def loadImage(fileName: String): Image = 
     import javax.imageio.ImageIO
     import java.io.File
-
-    Try(ImageIO.read(File(fileName))) match
-      case Success(file) => Some(Image(file))
-      case Failure(e) => None
+    Image(ImageIO.read(File(fileName)))
 
     /**
     * Save `img` to file as `JPEG`. Does not restore color of transparent pixels.
@@ -171,14 +167,15 @@ object IO {
     //create writer
     val writer = ImageIO.getImageWritersByFormatName("jpg").next();
     // specifies where the jpg image has to be written
+    val path = if fileName.endsWith(".jpg") then fileName else s"$fileName.jpg"
     writer.setOutput(new stream.FileImageOutputStream(
-      java.io.File(if fileName.endsWith(".jpg") then fileName else s"$fileName.jpg")))
+      java.io.File(path)))
     // writes the file with given compression level 
     // from JPEGImageWriteParam instance
     writer.write(
       null, 
       IIOImage(
-        (if img.hasAlpha then img.toImageType(BufferedImage.TYPE_INT_RGB) else img).underlying, //remove alpha channel
+        (if img.hasAlpha then img.withoutAlpha else img).underlying, //remove alpha channel
         null, 
         null)
       ,jpegParams) //add compression details
