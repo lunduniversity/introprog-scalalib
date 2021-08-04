@@ -141,12 +141,18 @@ object IO {
     /**
     * Load image from file.
     *
-    * @param fileName the path the image that will be loaded.
+    * @param fileName the path to the image that will be loaded.
     * */
   def loadImage(fileName: String): Image = 
-    import javax.imageio.ImageIO
-    import java.io.File
-    Image(ImageIO.read(File(fileName)))
+    loadImage(java.io.File(fileName))
+
+    /**
+    * Load image from file.
+    *
+    * @param file the file that will be loaded.
+    * */
+  def loadImage(file: java.io.File): Image = 
+    Image(javax.imageio.ImageIO.read(file))
 
     /**
     * Save `img` to file as `JPEG`. Does not restore color of transparent pixels.
