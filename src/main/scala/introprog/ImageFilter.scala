@@ -4,21 +4,27 @@ package introprog
 
 
 /**
- * The super class to all filters.
- * 
- * (2021-07-25) translate from java.
+ * (2021-07-25) translate from java. Replaced nbrOfArgs with args.
  * (Theodor Lundqvist)
  * 
  * (2016-07-17) nbrOfArgs attribut has been added.
  * (Casper Schreiter, Björn Regnell)
  * 
- * Create a filter object with a given name and the number of arguments the filter needs.
+*/
+
+/**
+ * The super class to all filters.
+
+ * Create a filter object with a given name and argument descriptions.
  * @param name
  *            the name of the filter.
- * @param nbrOfArgs
- *            number of arguments.
+ * @param args
+ *            optional array of strings with argument descriptions or names
  */
-abstract class ImageFilter(val name: String, val nbrOfArgs: Int):
+abstract class ImageFilter(val name: String, val args: Array[String] = null):
+
+	/**The number of args this filter needs*/
+	def nbrOfArgs = if args == null then 0 else args.length
 
 	/**
 	 * Apply the filter on `img` and return the result as a new Image using the arguments in `args`.
@@ -39,13 +45,13 @@ abstract class ImageFilter(val name: String, val nbrOfArgs: Int):
 	 * @return intensitymatrix, values ranging from 0 to 255
 	 */
 	protected def computeIntensity(img: Image): Array[Array[Short]] = 
-		val intensity : Array[Array[Short]] = Array.ofDim(img.height, img.width)
+		val intensity : Array[Array[Short]] = Array.ofDim(img.width, img.height)
 		for 
-			h <- 0 until img.height 
 			w <- 0 until img.width
+			h <- 0 until img.height 
 		do
-			val c = img(h, w)
-			intensity(h)(w) = ((c.getRed()+c.getGreen+c.getBlue())/3).toShort
+			val c = img(w, h)
+			intensity(w)(h) = ((c.getRed()+c.getGreen+c.getBlue())/3).toShort
 		intensity
 
 	/**

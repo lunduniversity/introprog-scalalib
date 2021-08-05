@@ -1,9 +1,19 @@
 package introprog
 
+
+object Image:
+  import java.awt.image.BufferedImage
+  /** Create new empty Image with specified dimensions `(width, height)`*/
+  def ofDim(width: Int, height: Int) =
+    Image(BufferedImage(width, height, BufferedImage.TYPE_INT_RGB))
+
+
+
 class Image (val underlying: java.awt.image.BufferedImage):
   import java.awt.Color
   import java.awt.image.BufferedImage
 
+  
   /** Get color of pixel at `(x, y)`.*/
   def apply(x: Int, y: Int): Color = Color(underlying.getRGB(x, y))
 
