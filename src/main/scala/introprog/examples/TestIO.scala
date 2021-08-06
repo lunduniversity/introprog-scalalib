@@ -24,24 +24,54 @@ object TestIO {
     testImageLoadAndDraw
   }
 
-  def testImageLoadAndDraw = {
-    import introprog.PixelWindow
+  def testImageLoadAndDraw : Unit = {
+    import introprog.*
+    import java.awt.Color
+    import java.awt.Color.*
 
-    var w = new PixelWindow(100, 100);
+    val wSize = (4*128, 3*128)
+    val w =  new PixelWindow(wSize._1, wSize._2, "DrawImage");
+    val w2 = new PixelWindow(wSize._1, wSize._2, "DrawMatrix")
+    val w3 = new PixelWindow(wSize._1, wSize._2, "SaveLoadAsJpeg")
+    w.setPosition(0,0)
+    w2.setPosition(wSize._1, 0)
+    w3.setPosition(0, wSize._2+50)
     //draw text top right
-    w.drawText("test", 0, 0, java.awt.Color.red)
-    //draw entire window bottom left
-    w.drawImage(w.getImage(), 50, 50)
-    //save screenshot
-    IO.saveImage("screenshot.png", w.getImage())
+    val testMatrix = Array[Array[Color]](Array[Color](blue, yellow, blue), 
+                                        Array[Color](yellow, yellow,  yellow),
+                                        Array[Color](blue, yellow,  blue),
+                                        Array[Color](blue, yellow,  blue))
+    var flagPos = (0, 0)
+    var flagSize = (4, 3)
+    
+    //rita pytteliten flagga                
+    w.drawMatrix(testMatrix, 0, 0)
+    for i <- 1 to 7 do
+      //klipp ut och spara förra flaggan (via Image)
+      var img = w.getImage(flagPos._1, flagPos._2, flagSize._1, flagSize._2)
+      IO.savePNG(img, "screenshot")
+      //rita ut på det andra fönstret med `drawMatrix`
+      w2.drawMatrix(img.toMatrix, flagPos._1, flagPos._2)
+      if i != 7 then
+        //uppdatera pos och size
+        flagPos = (flagPos._1 + flagSize._1,flagPos._2 + flagSize._2)
+        flagSize = (flagSize._1 * 2,flagSize._2 * 2)
+        //rita ny flagga från fil
+        img = IO.loadImage("screenshot.png")
+        w.drawImage(img.scaled(img.width*2, img.height*2), flagPos._1, flagPos._2)
 
-    //open new window with screenshot
-    new PixelWindow(100, 100).drawImage(IO.loadImage("screenshot.png"), 0, 0);
-    
-    println("if window content looks the same everything works :)")
-    
+    var im = w2.getImage
+    IO.saveJPEG(im, "screenshot.jpg", 0.2) 
+    im = IO.loadImage("screenshot.jpg")
+    w3.drawImage(im, 0, 0)
+
+
+    println("Windows should be identical and display 7 flags each\nPress enter to quit")
+    scala.io.StdIn.readLine()
     //delete screenshot file
     IO.delete("screenshot.png")
+    IO.delete("screenshot.jpg")
+    PixelWindow.exit()
   }
 
 
