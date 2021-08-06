@@ -19,12 +19,12 @@ package introprog
  * @param name
  *            the name of the filter.
  * @param args
- *            optional array of strings with argument descriptions or names
+ *            optional array of strings with argument descriptions
  */
-abstract class ImageFilter(val name: String, val args: Array[String] = null):
+abstract class ImageFilter(val name: String, val argDescriptions: String*):
 
 	/**The number of args this filter needs*/
-	def nbrOfArgs = if args == null then 0 else args.length
+	def nbrOfArgs = argDescriptions.length
 
 	/**
 	 * Apply the filter on `img` and return the result as a new Image using the arguments in `args`.
@@ -35,7 +35,7 @@ abstract class ImageFilter(val name: String, val args: Array[String] = null):
 	 *            arguments
 	 * @return the resulting image.
 	 */
-	def apply(img: Image, args: Array[Double]): Image;
+	def apply(img: Image, args: Double*): Image;
 	
 	/**
 	 * Calculate the intensity in each pixel of `img`.
