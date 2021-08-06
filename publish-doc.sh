@@ -1,7 +1,7 @@
 echo "*** Generating docs and copy api to fileadmin then zip it for local download"
 set -x
 
-SCALAVERSION=3.0.0
+SCALAVERSION=3.0.1
 sbt doc
 
 ssh $LUCATID@fileadmin.cs.lth.se rm -r pgk/api
