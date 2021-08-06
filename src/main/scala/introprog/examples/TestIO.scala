@@ -44,19 +44,19 @@ object TestIO {
     var flagPos = (0, 0)
     var flagSize = (4, 3)
     
-    //rita pytteliten flagga                
+    //draw small flag                
     w.drawMatrix(testMatrix, 0, 0)
     for i <- 1 to 7 do
-      //klipp ut och spara förra flaggan (via Image)
+      // extract and save Image
       var img = w.getImage(flagPos._1, flagPos._2, flagSize._1, flagSize._2)
       IO.savePNG(img, "screenshot")
-      //rita ut på det andra fönstret med `drawMatrix`
+      //draw in other window using drawMatrix
       w2.drawMatrix(img.toMatrix, flagPos._1, flagPos._2)
       if i != 7 then
-        //uppdatera pos och size
+        //update pos and size
         flagPos = (flagPos._1 + flagSize._1,flagPos._2 + flagSize._2)
         flagSize = (flagSize._1 * 2,flagSize._2 * 2)
-        //rita ny flagga från fil
+        //draw new flag from file
         img = IO.loadImage("screenshot.png")
         w.drawImage(img.scaled(img.width*2, img.height*2), flagPos._1, flagPos._2)
 
@@ -66,15 +66,13 @@ object TestIO {
     w3.drawImage(im, 0, 0)
 
 
-    println("Windows should be identical and display 7 flags each\nPress enter to quit")
-    scala.io.StdIn.readLine()
-    //delete screenshot file
+    println("Windows should be identical and display 7 flags each.")
+    println("Close all widows and press enter to quit.")
+    val _ = scala.io.StdIn.readLine()
     IO.delete("screenshot.png")
     IO.delete("screenshot.jpg")
     PixelWindow.exit()
   }
-
-
 
 // for file extension choice see:
 // https://stackoverflow.com/questions/10433214/file-extension-for-a-serialized-object
