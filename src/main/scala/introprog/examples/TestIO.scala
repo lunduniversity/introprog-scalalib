@@ -21,10 +21,10 @@ object TestIO {
     assert(isSameContents, s"$highscores != $highscores2")
     println(s"$highscores == $highscores2\n$testResult")
 
-    testImageLoadAndDraw
+    testImageLoadAndDraw()
   }
 
-  def testImageLoadAndDraw : Unit = {
+  def testImageLoadAndDraw(): Unit = {
     import introprog.*
     import java.awt.Color
     import java.awt.Color.*
