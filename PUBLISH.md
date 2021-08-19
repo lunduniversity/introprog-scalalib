@@ -105,7 +105,7 @@ openpgp-revocs.d  pubring.asc        trustdb.gpg
 
 10. Click the *Close* icon with a diskette above the repository list to "close" the staging repository. No need to write anything in the "Description" field in the popup. It has happened that the Close failed - then the repo is still "Open" so try to close it again and hope it works this time...
 
-11. After a while (typically a couple of minutes) the *Release* icon with a chain above the repository list is enabled. Click it when enabled. You can keep the "Automatically Drop" checkbox checked, which means that when the repo is published on Central the staging repo is removed from the list.
+11. Click the green arrow "Refresh" icon. Mark the Repository in the list by clicking the check-mark square to the left of th repo name similar to "selthcs-1015". After a while (typically a couple of minutes) the *Release* icon with a chain above the repository list is enabled. If it is not enabled the wait some minutes and click "Refresh" again. Click "Release" when enabled. In the dialog that appears you can keep the "Automatically Drop" checkbox checked, which means that when the repo is published on Central the staging repo is removed from the list.
 
 12. By searching here you can see the repo in progress of being published but it takes a while before it is publicly visible on Central (typically 10-15 minutes). https://oss.sonatype.org/#nexus-search;quick~se.lth.cs
 
