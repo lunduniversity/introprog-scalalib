@@ -16,10 +16,10 @@ This repo is used in this course *(in Swedish)*: http://cs.lth.se/pgk with cours
 ## How to use introprog-scalalib
 ### Using sbt
 
-If you have the [Scala Build Tool](https://www.scala-sbt.org/download.html) version 1.5.2 or later then put this text in a file called `build.sbt`
+You need to have [Scala Build Tool](https://www.scala-sbt.org/download.html) version 1.5.2 or later and put this text in a file called `build.sbt`
 ```
-scalaVersion := "3.0.0"
-libraryDependencies += "se.lth.cs" %% "introprog" % "1.1.5"
+scalaVersion := "3.0.1"
+libraryDependencies += "se.lth.cs" %% "introprog" % "1.2.0"
 ```
 
 When you run `sbt` in terminal the `introprog` package is automatically downloaded and made available on your classpath.
@@ -33,7 +33,7 @@ scala> w.fill(100,100,100,100,java.awt.Color.red)
 
 ### Older Scala versions
 
-If you want to use Scala 2.13 then you need Scala 2.13.5 or later and these special settings in `build.sbt`: 
+If you want to use Scala 2.13 with 2.13.5 or later then use these special settings in `build.sbt`: 
 ```
 scalaVersion := "2.13.6"
 scalacOptions += "-Ytasty-reader"
@@ -41,31 +41,23 @@ libraryDependencies +=
   ("se.lth.cs" %% "introprog" % "1.1.5").cross(CrossVersion.for2_13Use3)
 ```
 
-For Scala 2.12.x and 2.13.4 and older you need to use the old version `"1.1.4"`. 
+For Scala 2.12.x and 2.13.4 and older you need to use the old version `"1.1.4"` of `introprog`. 
 
 
 ### Manual download
 
 Download the latest jar-file from here: https://github.com/lunduniversity/introprog-scalalib/releases
 
-Or from Maven central here: https://search.maven.org/search?q=a:introprog*
+Or from Scaladex here: https://index.scala-lang.org/lunduniversity/introprog-scalalib
 
-Or get any version from here: https://repo1.maven.org/maven2/se/lth/cs/
+Or search Maven central here: https://search.maven.org/search?q=a:introprog*
 
-Put the jar-file on your classpath when you run the Scala REPL, for example:
-```
-> scala -cp introprog_3-1.1.5.jar
-scala> val w = new introprog.PixelWindow()
-scala> w.fill(100,100,100,100,java.awt.Color.red)
-scala>
-```
-Put the jar-file on your classpath when you run your Scala app, for example:
-```
-> scala -cp "introprog_3-1.1.5.jar:." Main
-```
-If on Windows cmd/powershell use `;` instead of `:` before the period.
+Or download any version directly from Maven here: https://repo1.maven.org/maven2/se/lth/cs/
+
+Put the latest introprog jar-file in your sbt project in a subfolder called `lib`.  In your `build.sbt` you only need `scalaVersion := "3.0.1"` without a library dependency to introprog, as `sbt` automatically put jars in lib on your classpath.
 
 ## How to build introprog-scalalib
+
 With [`sbt`](https://www.scala-sbt.org/download.html) and [`git`](https://git-scm.com/downloads) on your path type in terminal:
 ```
 > git clone git@github.com:lunduniversity/introprog-scalalib.git
