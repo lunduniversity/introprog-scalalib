@@ -47,7 +47,6 @@ For Scala 2.12.x and 2.13.4 and older you need to use the old version `"1.1.4"` 
 ### Manual download
 
 Download the latest jar-file from here: 
-
 * Github releases: https://github.com/lunduniversity/introprog-scalalib/releases
 * Scaladex: https://index.scala-lang.org/lunduniversity/introprog-scalalib
 * Search Maven central: https://search.maven.org/search?q=introprog
