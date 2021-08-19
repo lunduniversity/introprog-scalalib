@@ -46,13 +46,12 @@ For Scala 2.12.x and 2.13.4 and older you need to use the old version `"1.1.4"` 
 
 ### Manual download
 
-Download the latest jar-file from here: https://github.com/lunduniversity/introprog-scalalib/releases
+Download the latest jar-file from here: 
 
-Or from Scaladex here: https://index.scala-lang.org/lunduniversity/introprog-scalalib
-
-Or search Maven central here: https://search.maven.org/search?q=introprog
-
-Or download any version directly from Maven here: https://repo1.maven.org/maven2/se/lth/cs/
+* Github releases: https://github.com/lunduniversity/introprog-scalalib/releases
+* Scaladex: https://index.scala-lang.org/lunduniversity/introprog-scalalib
+* Search Maven central: https://search.maven.org/search?q=introprog
+* Maven central server: https://repo1.maven.org/maven2/se/lth/cs/
 
 Put the latest introprog jar-file in your sbt project in a subfolder called `lib`.  In your `build.sbt` you only need `scalaVersion := "3.0.1"` without a library dependency to introprog, as `sbt` automatically put jars in lib on your classpath.
 
