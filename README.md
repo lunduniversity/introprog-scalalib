@@ -50,7 +50,7 @@ Download the latest jar-file from here: https://github.com/lunduniversity/introp
 
 Or from Scaladex here: https://index.scala-lang.org/lunduniversity/introprog-scalalib
 
-Or search Maven central here: https://search.maven.org/search?q=a:introprog*
+Or search Maven central here: https://search.maven.org/search?q=introprog
 
 Or download any version directly from Maven here: https://repo1.maven.org/maven2/se/lth/cs/
 
