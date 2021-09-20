@@ -33,6 +33,17 @@ object Swing {
   def isOS(partOfName: String): Boolean =
     scala.sys.props("os.name").toLowerCase.contains(partOfName.toLowerCase)
 
+  /** Check whether `/proc/version` on this filesystem contains the argument `s`. */
+  def isInProc(s: String): Boolean = {
+    val cmd = isOS("mac") match {
+          case true => Seq("grep", "-qs", s, "/proc/version")
+          case _    => Seq("grep", "-q",  s, "/proc/version")
+        }
+
+    val p = sys.process.Process(cmd)
+    util.Try(p.! == 0).getOrElse(false)
+  }
+
   private var isInit = false
 
   /** Init the Swing GUI toolkit and set platform-specific look and feel.*/
@@ -46,6 +57,7 @@ object Swing {
     if (isOS("linux")) findLookAndFeel("gtk").foreach(setLookAndFeel)
     else if (isOS("win")) findLookAndFeel("win").foreach(setLookAndFeel)
     else if (isOS("mac")) findLookAndFeel("apple").foreach(setLookAndFeel)
+    else if (isInProc("WSL")) findLookAndFeel("win").foreach(setLookAndFeel)
     else javax.swing.UIManager.setLookAndFeel(
       javax.swing.UIManager.getSystemLookAndFeelClassName()
     )
