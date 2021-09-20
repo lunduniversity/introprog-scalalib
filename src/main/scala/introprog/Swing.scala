@@ -55,9 +55,8 @@ object Swing {
   private def setPlatformSpecificLookAndFeel(): Unit = {
     import javax.swing.UIManager.setLookAndFeel
     if (isOS("linux")) findLookAndFeel("gtk").foreach(setLookAndFeel)
-    else if (isOS("win")) findLookAndFeel("win").foreach(setLookAndFeel)
+    else if (isOS("win") || isInProc("WSL")) findLookAndFeel("win").foreach(setLookAndFeel)
     else if (isOS("mac")) findLookAndFeel("apple").foreach(setLookAndFeel)
-    else if (isInProc("WSL")) findLookAndFeel("win").foreach(setLookAndFeel)
     else javax.swing.UIManager.setLookAndFeel(
       javax.swing.UIManager.getSystemLookAndFeelClassName()
     )
