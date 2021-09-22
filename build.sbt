@@ -1,7 +1,7 @@
-lazy val Version = "1.2.0"
+lazy val Version = "1.3.0"
 lazy val Name    = "introprog"
 //lazy val scala213 = "2.13.6"
-lazy val scala3  = "3.0.1" 
+lazy val scala3  = "3.0.2" 
 //lazy val supportedScalaVersions = List(scala213, scala3)
 
 // to avoid strange warnings, these lines with excludeLintKeys are needed:

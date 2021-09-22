@@ -33,12 +33,19 @@ object Swing {
   def isOS(partOfName: String): Boolean =
     scala.sys.props("os.name").toLowerCase.contains(partOfName.toLowerCase)
 
-  /** Check whether `/proc/version` on this filesystem contains any of the strings in `s`. */
-  def isInProc(s: String*): Boolean = {
-    val searchString = s.mkString("|")
-    val cmd = Seq("grep", "-i", "-P", "-s", "-q", searchString, "/proc/version")
-    val p = sys.process.Process(cmd)
-    util.Try(p.! == 0).getOrElse(false)
+  /** Check whether `/proc/version` on this filesystem contains any of the strings in `parts`. 
+    * Can be used to detect if we are on WSL instead of "real" linux/ubuntu.
+    */
+  def isInProc(parts: String*): Boolean = {
+    val searchExpression = parts.mkString("|")
+    val cmd = Seq(
+      "grep", 
+      "--ignore-case", "--perl-regexp", "--no-messages", "--silent", 
+      searchExpression, 
+      "/proc/version"
+    )
+    val process = sys.process.Process(cmd)
+    util.Try(process.! == 0).getOrElse(false)
   }
 
   private var isInit = false
