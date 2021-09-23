@@ -39,10 +39,9 @@ object Swing {
     */
   private def isInProc(parts: String*): Boolean = {
     import util.{Try, Success, Failure}
-    val partsLowerCase = parts.map(_.toLowerCase)
     
     Try(IO.loadString("/proc/version").toLowerCase) match {
-      case Success(s) => partsLowerCase.exists(s.contains(_))
+      case Success(proc) => parts.map(_.toLowerCase).exists(proc.contains(_))
       case Failure(_) => false
     }
   }
