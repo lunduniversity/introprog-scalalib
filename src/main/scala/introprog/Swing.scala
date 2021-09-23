@@ -38,15 +38,13 @@ object Swing {
     * Can be used to detect if we are on WSL instead of "real" linux/ubuntu.
     */
   private def isInProc(parts: String*): Boolean = {
-    val searchExpression = parts.mkString("|")
-    val cmd = Seq(
-      "grep", 
-      "--ignore-case", "--perl-regexp", "--no-messages", "--silent", 
-      searchExpression, 
-      "/proc/version"
-    )
-    val process = sys.process.Process(cmd)
-    util.Try(process.! == 0).getOrElse(false)
+    import util.{Try, Success, Failure}
+    val partsLowerCase = parts.map(_.toLowerCase)
+    
+    Try(IO.loadString("/proc/version").toLowerCase) match {
+      case Success(s) => partsLowerCase.exists(s.contains(_))
+      case Failure(_) => false
+    }
   }
 
   private var isInit = false
