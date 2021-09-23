@@ -37,14 +37,10 @@ object Swing {
   /** Check whether `/proc/version` on this filesystem contains any of the strings in `parts`. 
     * Can be used to detect if we are on WSL instead of "real" linux/ubuntu.
     */
-  private def isInProc(parts: String*): Boolean = {
-    import util.{Try, Success, Failure}
-    
-    Try(IO.loadString("/proc/version").toLowerCase) match {
-      case Success(proc) => parts.map(_.toLowerCase).exists(proc.contains(_))
-      case Failure(_) => false
-    }
-  }
+  private def isInProc(parts: String*): Boolean =
+    util.Try(parts.map(_.toLowerCase)
+    .exists(IO.loadString("/proc/version").toLowerCase.contains(_)))
+    .getOrElse(false)
 
   private var isInit = false
 
