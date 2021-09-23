@@ -1,5 +1,5 @@
 #VERSION="$(grep -m 1 -Po -e '\d+.\d+.\d+' build.sbt)"
-VERSION=1.3.0
+VERSION=1.3.1
 SCALAVERSION=3.0.2
 SCALACOMPAT=3
 
