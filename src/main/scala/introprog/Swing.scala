@@ -39,7 +39,7 @@ object Swing {
     */
   private def isInProc(parts: String*): Boolean =
     util.Try(parts.map(_.toLowerCase)
-    .exists(IO.loadString("/proc/version").toLowerCase.contains(_)))
+    .exists(part => IO.loadString("/proc/version").toLowerCase.contains(part)))
     .getOrElse(false)
 
   private var isInit = false
