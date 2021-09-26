@@ -32,6 +32,8 @@ ThisBuild / versionPolicyIntention := Compatibility.None
 
 ThisBuild / scalacOptions ++= Seq(
   "-encoding", "UTF-8",
+  "-unchecked",
+  "-deprecation",
 //  "-Xfuture",
 //  "-Yno-adapted-args",
 //  "-Ywarn-dead-code",
