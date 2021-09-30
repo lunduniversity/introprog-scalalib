@@ -1,12 +1,11 @@
-lazy val Version = "1.2.0"
+lazy val Version = "1.3.1"
 lazy val Name    = "introprog"
 //lazy val scala213 = "2.13.6"
-lazy val scala3  = "3.0.1" 
+lazy val scala3  = "3.0.2" 
 //lazy val supportedScalaVersions = List(scala213, scala3)
 
 // to avoid strange warnings, these lines with excludeLintKeys are needed:
-  Global / excludeLintKeys += ThisBuild / Compile / console / fork
-  Global / excludeLintKeys += ThisBuild / Compile / doc / scalacOptions
+Global / excludeLintKeys += ThisBuild / Compile / console / fork
 
 
 lazy val introprog = (project in file("."))
@@ -45,15 +44,14 @@ ThisBuild / scalacOptions ++= Seq(
 
 ThisBuild / Compile / compile / javacOptions ++= Seq("-target", "1.8")
 
-ThisBuild / Compile / doc / scalacOptions ++= Seq(
-  "-implicits",
+Compile / doc / scalacOptions ++= Seq(
   "-groups",
-  "-doc-title", Name,
-  "-doc-footer", "Dep. of Computer Science, Lund University, Faculty of Engineering LTH",
-  "-sourcepath", (ThisBuild/baseDirectory).value.toString,
-  "-doc-version", Version,
-  "-doc-root-content", (ThisBuild/baseDirectory).value.toString + "/src/rootdoc.txt",
-  "-doc-source-url", s"https://github.com/lunduniversity/introprog-scalalib/tree/master€{FILE_PATH}.scala"
+  "-project-version", Version,
+  "-project-footer", "Dep. of Computer Science, Lund University, Faculty of Engineering LTH",
+  "-siteroot", ".",
+  "-doc-root-content", "./docs/index.md",
+  "-source-links:github://lunduniversity/introprog-scalalib/master",
+  "-social-links:github::https://github.com/lunduniversity/introprog-scalalib"
 )
 
 // Below enables publishing to central.sonatype.org 
