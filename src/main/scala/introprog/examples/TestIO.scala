@@ -63,11 +63,16 @@ object TestIO {
     var im = w2.getImage
     IO.saveJPEG(im, "screenshot.jpg", 0.2) 
     im = IO.loadImage("screenshot.jpg")
-    w3.drawImage(im, 0, 0)
+
+
+    for i <- 0 to 100 do
+      w3.clear()
+      w3.drawImage(im, 0, 0, im.width, im.height, i)
+      Thread.sleep(100/6)
 
 
     println("Windows should be identical and display 7 flags each.")
-    println("Close all widows and press enter to quit.")
+    println("Press enter to quit.")
     val _ = scala.io.StdIn.readLine()
     IO.delete("screenshot.png")
     IO.delete("screenshot.jpg")
