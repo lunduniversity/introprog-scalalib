@@ -32,7 +32,7 @@ object TestIO {
     val wSize = (4*128, 3*128)
     val w =  new PixelWindow(wSize._1, wSize._2, "DrawImage");
     val w2 = new PixelWindow(wSize._1, wSize._2, "DrawMatrix")
-    val w3 = new PixelWindow(wSize._1, wSize._2, "SaveLoadAsJpeg")
+    val w3 = new PixelWindow((wSize._1*1.5).toInt, (wSize._2*1.5).toInt, "SaveLoadAsJpeg")
     w.setPosition(0,0)
     w2.setPosition(wSize._1, 0)
     w3.setPosition(0, wSize._2+50)
@@ -64,10 +64,10 @@ object TestIO {
     IO.saveJPEG(im, "screenshot.jpg", 0.2) 
     im = IO.loadImage("screenshot.jpg")
 
-
-    for i <- 0 to 100 do
+    
+    for i <- 0 to 200 do
       w3.clear()
-      w3.drawImage(im, 0, 0, im.width, im.height, i)
+      w3.drawImage(im, 0, 0, (im.width*0.5).toInt, (im.height*0.5).toInt, Math.toRadians(i*2))
       Thread.sleep(100/6)
 
 

@@ -306,7 +306,7 @@ class PixelWindow(
   }
 
   
-  /** Draw `img` at `(x, y)` scaled to `(width, height)` and rotated `(angle)` degrees clockwise. */
+  /** Draw `img` at `(x, y)` scaled to `(width, height)` and rotated `(angle)` radians clockwise. */
   def drawImage(
     img: Image,
     x: Int,
@@ -317,9 +317,8 @@ class PixelWindow(
   ): Unit = 
     val at = new java.awt.geom.AffineTransform()
     at.translate(x, y)
-    at.scale(width/img.width, height/img.height)
-    at.rotate(Math.toRadians(angle), width/2, height/2)
-    canvas.withGraphics(_.drawImage(img.underlying, at, null))
+    at.rotate(angle, width/2, height/2)
+    canvas.withGraphics(_.drawImage(img.scaled(width, height).underlying, at, null))
   
   /** Draw `img` at `(x, y)` unscaled. */
   def drawImage(img: Image, x: Int, y: Int): Unit = 
