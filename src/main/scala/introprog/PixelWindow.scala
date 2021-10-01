@@ -1,7 +1,5 @@
 package introprog
 
-import java.awt.geom.AffineTransform
-
 /** A module with utilities for event handling in `PixelWindow` instances. */
 object PixelWindow {
   /** Immediately exit running application, close all windows, kills all threads. */
@@ -317,13 +315,13 @@ class PixelWindow(
     height: Int,
     angle: Double = 0
   ): Unit = 
-    val at = new AffineTransform()
+    val at = new java.awt.geom.AffineTransform()
     at.translate(x, y)
     at.scale(width/img.width, height/img.height)
     at.rotate(Math.toRadians(angle), width/2, height/2)
     canvas.withGraphics(_.drawImage(img.underlying, at, null))
   
-  /** Draw `img` at `(x, y)` unscaled, rotated `(angle)` degrees clockwise. */
+  /** Draw `img` at `(x, y)` unscaled. */
   def drawImage(img: Image, x: Int, y: Int): Unit = 
     drawImage(img, x, y, img.width, img.height)
 
