@@ -31,7 +31,16 @@ object Swing {
 
   /** Test if the current operating system name includes `partOfName`. */
   def isOS(partOfName: String): Boolean =
-    scala.sys.props("os.name").toLowerCase.contains(partOfName.toLowerCase)
+    if (partOfName.toLowerCase.startsWith("win") && isInProc("windows", "wsl", "microsoft")) true //WSL
+    else scala.sys.props("os.name").toLowerCase.contains(partOfName.toLowerCase)
+
+  /** Check whether `/proc/version` on this filesystem contains any of the strings in `parts`. 
+    * Can be used to detect if we are on WSL instead of "real" linux/ubuntu.
+    */
+  private def isInProc(parts: String*): Boolean =
+    util.Try(parts.map(_.toLowerCase)
+    .exists(part => IO.loadString("/proc/version").toLowerCase.contains(part)))
+    .getOrElse(false)
 
   private var isInit = false
 
@@ -43,8 +52,8 @@ object Swing {
 
   private def setPlatformSpecificLookAndFeel(): Unit = {
     import javax.swing.UIManager.setLookAndFeel
-    if (isOS("linux")) findLookAndFeel("gtk").foreach(setLookAndFeel)
-    else if (isOS("win")) findLookAndFeel("win").foreach(setLookAndFeel)
+    if (isOS("win")) findLookAndFeel("win").foreach(setLookAndFeel)
+    else if (isOS("linux")) findLookAndFeel("gtk").foreach(setLookAndFeel)
     else if (isOS("mac")) findLookAndFeel("apple").foreach(setLookAndFeel)
     else javax.swing.UIManager.setLookAndFeel(
       javax.swing.UIManager.getSystemLookAndFeelClassName()
