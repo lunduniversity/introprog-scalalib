@@ -2,6 +2,8 @@
 
 Contributions are welcome!
 
+If you contribute to this repo you implicitly agree to the terms of the open source license in this repository. 
+
 1. Open an **issue** and start discussing your suggestion. An issue can include a proposal to e.g. fix a bug, improve documentation, include a new or enhanced feature, develop a new beginner-friendly example, add a missing test, etc.
 
 2. **Fork** this repo and clone your fork as described [here](https://help.github.com/articles/fork-a-repo/).
