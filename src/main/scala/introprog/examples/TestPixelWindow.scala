@@ -34,10 +34,10 @@ object TestPixelWindow {
     square(150,200, 50)
     w.line(0,0,w.width,w.height)
 
-    while (w.lastEventType != Event.WindowClosed) {
+    while w.lastEventType != Event.WindowClosed do {
       w.awaitEvent(10)  // wait for next event for max 10 milliseconds
 
-      if (w.lastEventType != Event.Undefined) {
+      if w.lastEventType != Event.Undefined then {
         println(s"lastEventType: ${w.lastEventType} => ${Event.show(w.lastEventType)}")
       }
 

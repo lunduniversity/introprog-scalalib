@@ -17,7 +17,7 @@ object TestIO {
     val highscores2 = IO.loadObject[Map[Person, Int]]("highscores.ser")
 
     val isSameContents = highscores2 == highscores
-    val testResult = if (isSameContents) "SUCCESS :)" else "FAILURE :("
+    val testResult = if isSameContents then "SUCCESS :)" else "FAILURE :("
     assert(isSameContents, s"$highscores != $highscores2")
     println(s"$highscores == $highscores2\n$testResult")
 

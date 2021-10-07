@@ -31,7 +31,7 @@ object Swing {
 
   /** Test if the current operating system name includes `partOfName`. */
   def isOS(partOfName: String): Boolean =
-    if (partOfName.toLowerCase.startsWith("win") && isInProc("windows", "wsl", "microsoft")) true //WSL
+    if partOfName.toLowerCase.startsWith("win") && isInProc("windows", "wsl", "microsoft") then true //WSL
     else scala.sys.props("os.name").toLowerCase.contains(partOfName.toLowerCase)
 
   /** Check whether `/proc/version` on this filesystem contains any of the strings in `parts`. 
@@ -45,16 +45,16 @@ object Swing {
   private var isInit = false
 
   /** Init the Swing GUI toolkit and set platform-specific look and feel.*/
-  def init(): Unit = if (!isInit) {
+  def init(): Unit = if !isInit then {
     setPlatformSpecificLookAndFeel()
     isInit = true
   }
 
   private def setPlatformSpecificLookAndFeel(): Unit = {
     import javax.swing.UIManager.setLookAndFeel
-    if (isOS("win")) findLookAndFeel("win").foreach(setLookAndFeel)
-    else if (isOS("linux")) findLookAndFeel("gtk").foreach(setLookAndFeel)
-    else if (isOS("mac")) findLookAndFeel("apple").foreach(setLookAndFeel)
+    if isOS("win") then findLookAndFeel("win").foreach(setLookAndFeel)
+    else if isOS("linux") then findLookAndFeel("gtk").foreach(setLookAndFeel)
+    else if isOS("mac") then findLookAndFeel("apple").foreach(setLookAndFeel)
     else javax.swing.UIManager.setLookAndFeel(
       javax.swing.UIManager.getSystemLookAndFeelClassName()
     )

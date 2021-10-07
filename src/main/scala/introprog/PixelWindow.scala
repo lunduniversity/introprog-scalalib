@@ -166,7 +166,7 @@ class PixelWindow(
       }
 
     case ke: java.awt.event.KeyEvent =>
-      if (ke.getKeyChar == java.awt.event.KeyEvent.CHAR_UNDEFINED || ke.getKeyChar < ' ')
+      if ke.getKeyChar == java.awt.event.KeyEvent.CHAR_UNDEFINED || ke.getKeyChar < ' ' then
         _lastKeyText = PixelWindow.keyTextLookup.getOrElse(ke.getKeyCode, java.awt.event.KeyEvent.getKeyText(ke.getKeyCode))
       else _lastKeyText = ke.getKeyChar.toString
 
@@ -203,7 +203,7 @@ class PixelWindow(
     */
   def awaitEvent(timeoutInMillis: Long = 1): Unit = {
     val e = eventQueue.poll(timeoutInMillis, java.util.concurrent.TimeUnit.MILLISECONDS)
-    if (e != null) handleEvent(e) else _lastEventType = Event.Undefined
+    if e != null then handleEvent(e) else _lastEventType = Event.Undefined
   }
 
   /** Draw a line from (`x1`, `y1`) to (`x2`, `y2`) using `color` and `lineWidth`. */

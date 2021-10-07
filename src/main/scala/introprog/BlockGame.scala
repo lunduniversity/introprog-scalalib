@@ -85,11 +85,11 @@ abstract class BlockGame(
     * It draws only updated blocks aiming at the desired frame rate.
     * It calls each `onXXX` method if a corresponding event is detected.
     */
-  protected def gameLoop(stopWhen: => Boolean): Unit = while (!stopWhen) {
+  protected def gameLoop(stopWhen: => Boolean): Unit = while !stopWhen do {
     import PixelWindow.Event
     val t0 = System.currentTimeMillis
     pixelWindow.awaitEvent(MaxWaitForEventMillis.toLong)
-    while (pixelWindow.lastEventType != PixelWindow.Event.Undefined) {
+    while pixelWindow.lastEventType != PixelWindow.Event.Undefined do {
       pixelWindow.lastEventType match {
         case Event.KeyPressed    => onKeyDown(pixelWindow.lastKey)
         case Event.KeyReleased   => onKeyUp(pixelWindow.lastKey)
@@ -103,7 +103,7 @@ abstract class BlockGame(
     gameLoopAction()
     drawUpdatedBlocks()
     val elapsed = System.currentTimeMillis - t0
-    if ((gameLoopDelayMillis - elapsed) < MaxWaitForEventMillis) {
+    if (gameLoopDelayMillis - elapsed) < MaxWaitForEventMillis then {
       onFrameTimeOverrun(elapsed)
     }
     Thread.sleep((gameLoopDelayMillis - elapsed) max 0)
@@ -111,9 +111,9 @@ abstract class BlockGame(
 
   /** Draw updated blocks and carry out post-update actions if any. */
   private def drawUpdatedBlocks(): Unit = {
-    for (x <- blockBuffer.indices) {
-      for (y <- blockBuffer(x).indices) {
-        if (isBufferUpdated(x)(y)) {
+    for x <- blockBuffer.indices do {
+      for y <- blockBuffer(x).indices do {
+        if isBufferUpdated(x)(y) then {
           val pwx = x * blockSize
           val pwy = y * blockSize
           pixelWindow.fill(pwx, pwy, blockSize, blockSize, blockBuffer(x)(y))
@@ -129,8 +129,8 @@ abstract class BlockGame(
   def clearWindow(): Unit = {
     pixelWindow.clear()
     clearMessageArea()
-    for (x <- blockBuffer.indices) {
-      for (y <- blockBuffer(x).indices) {
+    for x <- blockBuffer.indices do {
+      for y <- blockBuffer(x).indices do {
           blockBuffer(x)(y) = background
       }
     }
@@ -138,7 +138,7 @@ abstract class BlockGame(
 
   /** Paint a block in color `c` at (`x`,`y`) in block coordinates. */
   def drawBlock(x: Int, y: Int, c: Color): Unit = {
-    if (blockBuffer(x)(y) != c) {
+    if blockBuffer(x)(y) != c then {
       blockBuffer(x)(y) = c
       isBufferUpdated(x)(y) = true
     }
@@ -146,7 +146,7 @@ abstract class BlockGame(
 
   /** Erase the block at (`x`,`y`) to `background` color. */
   def eraseBlock(x: Int, y: Int): Unit = {
-    if (blockBuffer(x)(y) != background) {
+    if blockBuffer(x)(y) != background then {
       blockBuffer(x)(y) = background
       isBufferUpdated(x)(y) = true
     }

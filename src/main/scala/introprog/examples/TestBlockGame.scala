@@ -55,7 +55,7 @@ object TestBlockGame {
       def rndPos: (Int, Int) = (nextInt(dim._1), nextInt(dim._2))
       def rndColor = new java.awt.Color(nextInt(256), nextInt(256), nextInt(256))
       print(".")
-      if (isDrawingRandomBlocks) {
+      if isDrawingRandomBlocks then {
         drawBlock(rndPos._1, rndPos._2, rndColor)
       }
     }
