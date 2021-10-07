@@ -306,7 +306,10 @@ class PixelWindow(
   }
 
   
-  /** Draw `img` at `(x, y)` scaled to `(width, height)` and rotated `(angle)` radians clockwise. */
+  /** Draw `img` at `(x, y)` scaled to `(width, height)` and rotated `(angle)` radians clockwise. 
+    *
+    * If angle is 0 then no rotation is applied.
+    */
   def drawImage(
     img: Image,
     x: Int,
@@ -334,7 +337,6 @@ class PixelWindow(
       yy <- 0 until matrix(xx).length
     do
       setPixel(xx+x, yy+y, matrix(xx)(yy))
-
 
 
   /** Create the underlying window and add listeners for event management. */
