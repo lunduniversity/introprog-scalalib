@@ -1,7 +1,7 @@
 package introprog
 
 /** A module with Swing utilities used by [[introprog.PixelWindow]]. */
-object Swing {
+object Swing:
 
   private def runInSwingThread(callback: => Unit): Unit =
     javax.swing.SwingUtilities.invokeLater(() => callback)
@@ -10,7 +10,7 @@ object Swing {
   def apply(callback: => Unit): Unit = runInSwingThread(callback)
 
   /** Run `callback` in the Swing thread and block until completion. */
-  def await[T: scala.reflect.ClassTag](callback: => T): T = {
+  def await[T: scala.reflect.ClassTag](callback: => T): T =
     val ready = new java.util.concurrent.CountDownLatch(1)
     val result = new Array[T](1)
     runInSwingThread {
@@ -19,7 +19,6 @@ object Swing {
     }
     ready.await
     result(0)
-  }
 
   /** Return a sequence of available look and feel options. */
   def installedLookAndFeels: Vector[String] =
@@ -45,12 +44,11 @@ object Swing {
   private var isInit = false
 
   /** Init the Swing GUI toolkit and set platform-specific look and feel.*/
-  def init(): Unit = if !isInit then {
+  def init(): Unit = if !isInit then
     setPlatformSpecificLookAndFeel()
     isInit = true
-  }
 
-  private def setPlatformSpecificLookAndFeel(): Unit = {
+  private def setPlatformSpecificLookAndFeel(): Unit =
     import javax.swing.UIManager.setLookAndFeel
     if isOS("win") then findLookAndFeel("win").foreach(setLookAndFeel)
     else if isOS("linux") then findLookAndFeel("gtk").foreach(setLookAndFeel)
@@ -58,14 +56,13 @@ object Swing {
     else javax.swing.UIManager.setLookAndFeel(
       javax.swing.UIManager.getSystemLookAndFeelClassName()
     )
-  }
 
   /** A Swing `JPanel` to create drawing windows for 2D graphics. */
   class ImagePanel(
     val initWidth: Int,
     val initHeight: Int,
     val initBackground: java.awt.Color
-  ) extends javax.swing.JPanel {
+  ) extends javax.swing.JPanel:
     val img: java.awt.image.BufferedImage = java.awt.GraphicsEnvironment
       .getLocalGraphicsEnvironment
       .getDefaultScreenDevice
@@ -84,10 +81,9 @@ object Swing {
 
     override def paintComponent(g: java.awt.Graphics): Unit = g.drawImage(img, 0, 0, this)
 
-    override def imageUpdate(img: java.awt.Image, infoFlags: Int, x: Int, y: Int, width: Int, height: Int): Boolean = {
+    override def imageUpdate(img: java.awt.Image, infoFlags: Int, x: Int, y: Int, width: Int, height: Int): Boolean =
       repaint()
       true
-    }
 
     /** Execute `action` in the Swing thread with graphics context as param. */
     def withGraphics(action: java.awt.Graphics2D => Unit) = runInSwingThread {
@@ -100,5 +96,3 @@ object Swing {
       action(img)
       repaint()
     }
-  }
-}

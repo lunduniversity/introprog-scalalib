@@ -1,12 +1,12 @@
 package introprog.examples
 
 /** Example of serializing objects to and from binary files on disk. */
-object TestIO {
+object TestIO:
   import introprog.IO
 
   case class Person(name: String)
 
-  def main(args: Array[String]): Unit = {
+  def main(args: Array[String]): Unit =
     println("Test of IO of serializable objects to/from disk:")
     val highscores = Map(Person("Sandra") -> 42, Person("Björn") -> 5)
 
@@ -22,9 +22,8 @@ object TestIO {
     println(s"$highscores == $highscores2\n$testResult")
 
     testImageLoadAndDraw()
-  }
 
-  def testImageLoadAndDraw(): Unit = {
+  def testImageLoadAndDraw(): Unit =
     import introprog.*
     import java.awt.Color
     import java.awt.Color.*
@@ -77,9 +76,7 @@ object TestIO {
     IO.delete("screenshot.png")
     IO.delete("screenshot.jpg")
     PixelWindow.exit()
-  }
 
 // for file extension choice see:
 // https://stackoverflow.com/questions/10433214/file-extension-for-a-serialized-object
 
-}
