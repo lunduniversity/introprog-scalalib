@@ -24,7 +24,7 @@ If you have [sbt](https://www.scala-sbt.org/) version 1.5.2 or later installed t
 
 ```
 scalaVersion := "3.0.2"
-libraryDependencies += "se.lth.cs" %% "introprog" % "1.2.0"
+libraryDependencies += "se.lth.cs" %% "introprog" % "1.3.1"
 ```
 
 You can find the latest version of introprog-scalalib on [scaladex](https://index.scala-lang.org/lunduniversity/introprog-scalalib/introprog).
