@@ -1,7 +1,9 @@
 lazy val Version = "1.3.1"
 lazy val Name    = "introprog"
 //lazy val scala213 = "2.13.6"
-lazy val scala3  = "3.0.2" 
+lazy val scala3  = "3.0.2" // stick to latest 3.0 for backward and forward compatibility
+      // when sbt 1.7 is released start using scalaOutputVersion
+      //     https://scala-lang.org/blog/2022/04/12/scala-3.1.2-released.html
 //lazy val supportedScalaVersions = List(scala213, scala3)
 
 // to avoid strange warnings, these lines with excludeLintKeys are needed:
