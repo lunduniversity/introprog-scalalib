@@ -14,9 +14,40 @@ This repo is used in this course *(in Swedish)*: http://cs.lth.se/pgk with cours
 
 
 ## How to use introprog-scalalib
+
+### Using scala-cli
+
+You need [Scala Command Line Interface]() at least version 0.1.5.
+
+Add these magic comment lines starting with `//>` in the beginning of your Scala 3 file: 
+
+```
+//> using scala "3"
+//> using lib "se.lth.cs::introprog:1.3.1"
+```
+
+You run your code with `scala-cli run .` (note the ending dot, meaning "this dir")
+
+If your program looks like this:
+
+```
+//> using scala "3.1.2"
+//> using lib "se.lth.cs::introprog:1.3.1"
+
+@main def run = 
+  val w = introprog.PixelWindow()
+  w.drawText("Hello introprog.PixelWindow!", x = 100, y = 100)
+```
+You should now see green text in a new window after executing:
+```
+scala-cli run .
+```
+
 ### Using sbt
 
-You need to have [Scala Build Tool](https://www.scala-sbt.org/download.html) version 1.5.2 or later and put this text in a file called `build.sbt`
+You need [Scala Build Tool](https://www.scala-sbt.org/download.html) at least version 1.5.2 (preferably 1.6.2 or later). 
+
+Put this text in a file called `build.sbt`
 ```
 scalaVersion := "3.0.2"
 libraryDependencies += "se.lth.cs" %% "introprog" % "1.3.1"
