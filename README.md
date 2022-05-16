@@ -42,6 +42,7 @@ You should see green text in a new window after executing:
 ```
 scala-cli run .
 ```
+See: [api documentation for PixelWindow](https://fileadmin.cs.lth.se/pgk/api/api/introprog/PixelWindow.html)
 
 ### Using sbt
 
@@ -61,7 +62,7 @@ sbt> console
 scala> val w = new introprog.PixelWindow()
 scala> w.fill(100,100,100,100,java.awt.Color.red)
 ```
-
+See: [api documentation for PixelWindow](https://fileadmin.cs.lth.se/pgk/api/api/introprog/PixelWindow.html)
 ### Older Scala versions
 
 If you want to use Scala 2.13 with 2.13.5 or later then use these special settings in `build.sbt`, esp. note that you should use version 1.1.5 of introprog: 
