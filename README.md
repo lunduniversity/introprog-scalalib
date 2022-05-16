@@ -64,15 +64,15 @@ scala> w.fill(100,100,100,100,java.awt.Color.red)
 
 ### Older Scala versions
 
-If you want to use Scala 2.13 with 2.13.5 or later then use these special settings in `build.sbt`: 
+If you want to use Scala 2.13 with 2.13.5 or later then use these special settings in `build.sbt`, esp. note that you should use version 1.1.5 of introprog: 
 ```
-scalaVersion := "2.13.6"
+scalaVersion := "2.13.8" //2.13.5 or any later 2.13 version
 scalacOptions += "-Ytasty-reader"
 libraryDependencies += 
   ("se.lth.cs" %% "introprog" % "1.1.5").cross(CrossVersion.for2_13Use3)
 ```
 
-For Scala 2.12.x and 2.13.4 and older you need to use the old version `"1.1.4"` of `introprog`. 
+For Scala 2.12.x and 2.13.4 and older you need to use version 1.1.4 of introprog or older. 
 
 
 ### Manual download
