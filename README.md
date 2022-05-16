@@ -17,7 +17,7 @@ This repo is used in this course *(in Swedish)*: http://cs.lth.se/pgk with cours
 
 ### Using scala-cli
 
-You need [Scala Command Line Interface]() at least version 0.1.5.
+You need [Scala Command Line Interface](https://scala-cli.virtuslab.org/install) at least version 0.1.5.
 
 Add these magic comment lines starting with `//>` in the beginning of your Scala 3 file: 
 
