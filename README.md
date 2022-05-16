@@ -38,7 +38,7 @@ If your program looks like this:
   val w = introprog.PixelWindow()
   w.drawText("Hello introprog.PixelWindow!", x = 100, y = 100)
 ```
-You should now see green text in a new window after executing:
+You should see green text in a new window after executing:
 ```
 scala-cli run .
 ```
