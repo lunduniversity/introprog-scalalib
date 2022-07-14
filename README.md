@@ -31,7 +31,7 @@ You run your code with `scala-cli run .` (note the ending dot, meaning "this dir
 If your program looks like this:
 
 ```
-//> using scala "3.1.2"
+//> using scala "3"
 //> using lib "se.lth.cs::introprog:1.3.1"
 
 @main def run = 
@@ -50,7 +50,7 @@ You need [Scala Build Tool](https://www.scala-sbt.org/download.html) at least ve
 
 Put this text in a file called `build.sbt`
 ```
-scalaVersion := "3.0.2"
+scalaVersion := "3.1.3"
 libraryDependencies += "se.lth.cs" %% "introprog" % "1.3.1"
 ```
 
