@@ -101,7 +101,7 @@ This repo includes utilities to empower learners to advance from basic to interm
 
 * Use as simple constructs as possible.
 * Follow Scala idioms with a pragmatic mix of imperative, functional and object-oriented programming.
-* Don't use advanced functional programming concepts and magical implicit.
+* Don't use advanced functional programming concepts and magical implicits.
 * Prefer a clean api with single-responsibility functions in simple modules.
 * Prefer immutability over mutable state, `Vector` for sequences and case classes for data.
 * Hide/avoid threading and complicated concurrency.
@@ -113,4 +113,4 @@ Areas currently in scope of this library:
 
 * Simple pixel-based 2D graphics for single-threaded game programming with explicit game loop.
 * Simple blocking IO that hides the underlying complication of releasing resources etc.
-* Simple modal GUI dialogs that blocks while waiting for user response.
+* Simple modal GUI dialogs that block while waiting for user response.
