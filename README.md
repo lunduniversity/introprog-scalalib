@@ -17,13 +17,13 @@ This repo is used in this course *(in Swedish)*: http://cs.lth.se/pgk with cours
 
 ### Using scala-cli
 
-You need [Scala Command Line Interface](https://scala-cli.virtuslab.org/install) at least version 0.1.5.
+You need [Scala Command Line Interface](https://scala-cli.virtuslab.org/install) at least version 1.0.0.
 
 Add these magic comment lines starting with `//>` in the beginning of your Scala 3 file: 
 
 ```
-//> using scala "3"
-//> using lib "se.lth.cs::introprog:1.3.1"
+//> using scala 3.3
+//> using lib se.lth.cs::introprog:1.3.1
 ```
 
 You run your code with `scala-cli run .` (note the ending dot, meaning "this dir")
@@ -31,8 +31,8 @@ You run your code with `scala-cli run .` (note the ending dot, meaning "this dir
 If your program looks like this:
 
 ```
-//> using scala "3"
-//> using lib "se.lth.cs::introprog:1.3.1"
+//> using scala 3.3
+//> using lib se.lth.cs::introprog:1.3.1
 
 @main def run = 
   val w = introprog.PixelWindow()
@@ -44,13 +44,18 @@ scala-cli run .
 ```
 See: [api documentation for PixelWindow](https://fileadmin.cs.lth.se/pgk/api/api/introprog/PixelWindow.html)
 
+You can also give the `introprog` dependency directly at the command line, instead of the `using lib` directive:
+```
+scala-cli run . --dep se.lth.cs::introprog:1.3.1
+```
+
 ### Using sbt
 
 You need [Scala Build Tool](https://www.scala-sbt.org/download.html) at least version 1.5.2 (preferably 1.6.2 or later). 
 
 Put this text in a file called `build.sbt`
 ```
-scalaVersion := "3.1.3"
+scalaVersion := "3.3.0"
 libraryDependencies += "se.lth.cs" %% "introprog" % "1.3.1"
 ```
 
