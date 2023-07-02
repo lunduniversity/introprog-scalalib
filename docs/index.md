@@ -18,7 +18,38 @@ The open source code is hosted at [[https://github.com/lunduniversity/introprog-
 
 - [[introprog.examples]] with code examples demonstrating how to use this library.
 
-## How to use this library with `sbt`
+## How to use introprog-scalalib
+
+### Using scala-cli
+
+You need [Scala Command Line Interface](https://scala-cli.virtuslab.org/install) at least version 0.1.5.
+
+Add these magic comment lines starting with `//>` in the beginning of your Scala 3 file: 
+
+```
+//> using scala "3"
+//> using lib "se.lth.cs::introprog:1.3.1"
+```
+
+You run your code with `scala-cli run .` (note the ending dot, meaning "this dir")
+
+If your program looks like this:
+
+```
+//> using scala "3"
+//> using lib "se.lth.cs::introprog:1.3.1"
+
+@main def run = 
+  val w = introprog.PixelWindow()
+  w.drawText("Hello introprog.PixelWindow!", x = 100, y = 100)
+```
+You should see green text in a new window after executing:
+```
+scala-cli run .
+```
+See: [api documentation for PixelWindow](https://fileadmin.cs.lth.se/pgk/api/api/introprog/PixelWindow.html)
+
+### Using sbt
 
 If you have [sbt](https://www.scala-sbt.org/) installed then you can put this text in a file called `build.sbt`
 
