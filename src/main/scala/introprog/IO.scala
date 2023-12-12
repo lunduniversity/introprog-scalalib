@@ -50,6 +50,17 @@ object IO:
     saveString(lines.mkString("\n"), fileName, enc)
 
   /**
+    * Appends `lines` to the text file `fileName` using encoding `enc`.
+    *
+    * @param lines the lines to append to the file.
+    * @param fileName the path of the file.
+    * @param enc the encoding of the file.
+    * */
+  def appendLines(lines: Seq[String], fileName: String, enc: String = "UTF-8"): Unit =
+    val newLines = loadLines(fileName, enc).appendedAll(lines)
+    saveLines(newLines, fileName, enc)
+
+  /**
     * Load a serialized object from a binary file called `fileName`.
     *
     * @param fileName the path of the file.
