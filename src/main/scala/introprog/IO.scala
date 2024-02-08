@@ -1,5 +1,9 @@
 package introprog
 
+import java.io.BufferedWriter
+import java.io.FileWriter
+import java.nio.charset.Charset
+
 /** A module with input/output operations from/to the underlying file system. */
 object IO:
   /**
@@ -50,6 +54,23 @@ object IO:
     saveString(lines.mkString("\n"), fileName, enc)
 
   /**
+    * Appends `string` to the text file `fileName` using encoding `enc`.
+    *
+    * @param text the text to be appended to the file.
+    * @param fileName the path of the file.
+    * @param enc the encoding of the file.
+    * */
+  def appendString(text: String, fileName: String, enc: String = "UTF-8"): Unit =
+    val f = new java.io.File(fileName);
+    require(!f.isDirectory(), "The file you're trying to write to can't be a directory.")
+    val w =
+      if f.exists() then
+        new BufferedWriter(new FileWriter(fileName, Charset.forName(enc), true))
+      else
+        new java.io.PrintWriter(f, enc)
+    try w.write(text) finally w.close()
+
+  /**
     * Appends `lines` to the text file `fileName` using encoding `enc`.
     *
     * @param lines the lines to append to the file.
@@ -57,8 +78,7 @@ object IO:
     * @param enc the encoding of the file.
     * */
   def appendLines(lines: Seq[String], fileName: String, enc: String = "UTF-8"): Unit =
-    val newLines = loadLines(fileName, enc).appendedAll(lines)
-    saveLines(newLines, fileName, enc)
+    appendString(lines.mkString("\n"), fileName, enc)
 
   /**
     * Load a serialized object from a binary file called `fileName`.
