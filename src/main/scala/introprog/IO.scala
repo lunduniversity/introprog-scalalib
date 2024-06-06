@@ -51,7 +51,7 @@ object IO:
     * @param enc the encoding of the file.
     * */
   def saveLines(lines: Seq[String], fileName: String, enc: String = "UTF-8"): Unit =
-    saveString(lines.mkString("\n"), fileName, enc)
+    saveString(lines.mkString("\n") + "\n", fileName, enc)
 
   /**
     * Appends `string` to the text file `fileName` using encoding `enc`.
