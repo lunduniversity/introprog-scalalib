@@ -1,13 +1,13 @@
 package introprog
 
-
+/** Companion object to create Image instances */ 
 object Image:
   import java.awt.image.BufferedImage
   /** Create new empty Image with specified dimensions `(width, height)`*/
   def ofDim(width: Int, height: Int) =
     Image(BufferedImage(width, height, BufferedImage.TYPE_INT_RGB))
 
-
+/** Image represents pixel arrays backed by underlying java.awtimage.BufferedImage */
 class Image (val underlying: java.awt.image.BufferedImage):
   import java.awt.Color
   import java.awt.image.BufferedImage
@@ -59,10 +59,13 @@ class Image (val underlying: java.awt.image.BufferedImage):
     val bi = BufferedImage(width, height, imageType)
     bi.createGraphics().drawImage(underlying, 0, 0, width, height, null)
     Image(bi)
-    
+  
+  /** Test if alpha channel is supperted. */
   val hasAlpha = underlying.getColorModel.hasAlpha
   
+  /** The height of this image. */ 
   val height = underlying.getHeight
   
+  /** The width of this image. */ 
   val width = underlying.getWidth
   
