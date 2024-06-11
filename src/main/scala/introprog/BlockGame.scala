@@ -3,7 +3,7 @@ package introprog
 import java.awt.Color
 
 /** A class for creating games with block-based graphics. 
- * See example usage in [`introprog.examples.TestBlockGame`](https://github.com/lunduniversity/introprog-scalalib/blob/master/src/main/scala/introprog/examples/TestBlockGame.scala#L7).
+ * See example usage in [introprog.examples.TestBlockGame](https://github.com/lunduniversity/introprog-scalalib/blob/master/src/main/scala/introprog/examples/TestBlockGame.scala#L7)
  * 
  * @constructor Create a new game.
  * @param title the title of the window
