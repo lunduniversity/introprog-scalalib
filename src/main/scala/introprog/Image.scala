@@ -1,6 +1,6 @@
 package introprog
 
-/** Companion object to create Image instances */ 
+/** Companion object to create Image instances. */ 
 object Image:
   import java.awt.image.BufferedImage
   /** Create new empty Image with specified dimensions `(width, height)`*/
@@ -23,7 +23,7 @@ class Image (val underlying: java.awt.image.BufferedImage):
     for x <- 0 until width; y <- 0 until height do
         update(x, y, f(x, y))
 
-  /** Set color of pixels by passing `f(x, y)` and return self*/
+  /** Set color of pixels by passing `f(x, y)` and return self. */
   def updated(f: (Int, Int) => Color): Image =
     for x <- 0 until width; y <- 0 until height do
         update(x, y, f(x, y))
