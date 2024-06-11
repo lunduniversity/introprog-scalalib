@@ -1,20 +1,15 @@
 lazy val Version = "1.4.0"
 lazy val Name    = "introprog"
-//lazy val scala213 = "2.13.6"
 lazy val scala3  = "3.3.3" 
-
-//lazy val supportedScalaVersions = List(scala213, scala3)
 
 // to avoid strange warnings, these lines with excludeLintKeys are needed:
 Global / excludeLintKeys += ThisBuild / Compile / console / fork
-
 
 lazy val introprog = (project in file("."))
   .settings(
     name := Name,
     version := Version,
     scalaVersion := scala3,
-    //crossScalaVersions := supportedScalaVersions,
   )
 
 ThisBuild / Compile / console / fork := true
@@ -24,7 +19,6 @@ ThisBuild / versionScheme := Some("early-semver")
 ThisBuild / versionPolicyIntention := Compatibility.None
 //ThisBuild / versionPolicyIntention := Compatibility.BinaryAndSourceCompatible
 //ThisBuild / versionPolicyIntention := Compatibility.BinaryCompatible
-
 //In the sbt shell check version using:
 //sbt> versionCheck
 //sbt> versionPolicyCheck
