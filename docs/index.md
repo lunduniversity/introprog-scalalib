@@ -22,22 +22,23 @@ The open source code is hosted at [[https://github.com/lunduniversity/introprog-
 
 ### Using scala-cli
 
-You need [Scala Command Line Interface](https://scala-cli.virtuslab.org/install) at least version 0.1.5.
+You need [Scala Command Line Interface](https://scala-cli.virtuslab.org/install) 
 
 Add these magic comment lines starting with `//>` in the beginning of your Scala 3 file: 
 
 ```
-//> using scala "3"
-//> using lib "se.lth.cs::introprog:1.3.1"
+//> using scala 3
+//> using lib "se.lth.cs::introprog:1.4.0"
 ```
+You can choose a specific Scala 3 version of at least 3.3.3, for example: `3.4.2`
 
 You run your code with `scala-cli run .` (note the ending dot, meaning "this dir")
 
 If your program looks like this:
 
 ```
-//> using scala "3"
-//> using lib "se.lth.cs::introprog:1.3.1"
+//> using scala 3
+//> using lib "se.lth.cs::introprog:1.4.0"
 
 @main def run = 
   val w = introprog.PixelWindow()
@@ -54,8 +55,8 @@ See: [api documentation for PixelWindow](https://fileadmin.cs.lth.se/pgk/api/api
 If you have [sbt](https://www.scala-sbt.org/) installed then you can put this text in a file called `build.sbt`
 
 ```
-scalaVersion := "3.0.2"
-libraryDependencies += "se.lth.cs" %% "introprog" % "1.3.1"
+scalaVersion := "3.3.3"  // or any newer released Scala version 
+libraryDependencies += "se.lth.cs" %% "introprog" % "1.4.0"
 ```
 
 When you run `sbt` in a terminal, with the above in your `build.sbt`, the introprog lib is automatically downloaded and made available on your classpath. Then you can do things like:
