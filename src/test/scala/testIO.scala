@@ -1,11 +1,16 @@
 package introprog
 
 val tmpDir = "target/tmp"
+def createTmp(): Boolean = IO.createDirIfNotExist(tmpDir)
 
-class TestIO extends munit.FunSuite {
-  test("TestIO: createDirIfNotExist, saveString, appendString, loadLines, appendLines") {
-    val existed = IO.createDirIfNotExist(tmpDir)
+class TestIO extends munit.FunSuite:
+
+  test("TestIO: createDirIfNotExist"):
+    val existed = createTmp()
     assert(IO.isExisting(tmpDir), s"dir should exists: $tmpDir")
+
+  test("TestIO: saveString, loadString, appendString, loadLines, appendLines"):
+    createTmp()
     val s1 = "hello"
     val fn = s"$tmpDir/hello.txt"
     IO.saveString(s1, fileName = fn)
@@ -21,5 +26,3 @@ class TestIO extends munit.FunSuite {
     assertEquals(s5, "hello!\nline2\n", s"loadLines not as expected: $s5")
     IO.appendLines(Seq(),fileName = fn) // nothing should be added, not even newline
     assertEquals(s5, IO.loadString(fileName = fn), s"loadLines not as expected: $s5")
-  }
-}
