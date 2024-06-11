@@ -2,6 +2,8 @@ lazy val Version = "1.4.0"
 lazy val Name    = "introprog"
 lazy val scala3  = "3.3.3" 
 
+Global / onChangedBuildSource := ReloadOnSourceChanges
+
 // to avoid strange warnings, these lines with excludeLintKeys are needed:
 Global / excludeLintKeys += ThisBuild / Compile / console / fork
 
@@ -10,6 +12,7 @@ lazy val introprog = (project in file("."))
     name := Name,
     version := Version,
     scalaVersion := scala3,
+    libraryDependencies += "org.scalameta" %% "munit" % "0.7.29" % Test,
   )
 
 ThisBuild / Compile / console / fork := true
@@ -17,6 +20,7 @@ ThisBuild / Compile / console / fork := true
 //https://github.com/scalacenter/sbt-version-policy
 ThisBuild / versionScheme := Some("early-semver")
 ThisBuild / versionPolicyIntention := Compatibility.None
+//ThisBuild / versionPolicyIntention := Compatibility.None
 //ThisBuild / versionPolicyIntention := Compatibility.BinaryAndSourceCompatible
 //ThisBuild / versionPolicyIntention := Compatibility.BinaryCompatible
 //In the sbt shell check version using:
