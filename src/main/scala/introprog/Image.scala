@@ -32,7 +32,7 @@ class Image (val underlying: java.awt.image.BufferedImage):
     this
     
 
-  /** Extract and return image pixels.*/
+  /** Extract and return image pixels. */
   def toMatrix: Array[Array[Color]] = 
     val xs: Array[Array[Color]] = Array.ofDim(width, height)
     for x <- 0 until width; y <- 0 until height do
