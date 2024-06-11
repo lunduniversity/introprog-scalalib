@@ -7,5 +7,5 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: SBT Build
-        run: sbt compile
+        run: sbt test
         shell: bash
