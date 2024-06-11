@@ -88,6 +88,7 @@ object TestBlockGame:
     def timestampLastMove = _timestampLastMove
 
     var x = 0
+
     var y = 0
 
     def move(): Unit = 
@@ -117,6 +118,7 @@ object TestBlockGame:
         loopCounter += 1
 
     final def start(): Unit = 
-        pixelWindow.show()  // möjliggör omstart även om fönstret stängts...
+        pixelWindow.show()  // show window again if closed and start() is called again
         gameLoop(stopWhen = x == dim._1 - 1 && y == dim._2 - 1)
+
   end MovingBlock
