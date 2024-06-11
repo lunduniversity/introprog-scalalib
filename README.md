@@ -100,6 +100,17 @@ With [`sbt`](https://www.scala-sbt.org/download.html) and [`git`](https://git-sc
 > sbt package
 ```
 
+## How to build and see the doc pages using a local server
+
+Run this in linux bash terminal:
+```
+sbt doc && cd target/scala-3.3.3/api && python3 -m http.server 8080
+```
+Open Firefox and type this url in the address field:
+```
+http://localhost:8080/
+``` 
+
 ## Intentions and philosophy behind introprog-scalalib
 
 This repo includes utilities to empower learners to advance from basic to intermediate levels of computer science by providing easy-to-use constructs for creating simple desktop apps in terminal and using simple 2D graphics. The utilities are implemented and exposed through an api that follows these guidelines:
