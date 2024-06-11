@@ -8,11 +8,9 @@ object Image:
     Image(BufferedImage(width, height, BufferedImage.TYPE_INT_RGB))
 
 
-
 class Image (val underlying: java.awt.image.BufferedImage):
   import java.awt.Color
   import java.awt.image.BufferedImage
-
   
   /** Get color of pixel at `(x, y)`.*/
   def apply(x: Int, y: Int): Color = Color(underlying.getRGB(x, y))
@@ -31,7 +29,6 @@ class Image (val underlying: java.awt.image.BufferedImage):
         update(x, y, f(x, y))
     this
     
-
   /** Extract and return image pixels. */
   def toMatrix: Array[Array[Color]] = 
     val xs: Array[Array[Color]] = Array.ofDim(width, height)
@@ -63,8 +60,9 @@ class Image (val underlying: java.awt.image.BufferedImage):
     bi.createGraphics().drawImage(underlying, 0, 0, width, height, null)
     Image(bi)
     
-
   val hasAlpha = underlying.getColorModel.hasAlpha
+  
   val height = underlying.getHeight
+  
   val width = underlying.getWidth
   
