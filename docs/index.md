@@ -30,7 +30,7 @@ Add these magic comment lines starting with `//>` in the beginning of your Scala
 //> using scala 3
 //> using lib "se.lth.cs::introprog:1.4.0"
 ```
-You can choose the latest stable Scala version, or any version from at least 3.3.3 LTS, which this library is compiled against.
+You can choose the latest stable Scala version, or any version from at least Scala 3.3.3.
 
 You run your code with `scala-cli run .` (note the ending dot, meaning "this dir")
 
@@ -40,7 +40,7 @@ If your program looks like this:
 //> using scala 3
 //> using lib "se.lth.cs::introprog:1.4.0"
 
-@main def run = 
+@main def MyMain = 
   val w = introprog.PixelWindow()
   w.drawText("Hello introprog.PixelWindow!", x = 100, y = 100)
 ```
