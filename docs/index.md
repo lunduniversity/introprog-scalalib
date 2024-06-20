@@ -28,7 +28,7 @@ Add these magic comment lines starting with `//>` in the beginning of your Scala
 
 ```
 //> using scala 3
-//> using lib "se.lth.cs::introprog:1.4.0"
+//> using dep "se.lth.cs::introprog:1.4.0"
 ```
 You can choose the latest stable Scala version, or any version from at least Scala 3.3.3.
 
@@ -38,7 +38,7 @@ If your program looks like this:
 
 ```
 //> using scala 3
-//> using lib "se.lth.cs::introprog:1.4.0"
+//> using dep "se.lth.cs::introprog:1.4.0"
 
 @main def MyMain = 
   val w = introprog.PixelWindow()
@@ -52,7 +52,7 @@ See: [api documentation for PixelWindow](https://fileadmin.cs.lth.se/pgk/api/api
 
 ### Using sbt
 
-If you have [sbt](https://www.scala-sbt.org/) installed then you can put this text in a file called `build.sbt`
+If you have [sbt](https://www.scala-sbt.org/) installed at least version 1.10.0 then you can put this text in a file called `build.sbt`
 
 ```
 scalaVersion := "3.4.2"  // or any Scala version from at least 3.3.3

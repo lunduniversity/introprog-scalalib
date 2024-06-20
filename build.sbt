@@ -95,10 +95,12 @@ publishConfiguration := publishConfiguration.value.withOverwrite(true)
 publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true)
 //pushRemoteCacheConfiguration := pushRemoteCacheConfiguration.value.withOverwrite(true)
 
+credentials += Credentials(Path.userHome / ".sbt" / ".credentials")
+
 //https://oss.sonatype.org/#stagingRepositories
 //https://oss.sonatype.org/#nexus-search;quick~se.lth.cs
 //https://repo1.maven.org/maven2/se/lth/cs/introprog_2.12/
 
-//usePgpKeyHex("E7232FE8B8357EEC786315FE821738D92B63C95F")
 
 //https://github.com/sbt/sbt-pgp
+

@@ -92,7 +92,43 @@ openpgp-revocs.d  pubring.asc        trustdb.gpg
 
 4. In `sbt>` run `publishSigned`  - a plus sign is not used since we only publish for Scala 3 from 1.2.0.
 
-5. Log into Sonatype Nexus here: (if the page does not load, clear the browser's cache by pressing Ctrl+F5) https://oss.sonatype.org/#welcome
+Note: It is falsely said to be `sbt publish` according to https://www.scala-sbt.org/1.x/docs/Publishing.html but you need to use `sbt publishSigned` 
+after creating a .credentials file in ~/.sbt including below where xxx and yyy is replaced with secret values that is access according to https://central.sonatype.org/publish/generate-token/   If you do just `publish` you will get an error later in the process after closing below that complains that .asc files are missing etc.
+
+Put .credentials in ~/.sbt
+```
+realm=Sonatype Nexus Repository Manager
+host=oss.sonatype.org
+user=xxx
+password=yyy
+```
+
+When I did publishSIgend last time I got these errors but the publishing went through anyway with the above .credentials in ~/.sbt:
+```
+sbt:introprog> publishSigned
+[info] Wrote /home/bjornr/git/hub/lunduniversity/introprog-scalalib/target/scala-3.3.3/introprog_3-1.4.0.pom
+[warn] multiple main classes detected: run 'show discoveredMainClasses' to see the list
+[error] gpg: Warning: not using 'E7232FE8B8357EEC786315FE821738D92B63C95F' as default key: No secret key
+[error] gpg: all values passed to '--default-key' ignored
+[error] gpg: Warning: not using 'E7232FE8B8357EEC786315FE821738D92B63C95F' as default key: No secret key
+[error] gpg: all values passed to '--default-key' ignored
+[error] gpg: Warning: not using 'E7232FE8B8357EEC786315FE821738D92B63C95F' as default key: No secret key
+[error] gpg: all values passed to '--default-key' ignored
+[error] gpg: Warning: not using 'E7232FE8B8357EEC786315FE821738D92B63C95F' as default key: No secret key
+[error] gpg: all values passed to '--default-key' ignored
+[info] 	published introprog_3 to https://oss.sonatype.org/service/local/staging/deploy/maven2/se/lth/cs/introprog_3/1.4.0/introprog_3-1.4.0.pom.asc
+[info] 	published introprog_3 to https://oss.sonatype.org/service/local/staging/deploy/maven2/se/lth/cs/introprog_3/1.4.0/introprog_3-1.4.0-javadoc.jar
+[info] 	published introprog_3 to https://oss.sonatype.org/service/local/staging/deploy/maven2/se/lth/cs/introprog_3/1.4.0/introprog_3-1.4.0.pom
+[info] 	published introprog_3 to https://oss.sonatype.org/service/local/staging/deploy/maven2/se/lth/cs/introprog_3/1.4.0/introprog_3-1.4.0.jar.asc
+[info] 	published introprog_3 to https://oss.sonatype.org/service/local/staging/deploy/maven2/se/lth/cs/introprog_3/1.4.0/introprog_3-1.4.0.jar
+[info] 	published introprog_3 to https://oss.sonatype.org/service/local/staging/deploy/maven2/se/lth/cs/introprog_3/1.4.0/introprog_3-1.4.0-javadoc.jar.asc
+[info] 	published introprog_3 to https://oss.sonatype.org/service/local/staging/deploy/maven2/se/lth/cs/introprog_3/1.4.0/introprog_3-1.4.0-sources.jar
+[info] 	published introprog_3 to https://oss.sonatype.org/service/local/staging/deploy/maven2/se/lth/cs/introprog_3/1.4.0/introprog_3-1.4.0-sources.jar.asc
+```
+
+OOOPS! TODO: I already had this file: `cat ~/.sbt/sonatype_credential` pulled in by `cat ~/.sbt/1.0/sonatype.sbt`  so I should remove the last of them as Credentials is now included in the build.sbt
+
+5. After you have done `sbt publishSigned` then log into Sonatype Nexus here: (if the page does not load, clear the browser's cache by pressing Ctrl+F5) https://oss.sonatype.org/#welcome
 
 6. Click on *Staging Repositories* in the Build Promotion list to the left. Click "Refresh" if list is empty. https://oss.sonatype.org/#stagingRepositories
 
@@ -100,7 +136,7 @@ openpgp-revocs.d  pubring.asc        trustdb.gpg
 
 8. Download the staged jar by clicking on it and selecting the *Artifact* tab to the right and click the Repository Path to download. Save it e.g. in `tmp`.
 
-9.  Verify that the staged jar downloaded from sonatype works by running `scala -cp introprog_3-x.y.z.jar` and in REPL e.g. `val w = new introprog.PixelWindow`. The reason for this step is that there has been incidents where the uploading has failed and the jar was empty. A published jar can not be retracted even if corrupted according to Sonatype policies.
+9.  Verify that the staged jar downloaded from sonatype works by running something similar to `scala-cli repl . -S 3.4.2 --jar introprog_3-1.4.0.jar` and in REPL e.g. `val w = new introprog.PixelWindow` or `introprog.examples.TestPixelWindow.main(Array())`. The reason for this step is that there has been incidents where the uploading has failed and the jar was empty. A published jar can not be retracted even if corrupted according to Sonatype policies.
 
 10. Click the *Close* icon with a diskette above the repository list to "close" the staging repository. No need to write anything in the "Description" field in the popup. It has happened that the Close failed - then the repo is still "Open" so try to close it again and hope it works this time...
 
@@ -109,3 +145,4 @@ openpgp-revocs.d  pubring.asc        trustdb.gpg
 12. By searching here you can see the repo in progress of being published but it takes a while before it is publicly visible on Central (typically 10-15 minutes). https://oss.sonatype.org/#nexus-search;quick~se.lth.cs
 
 13. When visible on Central at https://repo1.maven.org/maven2/se/lth/cs/introprog_3/ verify with a simple sbt project that it works as shown in [README usage instructions for sbt](https://github.com/lunduniversity/introprog-scalalib/blob/master/README.md#using-sbt).
+
