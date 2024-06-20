@@ -68,7 +68,7 @@ openpgp-revocs.d  pubring.asc        trustdb.gpg
 
 ## How to publish
 
-1. Build and test locally.
+1. Build and test locally using `sbt "compile;test;doc"`
 
 2. Bump `lazy val Version` in `build.sbt`, run `package` in sbt. Note no plus before package as from 1.2.0 we only publish for Scala 3. We also want a release on github and the course home page aligned with the release on Sonatype Central. Therefore You should also:
   - Don't forget to update the `doc/index.md` file with current version information and package contents etc. Read more on scaladoc here: https://docs.scala-lang.org/scala3/scaladoc.html
