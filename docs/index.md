@@ -30,7 +30,7 @@ Add these magic comment lines starting with `//>` in the beginning of your Scala
 //> using scala 3
 //> using lib "se.lth.cs::introprog:1.4.0"
 ```
-You can choose a specific Scala 3 version of at least 3.3.3, for example: `3.4.2`
+You can choose the latest stable Scala version, or any version from at least 3.3.3 LTS, which this library is compiled against.
 
 You run your code with `scala-cli run .` (note the ending dot, meaning "this dir")
 
@@ -55,7 +55,7 @@ See: [api documentation for PixelWindow](https://fileadmin.cs.lth.se/pgk/api/api
 If you have [sbt](https://www.scala-sbt.org/) installed then you can put this text in a file called `build.sbt`
 
 ```
-scalaVersion := "3.3.3"  // or any newer released Scala version 
+scalaVersion := "3.4.2"  // or any Scala version from at least 3.3.3
 libraryDependencies += "se.lth.cs" %% "introprog" % "1.4.0"
 ```
 
