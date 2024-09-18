@@ -32,7 +32,7 @@ If your program looks like this:
 
 ```
 //> using scala 3.3
-//> using lib se.lth.cs::introprog:1.3.1
+//> using lib se.lth.cs::introprog:1.4.0
 
 @main def run = 
   val w = introprog.PixelWindow()
@@ -46,7 +46,7 @@ See: [api documentation for PixelWindow](https://fileadmin.cs.lth.se/pgk/api/api
 
 You can also give the `introprog` dependency directly at the command line, instead of the `using lib` directive:
 ```
-scala-cli run . --dep se.lth.cs::introprog:1.3.1
+scala-cli run . --dep se.lth.cs::introprog:1.4.0
 ```
 
 ### Using sbt
@@ -56,7 +56,7 @@ You need [Scala Build Tool](https://www.scala-sbt.org/download.html) at least ve
 Put this text in a file called `build.sbt`
 ```
 scalaVersion := "3.3.0"
-libraryDependencies += "se.lth.cs" %% "introprog" % "1.3.1"
+libraryDependencies += "se.lth.cs" %% "introprog" % "1.4.0"
 ```
 
 When you run `sbt` in terminal the `introprog` package is automatically downloaded and made available on your classpath.
