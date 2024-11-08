@@ -19,11 +19,11 @@ This repo is used in this course *(in Swedish)*: http://cs.lth.se/pgk with cours
 
 You need [Scala Command Line Interface](https://scala-cli.virtuslab.org/install) at least version 1.0.0.
 
-Add these magic comment lines starting with `//>` in the beginning of your Scala 3 file: 
+Add these magic comment lines starting with `//>` in the beginning of your Scala 3 file (bump your Scala version to the latest available): 
 
 ```
-//> using scala 3.3
-//> using lib se.lth.cs::introprog:1.3.1
+//> using scala 3.5.2
+//> using dep se.lth.cs::introprog:1.3.1
 ```
 
 You run your code with `scala-cli run .` (note the ending dot, meaning "this dir")
@@ -31,8 +31,8 @@ You run your code with `scala-cli run .` (note the ending dot, meaning "this dir
 If your program looks like this:
 
 ```
-//> using scala 3.3
-//> using lib se.lth.cs::introprog:1.4.0
+//> using scala 3.5.2
+//> using dep se.lth.cs::introprog:1.4.0
 
 @main def run = 
   val w = introprog.PixelWindow()
