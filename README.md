@@ -15,18 +15,31 @@ This repo is used in this course *(in Swedish)*: http://cs.lth.se/pgk with cours
 
 ## How to use introprog-scalalib
 
-### Using scala-cli
+### Getting started using scala from the command line
 
-You need [Scala Command Line Interface](https://scala-cli.virtuslab.org/install) at least version 1.0.0.
+You need to have [Scala installed](https://www.scala-lang.org/download/) using version 3.5.2 or later.
 
-Add these magic comment lines starting with `//>` in the beginning of your Scala 3 file (bump your Scala version to the latest available): 
+You can start the Scala REPL in the current directory with `introprog` directly available to play with using this command in a terminal window:
+```
+scala repl . --dep se.lth.cs::introprog:1.4.0
+```
+
+You can then open a drawing window like so:
+```scala
+scala> val w = introprog.PixelWindow()
+val w: introprog.PixelWindow = introprog.PixelWindow@34f60be9
+
+scala> w.drawText("Hello introprog.PixelWindow!", x = 100, y = 100)
+```
+
+If you want to use `introprog` in your program, add these magic comment lines starting with `//>` in the beginning of your Scala 3 file (update the version number after `//> using scala` to the [latest release](https://www.scala-lang.org/)): 
 
 ```
 //> using scala 3.5.2
 //> using dep se.lth.cs::introprog:1.3.1
 ```
 
-You run your code with `scala-cli run .` (note the ending dot, meaning "this dir")
+You can then run your code with `scala run .` (note the ending dot, meaning "current dir")
 
 If your program looks like this:
 
@@ -42,20 +55,18 @@ You should see green text in a new window after executing:
 ```
 scala-cli run .
 ```
-See: [api documentation for PixelWindow](https://fileadmin.cs.lth.se/pgk/api/api/introprog/PixelWindow.html)
+See: [api documentation for PixelWindow](https://fileadmin.cs.lth.se/pgk/api/api/introprog/PixelWindow.html) for more things you can do with a PixelWindow.
 
-You can also give the `introprog` dependency directly at the command line, instead of the `using lib` directive:
+You can also give the `introprog` dependency directly at the command line, instead of the `using dep` directive:
 ```
 scala-cli run . --dep se.lth.cs::introprog:1.4.0
 ```
 
-### Using sbt
+### Getting started using sbt
 
-You need [Scala Build Tool](https://www.scala-sbt.org/download.html) at least version 1.5.2 (preferably 1.6.2 or later). 
-
-Put this text in a file called `build.sbt`
+If you use the [Scala Build Tool, version 1.6 or later](https://www.scala-sbt.org/download.html) then put this text in a file called `build.sbt`
 ```
-scalaVersion := "3.3.0"
+scalaVersion := "3.5.2"
 libraryDependencies += "se.lth.cs" %% "introprog" % "1.4.0"
 ```
 
@@ -68,6 +79,7 @@ scala> val w = new introprog.PixelWindow()
 scala> w.fill(100,100,100,100,java.awt.Color.red)
 ```
 See: [api documentation for PixelWindow](https://fileadmin.cs.lth.se/pgk/api/api/introprog/PixelWindow.html)
+
 ### Older Scala versions
 
 If you want to use Scala 2.13 with 2.13.5 or later then use these special settings in `build.sbt`, esp. note that you should use version 1.1.5 of introprog: 
