@@ -6,7 +6,14 @@ object Dialog:
 
   Swing.init() // get platform-specific look and feel
 
-  /** Show a file choice dialog starting in `startDir` with confirm `button` text. */
+  /**
+    * Show a file choice dialog starting in `startDir` with confirm `button` text.
+    *
+    * @param button the text displayed in this file choice dialog's confirm button
+    * @param startDir the starting directory of this file choice dialog 
+    * @return the file path entered by user upon pressing confirm button,
+    *         an empty `String` if user pressed the file choice dialog's cancel button
+    */
   def file(button: String = "Open", startDir: String = "~"): String =
     val fs = new JFileChooser(new java.io.File(startDir))
     fs.showDialog(null, button) match
