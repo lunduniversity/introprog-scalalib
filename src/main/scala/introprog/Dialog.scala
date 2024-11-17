@@ -40,7 +40,7 @@ object Dialog:
     scala.util.Try{
       val chosenIndex =
         JOptionPane.showOptionDialog(null, message, title, JOptionPane.DEFAULT_OPTION,
-          JOptionPane.QUESTION_MESSAGE, null, buttons.reverse.toArray, null)
+          JOptionPane.QUESTION_MESSAGE, null, buttons.toArray, null)
       buttons(buttons.length - 1 - chosenIndex)
     }.getOrElse("")
 
