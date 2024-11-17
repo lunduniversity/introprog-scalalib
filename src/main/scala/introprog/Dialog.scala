@@ -23,9 +23,13 @@ object Dialog:
   /** Show a dialog with a `message` text. */
   def show(message: String): Unit = JOptionPane.showMessageDialog(null, message)
 
-  /** Show a `message` asking for input with `init` value. Return user input.
+  /** 
+    * Show a `message` asking for input with `init` value. Return user input.
     *
-    * Returns empty string on Cancel. */
+    * @param message prompt text displayed for user
+    * @param init intitial value displayed in input dialog
+    * @return user input, or an empty string on Cancel
+    */
   def input(message: String, init: String = ""): String =
     Option(JOptionPane.showInputDialog(message, init)).getOrElse("")
 
