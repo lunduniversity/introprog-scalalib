@@ -39,13 +39,22 @@ object Dialog:
       null, question, title, JOptionPane.OK_CANCEL_OPTION
     ) == JOptionPane.OK_OPTION
 
-  /** Show a selection dialog with `buttons`. Return a string with the chosen button text. */
+  /**
+    * Show a selection dialog with `buttons`. Return a `String` with the chosen button text.
+    *
+    * @param message text describing the choice to be made by the user
+    * @param buttons the sequence of buttons to be displayed in this dialog
+    * @param title the title of this dialog
+    * @return a `String` with the chosen button text
+    */
   def select(message: String, buttons: Seq[String], title: String = "Select"): String =
     scala.util.Try{
       val chosenIndex =
-        JOptionPane.showOptionDialog(null, message, title, JOptionPane.DEFAULT_OPTION,
-          JOptionPane.QUESTION_MESSAGE, null, buttons.toArray, null)
-      buttons(buttons.length - 1 - chosenIndex)
+        JOptionPane.showOptionDialog(
+          null, message, title, JOptionPane.DEFAULT_OPTION,
+          JOptionPane.QUESTION_MESSAGE, null, buttons.toArray, null
+        )
+      buttons(chosenIndex)
     }.getOrElse("")
 
   /** Show a color selection dialog and return the color that the user selected. */
