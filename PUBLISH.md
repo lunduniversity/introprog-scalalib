@@ -126,7 +126,7 @@ sbt:introprog> publishSigned
 [info] 	published introprog_3 to https://oss.sonatype.org/service/local/staging/deploy/maven2/se/lth/cs/introprog_3/1.4.0/introprog_3-1.4.0-sources.jar.asc
 ```
 
-OOOPS! TODO: I already had this file: `cat ~/.sbt/sonatype_credential` pulled in by `cat ~/.sbt/1.0/sonatype.sbt`  so I should remove the last of them as Credentials is now included in the build.sbt
+OOOPS! TODO: I already had this file: `cat ~/.sbt/sonatype_credential` pulled in by `cat ~/.sbt/1.0/sonatype.sbt`  so I should remove the last of them as Credentials is now included in the build.sbt as in `credentials += Credentials(Path.userHome / ".sbt" / ".credentials")`
 
 5. After you have done `sbt publishSigned` then log into Sonatype Nexus here: (if the page does not load, clear the browser's cache by pressing Ctrl+F5) https://oss.sonatype.org/#welcome
 
