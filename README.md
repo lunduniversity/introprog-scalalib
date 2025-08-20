@@ -35,8 +35,8 @@ scala> w.drawText("Hello introprog.PixelWindow!", x = 100, y = 100)
 If you want to use `introprog` in your program, add these magic comment lines starting with `//>` in the beginning of your Scala 3 file (update the version number after `//> using scala` to the [latest release](https://www.scala-lang.org/)): 
 
 ```
-//> using scala 3.5.2
-//> using dep se.lth.cs::introprog:1.3.1
+//> using scala 3.7.2
+//> using dep se.lth.cs::introprog:1.4.0
 ```
 
 You can then run your code with `scala run .` (note the ending dot, meaning "current dir")
@@ -44,7 +44,7 @@ You can then run your code with `scala run .` (note the ending dot, meaning "cur
 If your program looks like this:
 
 ```
-//> using scala 3.5.2
+//> using scala 3.7.2
 //> using dep se.lth.cs::introprog:1.4.0
 
 @main def run = 
@@ -66,7 +66,7 @@ scala-cli run . --dep se.lth.cs::introprog:1.4.0
 
 If you use the [Scala Build Tool, version 1.6 or later](https://www.scala-sbt.org/download.html) then put this text in a file called `build.sbt`
 ```
-scalaVersion := "3.5.2"
+scalaVersion := "3.7.2"
 libraryDependencies += "se.lth.cs" %% "introprog" % "1.4.0"
 ```
 
