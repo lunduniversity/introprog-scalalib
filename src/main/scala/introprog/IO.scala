@@ -37,9 +37,16 @@ object IO:
     * @param text the text to be written to the file.
     * @param fileName the path of the file.
     * @param enc the encoding of the file.
+    * @param isOverwrite should the file be overwritten if it already exists
     * */
-  def saveString(text: String, fileName: String, enc: String = "UTF-8"): Unit =
+  def saveString(text: String, fileName: String, enc: String = "UTF-8", isOverwrite: Boolean = false): Unit =
     val f = new java.io.File(fileName)
+
+    if !isOverwrite then
+      require(!f.exists(), s"The file $fileName already exists. To overwrite it, set isOverwrite=true.")
+
+    require(!f.isDirectory(), "The file you're trying to write to can't be a directory.")
+      
     val pw = new java.io.PrintWriter(f, enc)
     try pw.write(text) finally pw.close()
 
