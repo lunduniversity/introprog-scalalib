@@ -13,7 +13,7 @@ object PixelWindow:
     import java.awt.event.KeyEvent._
     Map(
       VK_META       -> "Meta",
-      VK_WINDOWS    -> "Meta",
+      VK_WINDOWS    -> "Super",
       VK_CONTROL    -> "Ctrl",
       VK_ALT        -> "Alt",
       VK_ALT_GRAPH  -> "Alt Gr",
