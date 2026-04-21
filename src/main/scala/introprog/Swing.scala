@@ -26,7 +26,7 @@ object Swing:
 
   /** Find a look and feel with a name including `partOfName`. */
   def findLookAndFeel(partOfName: String): Option[String] =
-    installedLookAndFeels.find(_.toLowerCase contains partOfName)
+    installedLookAndFeels.find(_.toLowerCase `contains` partOfName)
 
   /** Test if the current operating system name includes `partOfName`. */
   def isOS(partOfName: String): Boolean =
