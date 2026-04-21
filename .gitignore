@@ -12,6 +12,7 @@ tmp
 **/.bsp
 **/metals.sbt
 .vscode
+**/.scala-build
 
 **/*.cache-main  # Eclipse
 **/.metadata     # Eclipse
