@@ -1,8 +1,8 @@
 # Contributing to `introprog-scalalib`
 
-Contributions are welcome!
+Contributions from humans are welcome!
 
-If you contribute to this repo you implicitly agree to the terms of the open source license in this repository. 
+If you contribute to this repo you implicitly agree to the terms of the open source license in this repository. AI-generated code is not accepted; all code must be hand-written by a human contributor.
 
 1. Open an **issue** and start discussing your suggestion. An issue can include a proposal to e.g. fix a bug, improve documentation, include a new or enhanced feature, develop a new beginner-friendly example, add a missing test, etc.
 
