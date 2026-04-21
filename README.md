@@ -15,28 +15,18 @@ This repo is used in this course *(in Swedish)*: http://cs.lth.se/pgk with cours
 
 ## How to use introprog-scalalib
 
-### Getting started using scala from the command line
+### Pre-requisites
 
-You need to have [Scala installed](https://www.scala-lang.org/download/) using version 3.3.7 or later. You also need Java 17 or later. [Java 25 LTS is recommended](https://docs.scala-lang.org/overviews/jdk-compatibility/overview.html#jdk-25-compatibility-notes). 
+You need to have [Scala installed](https://www.scala-lang.org/download/) using Scala version 3.8.3 or later. 
 
-You can start the Scala REPL in the current directory with `introprog` directly available to play with using this command in a terminal window:
-```
-scala repl . --dep se.lth.cs::introprog:1.4.0
-```
-
-You can then open a drawing window like so:
-```scala
-scala> val w = introprog.PixelWindow()
-val w: introprog.PixelWindow = introprog.PixelWindow@34f60be9
-
-scala> w.drawText("Hello introprog.PixelWindow!", x = 100, y = 100)
-```
+### Using-directives
 
 If you want to use `introprog` in your program, add these magic comment lines starting with `//>` in the beginning of your Scala 3 file (update the version number after `//> using scala` to the [latest release](https://www.scala-lang.org/)): 
 
 ```
 //> using scala 3.8.3
-//> using dep se.lth.cs::introprog:1.4.0
+//> using jvm 21
+//> using dep se.lth.cs::introprog:1.5.0
 ```
 
 You can then run your code with `scala run .` (note the ending dot, meaning "current dir")
@@ -45,7 +35,7 @@ If your program looks like this:
 
 ```
 //> using scala 3.8.3
-//> using dep se.lth.cs::introprog:1.4.0
+//> using dep se.lth.cs::introprog:1.5.0
 
 @main def run = 
   val w = introprog.PixelWindow()
@@ -59,15 +49,31 @@ See: [api documentation for PixelWindow](https://fileadmin.cs.lth.se/pgk/api/api
 
 You can also give the `introprog` dependency directly at the command line, instead of the `using dep` directive:
 ```
-scala-cli run . --dep se.lth.cs::introprog:1.4.0
+scala-cli run . --dep se.lth.cs::introprog:1.5.0
 ```
 
-### Getting started using sbt
+### Using introprog with the Scala repl
+
+You can start the Scala REPL in the current directory with `introprog` directly available to play with using this command in a terminal window:
+```
+scala repl . --dep se.lth.cs::introprog:1.5.0
+```
+
+You can then open a drawing window like so:
+```scala
+scala> val w = introprog.PixelWindow()
+val w: introprog.PixelWindow = introprog.PixelWindow@34f60be9
+
+scala> w.drawText("Hello introprog.PixelWindow!", x = 100, y = 100)
+```
+
+
+### Using introprog with sbt
 
 If you use the [Scala Build Tool, version 1.6 or later](https://www.scala-sbt.org/download.html) then put this text in a file called `build.sbt`
 ```
 scalaVersion := "3.8.3"
-libraryDependencies += "se.lth.cs" %% "introprog" % "1.4.0"
+libraryDependencies += "se.lth.cs" %% "introprog" % "1.5.0"
 ```
 
 When you run `sbt` in terminal the `introprog` package is automatically downloaded and made available on your classpath.
@@ -80,7 +86,7 @@ scala> w.fill(100,100,100,100,java.awt.Color.red)
 ```
 See: [api documentation for PixelWindow](https://fileadmin.cs.lth.se/pgk/api/api/introprog/PixelWindow.html)
 
-### Older Scala versions
+### Using introprog with older Scala versions
 
 If you want to use Scala 2.13 with 2.13.5 or later then use these special settings in `build.sbt`, esp. note that you should use version 1.1.5 of introprog: 
 ```

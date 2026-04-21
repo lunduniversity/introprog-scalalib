@@ -20,25 +20,40 @@ The open source code is hosted at [[https://github.com/lunduniversity/introprog-
 
 ## How to use introprog-scalalib
 
-### Using scala-cli
+You need [Scala](https://www.scala-lang.org/download/) installed, Scala 3.8.3 or later recommended.
 
-You need [Scala Command Line Interface](https://scala-cli.virtuslab.org/install) 
+## Start a repl session with introprog
 
-Add these magic comment lines starting with `//>` in the beginning of your Scala 3 file: 
+The Scala repl (read-evaluate-print-loop) allow you to run Scala-lines one at a time. Start the Scala repl with introprog available like so:
+
+`scala repl . --dep "se.lth.cs::introprog:1.5.0" --jvm 21`
+
+Note the dot after `repl`, which means "this dir" making all scala code in the current dir available in the repl.
+
+Now you can open a drawing window by typing this after the `scala>` prompt:
 
 ```
-//> using scala 3
-//> using dep "se.lth.cs::introprog:1.4.0"
+val w = introprog.PixelWindow()
+w.drawText("Hello introprog.PixelWindow!", x = 100, y = 100)
 ```
-You can choose the latest stable Scala version, or any version from at least Scala 3.3.3.
 
-You run your code with `scala-cli run .` (note the ending dot, meaning "this dir")
+## Use introprog in your Scala programs
+
+Or add these magic comment lines starting with `//>` in the beginning of your Scala 3 file: 
+
+```
+//> using scala 3.8.3
+//> using dep "se.lth.cs::introprog:1.5.0"
+```
+You can use the latest stable Scala version, or any version from at least Scala 3.3.7.
+
+You run your code in the current dir with `scala run .` (note the ending dot, meaning "this dir")
 
 If your program looks like this:
 
 ```
-//> using scala 3
-//> using dep "se.lth.cs::introprog:1.4.0"
+//> using scala 3.8.3
+//> using dep "se.lth.cs::introprog:1.5.0"
 
 @main def MyMain = 
   val w = introprog.PixelWindow()
@@ -52,11 +67,11 @@ See: [api documentation for PixelWindow](https://fileadmin.cs.lth.se/pgk/api/api
 
 ### Using sbt
 
-If you have [sbt](https://www.scala-sbt.org/) installed at least version 1.10.0 then you can put this text in a file called `build.sbt`
+If you have [sbt](https://www.scala-sbt.org/) installed at least version 1.12.9 then you can put this text in a file called `build.sbt`
 
 ```
-scalaVersion := "3.4.2"  // or any Scala version from at least 3.3.3
-libraryDependencies += "se.lth.cs" %% "introprog" % "1.4.0"
+scalaVersion := "3.8.3"  // or any Scala version from at least 3.3.7
+libraryDependencies += "se.lth.cs" %% "introprog" % "1.5.0"
 ```
 
 When you run `sbt` in a terminal, with the above in your `build.sbt`, the introprog lib is automatically downloaded and made available on your classpath. Then you can do things like:
