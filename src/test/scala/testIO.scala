@@ -13,7 +13,7 @@ class TestIO extends munit.FunSuite:
     createTmp()
     val s1 = "hello"
     val fn = s"$tmpDir/hello.txt"
-    IO.saveString(s1, fileName = fn)
+    IO.saveString(s1, fileName = fn, isOverwrite=true)
     val s2 = IO.loadString(fileName = fn)
     assertEquals(s1, s2, "saved string different from loaded")
     IO.appendString("!\n", fileName = fn )
