@@ -35,7 +35,7 @@ scala> w.drawText("Hello introprog.PixelWindow!", x = 100, y = 100)
 If you want to use `introprog` in your program, add these magic comment lines starting with `//>` in the beginning of your Scala 3 file (update the version number after `//> using scala` to the [latest release](https://www.scala-lang.org/)): 
 
 ```
-//> using scala 3.7.2
+//> using scala 3.8.3
 //> using dep se.lth.cs::introprog:1.4.0
 ```
 
@@ -44,7 +44,7 @@ You can then run your code with `scala run .` (note the ending dot, meaning "cur
 If your program looks like this:
 
 ```
-//> using scala 3.7.2
+//> using scala 3.8.3
 //> using dep se.lth.cs::introprog:1.4.0
 
 @main def run = 
@@ -66,7 +66,7 @@ scala-cli run . --dep se.lth.cs::introprog:1.4.0
 
 If you use the [Scala Build Tool, version 1.6 or later](https://www.scala-sbt.org/download.html) then put this text in a file called `build.sbt`
 ```
-scalaVersion := "3.7.2"
+scalaVersion := "3.8.3"
 libraryDependencies += "se.lth.cs" %% "introprog" % "1.4.0"
 ```
 
@@ -84,7 +84,7 @@ See: [api documentation for PixelWindow](https://fileadmin.cs.lth.se/pgk/api/api
 
 If you want to use Scala 2.13 with 2.13.5 or later then use these special settings in `build.sbt`, esp. note that you should use version 1.1.5 of introprog: 
 ```
-scalaVersion := "2.13.8" //2.13.5 or any later 2.13 version
+scalaVersion := "2.13.18" //use any version later than 2.13.5
 scalacOptions += "-Ytasty-reader"
 libraryDependencies += 
   ("se.lth.cs" %% "introprog" % "1.1.5").cross(CrossVersion.for2_13Use3)
@@ -101,7 +101,7 @@ Download the latest jar-file from here:
 * Search Maven central: https://search.maven.org/search?q=introprog
 * Maven central server: https://repo1.maven.org/maven2/se/lth/cs/
 
-Put the latest introprog jar-file in your sbt project in a subfolder called `lib`.  In your `build.sbt` you only need `scalaVersion := "3.0.1"` without a library dependency to introprog, as `sbt` automatically put jars in lib on your classpath.
+Put the latest introprog jar-file in your sbt project in a subfolder called `lib`.  In your `build.sbt` you then only need `scalaVersion := "3.8.3"` without a library dependency to introprog, as `sbt` automatically put jars in lib folder on your classpath.
 
 ## How to build introprog-scalalib
 
@@ -116,8 +116,10 @@ With [`sbt`](https://www.scala-sbt.org/download.html) and [`git`](https://git-sc
 
 Run this in linux bash terminal:
 ```
-sbt doc && cd target/scala-3.3.3/api && python3 -m http.server 8080
+sbt doc && cd target/scala-3.3.7/api && python3 -m http.server 8080
 ```
+NOTE: Update scala version to the one used in build.sbt
+
 Open Firefox and type this url in the address field:
 ```
 http://localhost:8080/

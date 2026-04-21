@@ -1,6 +1,6 @@
-lazy val Version = "1.4.0"
+lazy val Version = "1.5.0"  // next version to be published
 lazy val Name    = "introprog"
-lazy val scala3  = "3.3.3" 
+lazy val scala3  = "3.3.7"  // stay on 3.3 LTS for maximum compatibility until 3.3 is deprecated
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
@@ -12,7 +12,7 @@ lazy val introprog = (project in file("."))
     name := Name,
     version := Version,
     scalaVersion := scala3,
-    libraryDependencies += "org.scalameta" %% "munit" % "0.7.29" % Test,
+    libraryDependencies += "org.scalameta" %% "munit" % "1.3.0" % Test,
   )
 
 ThisBuild / Compile / console / fork := true
