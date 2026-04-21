@@ -14,57 +14,24 @@ These instructions have already been followed for this repo by Bjorn Regnell who
 
 ## Sbt config and GPG Key setup (done once per machine)
 
-Read and adapt these instructions:
+Read carefully these instructions: https://www.scala-sbt.org/release/docs/Using-Sonatype.html
 
-* https://www.scala-sbt.org/release/docs/Using-Sonatype.html
-  * Be aware that step 1 was not used, instead the instructions from this link were used to create keys:
-    * https://github.com/scalacenter/sbt-release-early/wiki/How-to-create-a-gpg-key
+and adapt according to adaptations below 
 
-  * Step 2-4 from above was used. Then after key generation, step 5 should work according to "How to publish" below. See the last parts of this repo's `build.sbt` and these instructions:
+### Adaptations 
 
-Issue commands below one at a time to make files in `~/.sbt/` and key pair in ascii in `~/.sbt/gpg` and publish key in `~/ci-keys` and then copy to `.sbt/gpg` tested on Ubuntu 18.04 using `gpg --version` at 2.2.4. 
-
+In the file `~/.sbt/1.0/plugins/gpg.sbt` (instead of project/plugins.sbt) you should have:
 ```
-cd ~
-mkdir ci-keys 
-chmod -R go-rwx ci-keys
-cd ci-keys
-gpg --homedir . --gen-key
-gpg --homedir . -a --export > pubring.asc
-gpg --homedir . -a --export-secret-keys > secring.asc
-gpg --homedir . --list-key  
-# <copy> the pub hex string e.g E7232FE8B8357EEC786315FE821738D92B63C95F
-gpg --homedir . --keyserver hkp://pool.sks-keyservers.net --send-keys <paste>
-gpg --homedir . --keyserver hkp://pgp.mit.edu --send-keys E7232FE8B8357EEC786315FE821738D92B63C95F
-mkdir -p ~/.sbt/gpg
-cd ~/.sbt/gpg
-cp -R ~/ci-keys/* .
+addSbtPlugin("com.github.sbt" % "sbt-pgp" % "2.3.1")
 ```
 
-After this you should have this these files `~/.sbt/gpg`:
+In the file `~/.sbt/sonatype_central_credentials` you should have the userid and password of an active User Token. You only get to see that when you create one, so you need to put it somewhere safe upon creation. 
 
+In the file `~/.sbt/1.0/credentials.sbt ` you should have:
 ```
-$ cat ~/.sbt/1.0/plugins/gpg.sbt 
-addSbtPlugin("com.jsuereth" % "sbt-pgp" % "2.0.0")
-
-$ cat ~/.sbt/sonatype_credential 
-realm=Sonatype Nexus Repository Manager
-host=oss.sonatype.org
-user=<YOURUSERID>
-password=<YOURPASSWORD>
-
-$ cat ~/.sbt/1.0/sonatype.sbt 
-credentials += Credentials(Path.userHome / ".sbt" / "sonatype_credential")
-
-$ ls ~/.sbt/gpg
-crls.d            private-keys-v1.d  pubring.kbx   secring.asc
-openpgp-revocs.d  pubring.asc        trustdb.gpg
-
+credentials += Credentials(Path.userHome / ".sbt" / "sonatype_central_credentials")
 ```
 
-* See more info here:
-  - https://github.com/sbt/sbt-pgp#configuration-signing-key
-  - https://www.scala-sbt.org/sbt-pgp/usage.html
 
 ## How to publish
 
@@ -81,34 +48,24 @@ openpgp-revocs.d  pubring.asc        trustdb.gpg
   - Update the link http://www.cs.lth.se/pgk/lib in typo3 so that it links to the right http://fileadmin.cs.lth.se/pgk/introprog_3-x.y.z.jar
 
 
-4. In `sbt>` run `publishSigned`  - a plus sign is not used since we only publish for Scala 3 from 1.2.0.
+4. In `sbt>` run `publishSigned`  which requires correct credentials, see Adaptations above.
 
-Note: It is falsely said to be `sbt publish` according to https://www.scala-sbt.org/1.x/docs/Publishing.html but you need to use `sbt publishSigned` 
-after creating a .credentials file in ~/.sbt including below where xxx and yyy is replaced with secret values that is access according to https://central.sonatype.org/publish/generate-token/   If you do just `publish` you will get an error later in the process after closing below that complains that .asc files are missing etc.
+5. After you have done `sbt publishSigned` then log into Sonatype Nexus here: (if the page does not load, clear the browser's cache by pressing Ctrl+F5) https://central.sonatype.com/publishing/deployments
 
-Put .credentials in ~/.sbt
+6. Or click on the upper left drop-down and choose *View deployments*. Click "Refresh" if list is empty. 
+
+7. Expand the "Component Files" and download the published `introprog_3-x.y.z.jar`
+
+8. Save it e.g. in `tmp`.
+
+9.  Verify that the staged jar downloaded  works by running something similar to `scala-cli repl . -S 3.8.3 --jar introprog_3-1.5.0.jar` and in REPL e.g. `val w = new introprog.PixelWindow` or `introprog.examples.TestPixelWindow.main(Array())`. The reason for this step is that there has been incidents where the uploading has failed and the jar was empty. A published jar can not be retracted even if corrupted according to Sonatype policies.
+
+10. Click the *Publish* button. This will take ages (if you are lucky 15 min or else hours)
+
+11. Click the green arrow "Refresh" icon now and then. 
+
+12. When visible on Central at https://repo1.maven.org/maven2/se/lth/cs/introprog_3/ verify with 
 ```
-realm=Sonatype Nexus Repository Manager
-host=oss.sonatype.org
-user=xxx
-password=yyy
+scala repl --dep "se.lth.cs::introprog:1.5.0" --jvm 21 -- --repl-init-script 'introprog.PixelWindow()'
 ```
-
-5. After you have done `sbt publishSigned` then log into Sonatype Nexus here: (if the page does not load, clear the browser's cache by pressing Ctrl+F5) https://oss.sonatype.org/#welcome
-
-6. Click on *Staging Repositories* in the Build Promotion list to the left. Click "Refresh" if list is empty. https://oss.sonatype.org/#stagingRepositories
-
-7. Scroll down and select something similar to `selthcs-100X` and select the *Contents* tab and expand until leaf level of the tree where you can see the `introprog_3-x.y.z.jar`
-
-8. Download the staged jar by clicking on it and selecting the *Artifact* tab to the right and click the Repository Path to download. Save it e.g. in `tmp`.
-
-9.  Verify that the staged jar downloaded from sonatype works by running something similar to `scala-cli repl . -S 3.8.3 --jar introprog_3-1.5.0.jar` and in REPL e.g. `val w = new introprog.PixelWindow` or `introprog.examples.TestPixelWindow.main(Array())`. The reason for this step is that there has been incidents where the uploading has failed and the jar was empty. A published jar can not be retracted even if corrupted according to Sonatype policies.
-
-10. Click the *Close* icon with a diskette above the repository list to "close" the staging repository. No need to write anything in the "Description" field in the popup. It has happened that the Close failed - then the repo is still "Open" so try to close it again and hope it works this time...
-
-11. Click the green arrow "Refresh" icon. Mark the Repository in the list by clicking the check-mark square to the left of th repo name similar to "selthcs-1015". After a while (typically a couple of minutes) the *Release* icon with a chain above the repository list is enabled. If it is not enabled the wait some minutes and click "Refresh" again. Click "Release" when enabled. In the dialog that appears you can keep the "Automatically Drop" checkbox checked, which means that when the repo is published on Central the staging repo is removed from the list.
-
-12. By searching here you can see the repo in progress of being published but it takes a while before it is publicly visible on Central (typically 10-15 minutes). https://oss.sonatype.org/#nexus-search;quick~se.lth.cs
-
-13. When visible on Central at https://repo1.maven.org/maven2/se/lth/cs/introprog_3/ verify with a simple sbt project that it works as shown in [README usage instructions for sbt](https://github.com/lunduniversity/introprog-scalalib/blob/master/README.md#using-sbt).
-
+that it is automatically identified and downloaded and a black window should appear.

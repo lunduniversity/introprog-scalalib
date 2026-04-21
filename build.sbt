@@ -40,9 +40,19 @@ Compile / doc / scalacOptions ++= Seq(
 
 // Below enables publishing to central.sonatype.org 
 // see PUBLISH.md for instructions
-// usage inside sbt: BUT READ PUBLISH.md FIRST  - the plus is needed for cross building all versions
-// sbt> + publishSigned
+// base on https://www.scala-sbt.org/release/docs/Using-Sonatype.html
+// usage inside sbt: BUT READ PUBLISH.md FIRST  
+// sbt> publishSigned
+// sbt> sonaUpload
 // DON'T PANIC: it takes looong time to run it
+// login in to https://central.sonatype.com
+//   goto https://central.sonatype.com/publishing/deployments
+//   and press the Publish button 
+//   or do this in sbt with the same effect as pushing the button:
+// sbt> sonaRelease
+
+ThisBuild / versionScheme := Some("early-semver")
+
 
 ThisBuild / organization := "se.lth.cs"
 ThisBuild / organizationName := "LTH"
@@ -64,28 +74,24 @@ ThisBuild / developers := List(
 )
 
 ThisBuild / description := "Scala utilities for introductory Computer Science teaching."
-ThisBuild / licenses := List("BSD 2-Clause" -> new URL("https://opensource.org/licenses/BSD-2-Clause"))
+ThisBuild / licenses := List("BSD 2-Clause" -> url("https://opensource.org/licenses/BSD-2-Clause"))
 ThisBuild / homepage := Some(url("https://github.com/lunduniversity/introprog-scalalib"))
 
 // Remove all additional repository other than Maven Central from POM
 ThisBuild / pomIncludeRepository := { _ => false }
+
 ThisBuild / publishTo := {
-  val nexus = "https://oss.sonatype.org/"
-  if (isSnapshot.value) Some("snapshots" at nexus + "content/repositories/snapshots")
-  else Some("releases" at nexus + "service/local/staging/deploy/maven2")
+  val centralSnapshots = "https://central.sonatype.com/repository/maven-snapshots/"
+  if (isSnapshot.value) Some("central-snapshots" at centralSnapshots)
+  else localStaging.value
 }
+
 ThisBuild / publishMavenStyle := true
 
 publishConfiguration := publishConfiguration.value.withOverwrite(true)
 publishLocalConfiguration := publishLocalConfiguration.value.withOverwrite(true)
-//pushRemoteCacheConfiguration := pushRemoteCacheConfiguration.value.withOverwrite(true)
 
-credentials += Credentials(Path.userHome / ".sbt" / ".credentials")
-
-//https://oss.sonatype.org/#stagingRepositories
-//https://oss.sonatype.org/#nexus-search;quick~se.lth.cs
 //https://repo1.maven.org/maven2/se/lth/cs/introprog_2.12/
 
 
-//https://github.com/sbt/sbt-pgp
 
