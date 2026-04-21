@@ -1,6 +1,7 @@
-lazy val Version = "1.5.0"  // next version to be published
 lazy val Name    = "introprog"
+lazy val Version = "1.5.0"  // next version to be published
 lazy val scala3  = "3.3.7"  // stay on 3.3 LTS for maximum compatibility until 3.3 is deprecated
+lazy val munitVersion = "1.3.0" // https://mvnrepository.com/search?q=munit
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
@@ -12,7 +13,7 @@ lazy val introprog = (project in file("."))
     name := Name,
     version := Version,
     scalaVersion := scala3,
-    libraryDependencies += "org.scalameta" %% "munit" % "1.3.0" % Test,
+    libraryDependencies += "org.scalameta" %% "munit" % munitVersion % Test,
   )
 
 ThisBuild / Compile / console / fork := true
