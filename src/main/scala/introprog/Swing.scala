@@ -20,6 +20,14 @@ object Swing:
     ready.await
     result(0)
 
+  /** Return a sequence of available look and feel options. */
+  def installedLookAndFeels: Vector[String] =
+    javax.swing.UIManager.getInstalledLookAndFeels.toVector.map(_.getClassName)
+
+  /** Find a look and feel with a name including `partOfName`. */
+  def findLookAndFeel(partOfName: String): Option[String] =
+    installedLookAndFeels.find(_.toLowerCase.contains(partOfName))
+
   /** Test if the current operating system name includes `partOfName`. */
   def isOS(partOfName: String): Boolean =
     if partOfName.toLowerCase.startsWith("win") && isInProc("windows", "wsl", "microsoft") then true //WSL
