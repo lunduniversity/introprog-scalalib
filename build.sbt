@@ -1,6 +1,6 @@
 lazy val Name    = "introprog"
 lazy val Version = "1.5.0"  // next version to be published
-lazy val scala3  = "3.3.7"  // stay on 3.3 LTS for maximum compatibility until 3.3 is deprecated
+lazy val scala3  = "3.3.7"  // stay on 3.3 LTS for maximum compatibility until 3.9 LTS is established
 lazy val munitVersion = "1.3.0" // https://mvnrepository.com/artifact/org.scalameta/munit
 
 Global / onChangedBuildSource := ReloadOnSourceChanges
@@ -18,31 +18,15 @@ lazy val introprog = (project in file("."))
 
 ThisBuild / Compile / console / fork := true
 
-//https://github.com/scalacenter/sbt-version-policy
-ThisBuild / versionScheme := Some("early-semver")
-ThisBuild / versionPolicyIntention := Compatibility.None
-//ThisBuild / versionPolicyIntention := Compatibility.None
-//ThisBuild / versionPolicyIntention := Compatibility.BinaryAndSourceCompatible
-//ThisBuild / versionPolicyIntention := Compatibility.BinaryCompatible
-//In the sbt shell check version using:
-//sbt> versionCheck
-//sbt> versionPolicyCheck
-//sbt> last versionPolicyFindDependencyIssues
-//sbt> last mimaPreviousClassfiles
-
 ThisBuild / scalacOptions ++= Seq(
   "-encoding", "UTF-8",
   "-unchecked",
   "-deprecation",
-//  "-Xfuture",
-//  "-Yno-adapted-args",
-//  "-Ywarn-dead-code",
-//  "-Ywarn-numeric-widen",
-//  "-Ywarn-value-discard",
-//  "-Ywarn-unused"
+  "-new-syntax",
+  "-Werror",
 )
 
-ThisBuild / Compile / compile / javacOptions ++= Seq("-target", "1.8") // for backward compat
+//ThisBuild / Compile / compile / javacOptions ++= Seq("-target", "1.8") // for backward compat
 
 Compile / doc / scalacOptions ++= Seq(
   "-groups",
