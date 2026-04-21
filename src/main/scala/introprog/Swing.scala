@@ -45,8 +45,8 @@ object Swing:
 
   /** Init the Swing GUI toolkit and set platform-specific look and feel.*/
   def init(): Unit = if !isInit then
-     setLookAndFeel()
-     isInit = true
+    setLookAndFeel()
+    isInit = true
 
   /** Return a sequence of available look and feel options. */
   def installedLookAndFeels: Vector[String] =
