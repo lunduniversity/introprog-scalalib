@@ -17,7 +17,7 @@ This repo is used in this course *(in Swedish)*: http://cs.lth.se/pgk with cours
 
 ### Getting started using scala from the command line
 
-You need to have [Scala installed](https://www.scala-lang.org/download/) using version 3.5.2 or later.
+You need to have [Scala installed](https://www.scala-lang.org/download/) using version 3.3.7 or later. You also need Java 17 or later. [Java 25 LTS is recommended](https://docs.scala-lang.org/overviews/jdk-compatibility/overview.html#jdk-25-compatibility-notes). 
 
 You can start the Scala REPL in the current directory with `introprog` directly available to play with using this command in a terminal window:
 ```
