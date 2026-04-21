@@ -68,6 +68,8 @@ openpgp-revocs.d  pubring.asc        trustdb.gpg
 
 ## How to publish
 
+0. Make sure your shell use Java 17: `sdk use java 17.0.18-tem` or similar
+
 1. Build and test locally using `sbt "compile;test;doc"`
 
 2. Bump `lazy val Version` in `build.sbt`, run `package` in sbt. Note no plus before package as from 1.2.0 we only publish for Scala 3. We also want a release on github and the course home page aligned with the release on Sonatype Central. Therefore You should also:
