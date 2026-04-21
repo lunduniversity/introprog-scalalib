@@ -68,28 +68,17 @@ openpgp-revocs.d  pubring.asc        trustdb.gpg
 
 ## How to publish
 
-0. Make sure your shell use Java 17: `sdk use java 17.0.18-tem` or similar
+1. Make sure your shell use Java 17: `sdk use java 17.0.18-tem` or similar
 
-1. Build and test locally using `sbt "compile;test;doc"`
+2. Build and test locally using `sbt "compile;test;doc"`
 
-2. Bump `lazy val Version` in `build.sbt`, run `package` in sbt. Note no plus before package as from 1.2.0 we only publish for Scala 3. We also want a release on github and the course home page aligned with the release on Sonatype Central. Therefore You should also:
+3. Bump `lazy val Version` in `build.sbt`, run `package` in sbt. Note no plus before package as from 1.2.0 we only publish for Scala 3. We also want a release on github and the course home page aligned with the release on Sonatype Central. Therefore You should also:
   - Don't forget to update the `doc/index.md` file with current version information and package contents etc. Read more on scaladoc here: https://docs.scala-lang.org/scala3/scaladoc.html
   - commit all changes and push and *then* create a github release with the packaged jar uploaded to https://github.com/lunduniversity/introprog-scalalib/releases
   - Publish the jar to the course home page at http://cs.lth.se/lib using  `sh publish-jar.sh`
   - Publish updated docs to the course home page at http://cs.lth.se/api using script `sh publish-doc.sh`
   - Copy the introprog-scalalib/src the workspace subdir at https://github.com/lunduniversity/introprog to enable eclipse project generation with internal dependency of projects using `sh publish-workspace.sh`. Then run `sbt eclipse` IN THAT repo and `sh package.sh` to create `workspace.zip` etc. TODO: For the future it would be **nice** to have another repo introprog-workspace and factor out code to that repo and solve the problem of dependency between latex code and the workspace.
   - Update the link http://www.cs.lth.se/pgk/lib in typo3 so that it links to the right http://fileadmin.cs.lth.se/pgk/introprog_3-x.y.z.jar
-
-3. In build.sbt set the key `ThisBuild / versionPolicyIntention := ` to one of `Compatibility.None`, `Compatibility.BinaryAndSourceCompatible` or `Compatibility.BinaryCompatible` depending on what is intended. Then run these checks in the sbt shell: 
-   ```
-   sbt> versionCheck
-   sbt> versionPolicyCheck
-   ```
-   More information here:
-   * https://www.scala-lang.org/blog/2021/02/16/preventing-version-conflicts-with-versionscheme.html
-   * https://www.youtube.com/watch?v=0T3vBnYCXn4
-   * https://www.scala-sbt.org/1.x/docs/Publishing.html#Version+scheme
-   * https://eed3si9n.com/enforcing-semver-with-sbt-strict-update
 
 
 4. In `sbt>` run `publishSigned`  - a plus sign is not used since we only publish for Scala 3 from 1.2.0.
@@ -105,31 +94,6 @@ user=xxx
 password=yyy
 ```
 
-When I did publishSIgend last time I got these errors but the publishing went through anyway with the above .credentials in ~/.sbt:
-```
-sbt:introprog> publishSigned
-[info] Wrote /home/bjornr/git/hub/lunduniversity/introprog-scalalib/target/scala-3.3.3/introprog_3-1.4.0.pom
-[warn] multiple main classes detected: run 'show discoveredMainClasses' to see the list
-[error] gpg: Warning: not using 'E7232FE8B8357EEC786315FE821738D92B63C95F' as default key: No secret key
-[error] gpg: all values passed to '--default-key' ignored
-[error] gpg: Warning: not using 'E7232FE8B8357EEC786315FE821738D92B63C95F' as default key: No secret key
-[error] gpg: all values passed to '--default-key' ignored
-[error] gpg: Warning: not using 'E7232FE8B8357EEC786315FE821738D92B63C95F' as default key: No secret key
-[error] gpg: all values passed to '--default-key' ignored
-[error] gpg: Warning: not using 'E7232FE8B8357EEC786315FE821738D92B63C95F' as default key: No secret key
-[error] gpg: all values passed to '--default-key' ignored
-[info] 	published introprog_3 to https://oss.sonatype.org/service/local/staging/deploy/maven2/se/lth/cs/introprog_3/1.4.0/introprog_3-1.4.0.pom.asc
-[info] 	published introprog_3 to https://oss.sonatype.org/service/local/staging/deploy/maven2/se/lth/cs/introprog_3/1.4.0/introprog_3-1.4.0-javadoc.jar
-[info] 	published introprog_3 to https://oss.sonatype.org/service/local/staging/deploy/maven2/se/lth/cs/introprog_3/1.4.0/introprog_3-1.4.0.pom
-[info] 	published introprog_3 to https://oss.sonatype.org/service/local/staging/deploy/maven2/se/lth/cs/introprog_3/1.4.0/introprog_3-1.4.0.jar.asc
-[info] 	published introprog_3 to https://oss.sonatype.org/service/local/staging/deploy/maven2/se/lth/cs/introprog_3/1.4.0/introprog_3-1.4.0.jar
-[info] 	published introprog_3 to https://oss.sonatype.org/service/local/staging/deploy/maven2/se/lth/cs/introprog_3/1.4.0/introprog_3-1.4.0-javadoc.jar.asc
-[info] 	published introprog_3 to https://oss.sonatype.org/service/local/staging/deploy/maven2/se/lth/cs/introprog_3/1.4.0/introprog_3-1.4.0-sources.jar
-[info] 	published introprog_3 to https://oss.sonatype.org/service/local/staging/deploy/maven2/se/lth/cs/introprog_3/1.4.0/introprog_3-1.4.0-sources.jar.asc
-```
-
-OOOPS! TODO: I already had this file: `cat ~/.sbt/sonatype_credential` pulled in by `cat ~/.sbt/1.0/sonatype.sbt`  so I should remove the last of them as Credentials is now included in the build.sbt as in `credentials += Credentials(Path.userHome / ".sbt" / ".credentials")`
-
 5. After you have done `sbt publishSigned` then log into Sonatype Nexus here: (if the page does not load, clear the browser's cache by pressing Ctrl+F5) https://oss.sonatype.org/#welcome
 
 6. Click on *Staging Repositories* in the Build Promotion list to the left. Click "Refresh" if list is empty. https://oss.sonatype.org/#stagingRepositories
@@ -138,7 +102,7 @@ OOOPS! TODO: I already had this file: `cat ~/.sbt/sonatype_credential` pulled in
 
 8. Download the staged jar by clicking on it and selecting the *Artifact* tab to the right and click the Repository Path to download. Save it e.g. in `tmp`.
 
-9.  Verify that the staged jar downloaded from sonatype works by running something similar to `scala-cli repl . -S 3.4.2 --jar introprog_3-1.4.0.jar` and in REPL e.g. `val w = new introprog.PixelWindow` or `introprog.examples.TestPixelWindow.main(Array())`. The reason for this step is that there has been incidents where the uploading has failed and the jar was empty. A published jar can not be retracted even if corrupted according to Sonatype policies.
+9.  Verify that the staged jar downloaded from sonatype works by running something similar to `scala-cli repl . -S 3.8.3 --jar introprog_3-1.5.0.jar` and in REPL e.g. `val w = new introprog.PixelWindow` or `introprog.examples.TestPixelWindow.main(Array())`. The reason for this step is that there has been incidents where the uploading has failed and the jar was empty. A published jar can not be retracted even if corrupted according to Sonatype policies.
 
 10. Click the *Close* icon with a diskette above the repository list to "close" the staging repository. No need to write anything in the "Description" field in the popup. It has happened that the Close failed - then the repo is still "Open" so try to close it again and hope it works this time...
 
