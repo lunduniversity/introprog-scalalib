@@ -20,14 +20,6 @@ object Swing:
     ready.await
     result(0)
 
-  /** Return a sequence of available look and feel options. */
-  def installedLookAndFeels: Vector[String] =
-    javax.swing.UIManager.getInstalledLookAndFeels.toVector.map(_.getClassName)
-
-  /** Find a look and feel with a name including `partOfName`. */
-  def findLookAndFeel(partOfName: String): Option[String] =
-    installedLookAndFeels.find(_.toLowerCase contains partOfName)
-
   /** Test if the current operating system name includes `partOfName`. */
   def isOS(partOfName: String): Boolean =
     if partOfName.toLowerCase.startsWith("win") && isInProc("windows", "wsl", "microsoft") then true //WSL
@@ -45,17 +37,41 @@ object Swing:
 
   /** Init the Swing GUI toolkit and set platform-specific look and feel.*/
   def init(): Unit = if !isInit then
-    setPlatformSpecificLookAndFeel()
-    isInit = true
+     setLookAndFeel()
+     isInit = true
 
-  private def setPlatformSpecificLookAndFeel(): Unit =
-    import javax.swing.UIManager.setLookAndFeel
-    if isOS("win") then findLookAndFeel("win").foreach(setLookAndFeel)
-    else if isOS("linux") then findLookAndFeel("gtk").foreach(setLookAndFeel)
-    else if isOS("mac") then findLookAndFeel("apple").foreach(setLookAndFeel)
-    else javax.swing.UIManager.setLookAndFeel(
-      javax.swing.UIManager.getSystemLookAndFeelClassName()
-    )
+  /** Return a sequence of available look and feel options. */
+  def installedLookAndFeels: Vector[String] =
+    javax.swing.UIManager.getInstalledLookAndFeels.toVector.map(_.getClassName)
+
+  /** Find a look and feel with a name including `partOfName`. */
+  def findLookAndFeel(partOfName: String): Option[String] =
+    installedLookAndFeels.find(_.toLowerCase.contains(partOfName))
+
+
+  private def setLookAndFeel(): Unit =
+    findLookAndFeel("nimbus").foreach: nimbus =>
+      try javax.swing.UIManager.setLookAndFeel(nimbus)
+      catch 
+        case e: Throwable => 
+          println(s"WARNING: caught $e in introprog.Swing.setLookAndFeel()")
+
+    /* TODO: Investigate how to make platform-specific look and feel work post Java 8
+
+      The code below gives this exception
+        java.lang.IllegalAccessError: superclass access check failed: class com.sun.java.swing.plaf.gtk.GTKLookAndFeel$GnomeLayoutStyle (in unnamed module @0x3a1df9d3) cannot access class sun.swing.DefaultLayoutStyle (in module java.desktop) because module java.desktop does not export sun.swing to unnamed module @0x3a1df9d3
+      import javax.swing.UIManager.setLookAndFeel
+      if isOS("win") then findLookAndFeel("win").foreach(setLookAndFeel)
+      else if isOS("linux") then findLookAndFeel("gtk").foreach(setLookAndFeel)
+      else if isOS("mac") then findLookAndFeel("apple").foreach(setLookAndFeel)
+      else javax.swing.UIManager.setLookAndFeel(
+        javax.swing.UIManager.getSystemLookAndFeelClassName()
+      )
+
+    */
+
+    ()
+  end setLookAndFeel
 
   /** A Swing `JPanel` to create drawing windows for 2D graphics. */
   class ImagePanel(
