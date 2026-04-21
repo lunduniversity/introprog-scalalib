@@ -1,6 +1,6 @@
 #VERSION="$(grep -m 1 -Po -e '\d+.\d+.\d+' build.sbt)"
-VERSION=1.4.0
-SCALAVERSION=3.3.3
+VERSION=1.5.0
+SCALAVERSION=3.3.7
 SCALACOMPAT=3
 
 JARFILE="introprog_$SCALACOMPAT-$VERSION.jar"
